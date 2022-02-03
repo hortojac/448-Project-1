@@ -12,7 +12,7 @@ root.columnconfigure(0, weight=1)
 frame1 = Frame(root)
 frame2 = Frame(root)
 frame3 = Frame(root)
-frame4 = Frame(root)
+frame4 = Frame(root,)
 
 for frame in (frame1, frame2, frame3, frame4):
     frame.grid(row=0, column=0, sticky = 'nsew')
@@ -47,25 +47,33 @@ myButton = Button(frame2, text="4 ships", padx=25, pady=25, command=myClick4, fg
 myButton = Button(frame2, text="5 ships", padx=25, pady=25, command=myClick5, fg="black").grid(row=5, column=0)
 myButton = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=lambda:show_frame(frame3)).grid(row=7, column=0)
 
+def getboard():
+    for row_index in range(10):
+        Grid.rowconfigure(frame4, row_index, weight=1)
+        for col_index in range(10):
+             Grid.columnconfigure(frame4, col_index, weight=1,)
+             btn = Button(frame4,) #create a button inside frame 
+             btn.grid(row=row_index, column=col_index, sticky='nsew')
+
 #Frame 3 code
 e = Entry(frame3, width=50)
-e.pack()
+e.grid()
 e.insert(0, "Enter Player 1 Name Here")
 b = Entry(frame3, width=50)
-b.pack()
+b.grid()
 b.insert(0, "Enter Player 2 Name Here")
 
-def GetName():
+def getName():
     message1 = e.get()
     message2 = b.get()
-    myLabel = Label(frame3, text=message1 + " place your battle ships.")
-    myLabel.pack()
+    myLabel = Label(frame3, text=message1 + "place your battle ships.")
+    myLabel.grid()
     #show_frame(frame4)
 
-myButton = Button(frame3, text="Enter", command = GetName).pack()
-
+myButton = Button(frame3, text="Enter", command = lambda:[getName(), show_frame(frame4)]).grid()
 
 #Frame 4 code
-myLabel = Label(frame4, text= "Place your battle ships.").pack()
+#myLabel = Label(frame4, text= "Place your battle ships.").grid()
+getboard()
 
 root.mainloop()
