@@ -4,7 +4,7 @@ def show_frame(frame):
     frame.tkraise()
 
 root = Tk()
-root.state("zoomed")
+root.geometry('600x600')
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -48,12 +48,7 @@ myButton = Button(frame2, text="5 ships", padx=25, pady=25, command=myClick5, fg
 myButton = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=lambda:show_frame(frame3)).grid(row=7, column=0)
 
 def getboard():
-    for row_index in range(10):
-        Grid.rowconfigure(frame4, row_index, weight=1)
-        for col_index in range(10):
-             Grid.columnconfigure(frame4, col_index, weight=1,)
-             btn = Button(frame4,) #create a button inside frame 
-             btn.grid(row=row_index, column=col_index, sticky='nsew')
+    btn1 = Button(frame4, text='Null', padx=25, pady=25, fg='red').grid(row=2, column=2)
 
 #Frame 3 code
 e = Entry(frame3, width=50)
