@@ -4,7 +4,7 @@ def show_frame(frame):
     frame.tkraise()
 
 root = Tk()
-root.geometry('600x600')
+root.geometry('1200x800')
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -40,15 +40,19 @@ def myClick4():
 def myClick5():
     myLabel = Label(frame2, text="Each player will have 5 ships", fg="red").grid(row=6, column=0)
 
-myButton = Button(frame2, text="1 ship", padx=25, pady=25, command=myClick1, fg="black").grid(row=1, column=0)
+myButton = Button(frame2, text="1 ship ", padx=25, pady=25, command=myClick1, fg="black").grid(row=1, column=0)
 myButton = Button(frame2, text="2 ships", padx=25, pady=25, command=myClick2, fg="black").grid(row=2, column=0)
-myButton = Button(frame2, text="3 ship", padx=25, pady=25, command=myClick3, fg="black").grid(row=3, column=0)
+myButton = Button(frame2, text="3 ships", padx=25, pady=25, command=myClick3, fg="black").grid(row=3, column=0)
 myButton = Button(frame2, text="4 ships", padx=25, pady=25, command=myClick4, fg="black").grid(row=4, column=0)
 myButton = Button(frame2, text="5 ships", padx=25, pady=25, command=myClick5, fg="black").grid(row=5, column=0)
 myButton = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=lambda:show_frame(frame3)).grid(row=7, column=0)
 
 def getboard():
-    btn1 = Button(frame4, text='Null', padx=25, pady=25, fg='red').grid(row=2, column=2)
+    for x in range(1,11):
+        for y in range(1,11):
+            Button(frame4, text=(x,y), padx=25, pady=25, fg='black').grid(row=y, column=x, sticky='nsew')
+            
+
 
 #Frame 3 code
 e = Entry(frame3, width=50)
