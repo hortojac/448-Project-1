@@ -48,16 +48,35 @@ def shipcount(x):
         myLabel = Label(frame4, text="Place your 5 ships").grid(row=1, column=20)
         myLabel = Label(frame5, text="Place your 5 ships").grid(row=1, column=20)
 
-myButton = Button(frame2, text="1 ship ", padx=25, pady=25, command=lambda:shipcount(1), fg="black").grid(row=1, column=0)
-myButton = Button(frame2, text="2 ships", padx=25, pady=25, command=lambda:shipcount(2), fg="black").grid(row=2, column=0)
-myButton = Button(frame2, text="3 ships", padx=25, pady=25, command=lambda:shipcount(3), fg="black").grid(row=3, column=0)
-myButton = Button(frame2, text="4 ships", padx=25, pady=25, command=lambda:shipcount(4), fg="black").grid(row=4, column=0)
-myButton = Button(frame2, text="5 ships", padx=25, pady=25, command=lambda:shipcount(5), fg="black").grid(row=5, column=0)
-myButton = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=lambda:show_frame(frame3)).grid(row=7, column=0)
+def placeships(x):
+    if x >= 1:
+        ship1 = Button(frame4, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
+        ship1 = Button(frame5, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
+        if x >= 2:
+            ship2 = Button(frame4, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
+            ship2 = Button(frame5, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
+            if x >= 3:
+                ship3 = Button(frame4, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
+                ship3 = Button(frame5, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
+                if x >= 4:
+                    ship4 = Button(frame4, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
+                    ship4 = Button(frame5, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
+                    if x >= 5:
+                        ship5 = Button(frame4, text="EEEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
+                        ship5 = Button(frame5, text="EEEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
+
+
+
+myButton1 = Button(frame2, text="1 ship ", padx=25, pady=25, command=lambda:[shipcount(1), placeships(1)], fg="black").grid(row=1, column=0)
+myButton2 = Button(frame2, text="2 ships", padx=25, pady=25, command=lambda:[shipcount(2), placeships(2)], fg="black").grid(row=2, column=0)
+myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=lambda:[shipcount(3), placeships(3)], fg="black").grid(row=3, column=0)
+myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=lambda:[shipcount(4), placeships(4)], fg="black").grid(row=4, column=0)
+myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=lambda:[shipcount(5), placeships(5)], fg="black").grid(row=5, column=0)
+myButton6 = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=lambda:show_frame(frame3)).grid(row=7, column=0)
 
             
 #Frame 3 code
-e = Entry(frame3, width=50)
+e = Entry(frame3,width=50)
 e.grid()
 e.insert(0, "Enter Player 1 Name Here")
 b = Entry(frame3, width=50)
@@ -85,12 +104,7 @@ def getboard1():
         for col_num in range(1,11): #iterate through columns
             Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
             myLabel = Label(frame4, text="Player 1").grid(row=2, column=20)
-            ship1 = Button(frame4, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
-            ship2 = Button(frame4, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
-            ship3 = Button(frame4, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
-            ship4 = Button(frame4, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
-            ship5 = Button(frame4, text="EEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
-
+    
 frame4_button = Button(frame4, text="Finalize Ship Placement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame5)).grid(row = 8, column = 20)
 
 getboard1()
@@ -102,12 +116,7 @@ def getboard2():
         for col_num in range(1,11): #iterate through columns
             Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
             myLabel = Label(frame5, text="Player 2").grid(row=2, column=20)
-            ship1 = Button(frame5, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
-            ship2 = Button(frame5, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
-            ship3 = Button(frame5, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
-            ship4 = Button(frame5, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
-            ship5 = Button(frame5, text="EEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
-
+            
 frame5_button = Button(frame5, text="Finalize Ship Placement", padx=20, pady=20, fg='black').grid(row = 8, column = 20)
 
 getboard2()
