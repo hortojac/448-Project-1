@@ -29,41 +29,41 @@ myLabel2 = Label(frame2, text="Choose the number of ships each player will have.
 def shipcount(x):
     if x == 1:
         myLabel = Label(frame2, text="Each player will have 1 ship", fg="red").grid(row=6, column=0)
-        mylabel = Label(frame4, text="Place your 1 ship").grid(row=1, column=20)
-        mylabel = Label(frame5, text="Place your 1 ship").grid(row=1, column=20)
+        mylabel = Label(frame4, text="Place your 1 ship").grid(row=1, column=22)
+        mylabel = Label(frame5, text="Place your 1 ship").grid(row=1, column=22)
     elif x == 2:
         myLabel = Label(frame2, text="Each player will have 2 ships", fg="red").grid(row=6, column=0)
-        myLabel = Label(frame4, text="Place your 2 ships").grid(row=1, column=20)
-        mylabel = Label(frame5, text="Place your 2 ships").grid(row=1, column=20)
+        myLabel = Label(frame4, text="Place your 2 ships").grid(row=1, column=22)
+        mylabel = Label(frame5, text="Place your 2 ships").grid(row=1, column=22)
     elif x == 3:
         myLabel = Label(frame2, text="Each player will have 3 ships", fg="red").grid(row=6, column=0)
-        myLabel = Label(frame4, text="Place your 3 ships").grid(row=1, column=20)
-        mylabel = Label(frame5, text="Place your 3 ships").grid(row=1, column=20)
+        myLabel = Label(frame4, text="Place your 3 ships").grid(row=1, column=22)
+        mylabel = Label(frame5, text="Place your 3 ships").grid(row=1, column=22)
     elif x == 4:
         myLabel = Label(frame2, text="Each player will have 4 ships", fg="red").grid(row=6, column=0)
-        myLabel = Label(frame4, text="Place your 4 ships").grid(row=1, column=20)
-        mylabel = Label(frame5, text="Place your 4 ships").grid(row=1, column=20)
+        myLabel = Label(frame4, text="Place your 4 ships").grid(row=1, column=22)
+        mylabel = Label(frame5, text="Place your 4 ships").grid(row=1, column=22)
     else:
         myLabel = Label(frame2, text="Each player will have 5 ships", fg="red").grid(row=6, column=0)
-        myLabel = Label(frame4, text="Place your 5 ships").grid(row=1, column=20)
-        myLabel = Label(frame5, text="Place your 5 ships").grid(row=1, column=20)
+        myLabel = Label(frame4, text="Place your 5 ships").grid(row=1, column=22)
+        myLabel = Label(frame5, text="Place your 5 ships").grid(row=1, column=22)
 
 def placeships(x):
     if x >= 1:
-        ship1 = Button(frame4, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
-        ship1 = Button(frame5, text="A", padx=10, pady=10, fg='red').grid(row = 3, column = 20)
+        ship1 = Button(frame4, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
+        ship1 = Button(frame5, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
         if x >= 2:
-            ship2 = Button(frame4, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
-            ship2 = Button(frame5, text="BB", padx=20, pady=10, fg='blue').grid(row = 4, column = 20)
+            ship2 = Button(frame4, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22)
+            ship2 = Button(frame5, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22)
             if x >= 3:
-                ship3 = Button(frame4, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
-                ship3 = Button(frame5, text="CCC", padx=30, pady=10, fg='orange').grid(row = 5, column = 20)
+                ship3 = Button(frame4, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22)
+                ship3 = Button(frame5, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22)
                 if x >= 4:
-                    ship4 = Button(frame4, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
-                    ship4 = Button(frame5, text="DDDD", padx=40, pady=10, fg='green').grid(row = 6, column = 20)
+                    ship4 = Button(frame4, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22)
+                    ship4 = Button(frame5, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22)
                     if x >= 5:
-                        ship5 = Button(frame4, text="EEEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
-                        ship5 = Button(frame5, text="EEEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
+                        ship5 = Button(frame4, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
+                        ship5 = Button(frame5, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
 
 
 
@@ -103,9 +103,9 @@ def getboard1():
         row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
         for col_num in range(1,11): #iterate through columns
             Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-            myLabel = Label(frame4, text="Player 1").grid(row=2, column=20)
+            myLabel = Label(frame4, text="Player 1").grid(row=2, column=22)
     
-frame4_button = Button(frame4, text="Finalize Ship Placement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame5)).grid(row = 8, column = 20)
+frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame5)).grid(row = 9, column = 22)
 
 getboard1()
 
@@ -115,9 +115,9 @@ def getboard2():
         row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
         for col_num in range(1,11): #iterate through columns
             Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-            myLabel = Label(frame5, text="Player 2").grid(row=2, column=20)
+            myLabel = Label(frame5, text="Player 2").grid(row=2, column=22)
             
-frame5_button = Button(frame5, text="Finalize Ship Placement", padx=20, pady=20, fg='black').grid(row = 8, column = 20)
+frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black').grid(row = 9, column = 22)
 
 getboard2()
 
