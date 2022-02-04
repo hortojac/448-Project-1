@@ -3,19 +3,30 @@ from tkinter import *
 def show_frame(frame):
     frame.tkraise()
 
+
+
 root = Tk()
-root.geometry('1200x800')
+#root.geometry('1200x800')
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
+
+### Global Variables
+num_ships = Label(master=root, textvariable="0")
+###
 
 frame1 = Frame(root)
 frame2 = Frame(root)
 frame3 = Frame(root)
 frame4 = Frame(root)
 frame5 = Frame(root)
+frame6 = Frame(root)
+frame7 = Frame(root)
+frame8 = Frame(root)
+frame9 = Frame(root)
+frame10 = Frame(root)
 
-for frame in (frame1, frame2, frame3, frame4, frame5):
+for frame in (frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10):
     frame.grid(row=0, column=0, sticky = 'nsew')
 
 show_frame(frame1)
@@ -117,8 +128,34 @@ def getboard2():
             Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
             myLabel = Label(frame5, text="Player 2").grid(row=2, column=20)
             
-frame5_button = Button(frame5, text="Finalize Ship Placement", padx=20, pady=20, fg='black').grid(row = 8, column = 20)
+frame5_button = Button(frame5, text="Finalize Ship Placement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame6)).grid(row = 8, column = 20)
 
 getboard2()
+
+def checkWin(nextFrame):
+    win = False #for now
+    if win:
+        show_frame(frame10) #show win frame
+    else:
+        show_frame(nextFrame)
+
+#frame 6 code = popup player 1
+frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='black', command=lambda:show_frame(frame7)).grid(row = 8, column = 20)
+
+
+#frame 7 = player 1 turn
+frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame8)).grid(row = 8, column = 20)
+getboard1()
+
+getboard2()
+#frame 8 = popup player 2   
+frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=lambda:show_frame(frame9)).grid(row = 8, column = 20)
+
+#frame 9 = player 2 turn
+    #frame 6 = player 1 turn
+frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame6)).grid(row = 8, column = 20)
+
+#Frame 10 = endscreen
+frame10_button = Button(frame10, text="Yay Player x Wins!!", padx=20, pady=20, fg='black', command=lambda:exit()).grid(row = 8, column = 20)
 
 root.mainloop()
