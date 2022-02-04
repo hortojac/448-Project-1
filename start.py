@@ -12,9 +12,10 @@ root.columnconfigure(0, weight=1)
 frame1 = Frame(root)
 frame2 = Frame(root)
 frame3 = Frame(root)
-frame4 = Frame(root,)
+frame4 = Frame(root)
+frame5 = Frame(root)
 
-for frame in (frame1, frame2, frame3, frame4):
+for frame in (frame1, frame2, frame3, frame4, frame5):
     frame.grid(row=0, column=0, sticky = 'nsew')
 
 show_frame(frame1)
@@ -61,22 +62,48 @@ def getName():
     message2 = b.get()
     #show_frame(frame4)
 
-myButton = Button(frame3, text="Enter", command = lambda:[getName(), show_frame(frame4)]).grid()
+frame3_button = Button(frame3, text="Enter", command = lambda:[getName(), show_frame(frame4)]).grid()
 
 #Frame 4 code
+
+def int_to_char(x): #converts given integer into to a character
+    return chr(x+64)
+
+def char_to_int(x): #converts given character into an integer
+    return int(x) - 64
+
 def getboard1():
-    for x in range(1,11):
-        for y in range(1,11):
-            Button(frame4, text=(x,y), padx=25, pady=25, fg='black').grid(row=y, column=x, sticky='nsew')
-    myLabel = Label(frame4, text="Place your battle ships player 1.").grid(row = 1, column = 20)
-    ship1 = Button(frame4, text="A", padx=10, pady=10, fg='red').grid(row = 2, column = 20)
-    ship2 = Button(frame4, text="BB", padx=20, pady=10, fg='blue').grid(row = 3, column = 20)
-    ship3 = Button(frame4, text="CCC", padx=30, pady=10, fg='orange').grid(row = 4, column = 20)
-    ship4 = Button(frame4, text="DDDD", padx=40, pady=10, fg='green').grid(row = 5, column = 20)
-    ship5 = Button(frame4, text="EEEE", padx=50, pady=10, fg='purple').grid(row = 6, column = 20)
+
+    for row_num in range(1,11): #iterate through rows
+        row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+        for col_num in range(1,11): #iterate through columns
+            Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+            myLabel = Label(frame4, text="Place your battle ships player 1.").grid(row = 1, column = 20)
+            ship1 = Button(frame4, text="A", padx=10, pady=10, fg='red').grid(row = 2, column = 20)
+            ship2 = Button(frame4, text="BB", padx=20, pady=10, fg='blue').grid(row = 3, column = 20)
+            ship3 = Button(frame4, text="CCC", padx=30, pady=10, fg='orange').grid(row = 4, column = 20)
+            ship4 = Button(frame4, text="DDDD", padx=40, pady=10, fg='green').grid(row = 5, column = 20)
+            ship5 = Button(frame4, text="EEEE", padx=50, pady=10, fg='purple').grid(row = 6, column = 20)
+
+frame4_button = Button(frame4, text="Finalize Ship Placement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame5)).grid(row = 8, column = 20)
 
 getboard1()
 
 #frame 5 code
+def getboard2():
+    for row_num in range(1,11): #iterate through rows
+        row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+        for col_num in range(1,11): #iterate through columns
+            Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+            myLabel = Label(frame5, text="Place your battle ships player 2.").grid(row = 1, column = 20)
+            ship1 = Button(frame5, text="A", padx=10, pady=10, fg='red').grid(row = 2, column = 20)
+            ship2 = Button(frame5, text="BB", padx=20, pady=10, fg='blue').grid(row = 3, column = 20)
+            ship3 = Button(frame5, text="CCC", padx=30, pady=10, fg='orange').grid(row = 4, column = 20)
+            ship4 = Button(frame5, text="DDDD", padx=40, pady=10, fg='green').grid(row = 5, column = 20)
+            ship5 = Button(frame5, text="EEEE", padx=50, pady=10, fg='purple').grid(row = 6, column = 20)
+
+frame5_button = Button(frame5, text="Finalize Ship Placement", padx=20, pady=20, fg='black').grid(row = 8, column = 20)
+
+getboard2()
 
 root.mainloop()
