@@ -76,6 +76,36 @@ def placeships(x):
                         ship5 = Button(frame4, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
                         ship5 = Button(frame5, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
 
+def int_to_char(x): #converts given integer into to a character
+    return chr(x+64)
+
+def char_to_int(x): #converts given character into an integer
+    return int(x) - 64
+
+def board(type):
+    if type == 'p1_set':
+        for row_num in range(1,11): #iterate through rows
+            row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+            for col_num in range(1,11): #iterate through columns
+                Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+    
+    if type == 'p1_attack':
+        for row_num in range(1,11): #iterate through rows
+            row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+            for col_num in range(1,11): #iterate through columns
+                Button(frame9, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+
+    if type == 'p2_set':
+        for row_num in range(1,11): #iterate through rows
+            row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+            for col_num in range(1,11): #iterate through columns
+                Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+
+    if type == 'p2_attack':
+        for row_num in range(1,11): #iterate through rows
+            row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
+            for col_num in range(1,11): #iterate through columns
+                Button(frame7, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
 
 
 myButton1 = Button(frame2, text="1 ship ", padx=25, pady=25, command=lambda:[shipcount(1), placeships(1)], fg="black").grid(row=1, column=0)
@@ -102,49 +132,26 @@ def getName():
 frame3_button = Button(frame3, text="Enter", command = lambda:[getName(), show_frame(frame4)]).grid()
 
 #Frame 4 code
-
-def int_to_char(x): #converts given integer into to a character
-    return chr(x+64)
-
-def char_to_int(x): #converts given character into an integer
-    return int(x) - 64
-
-def getboard1():
-    for row_num in range(1,11): #iterate through rows
-        row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
-        for col_num in range(1,11): #iterate through columns
-            Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-            Button(frame9, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-
-myLabel = Label(frame4, text="Player 1").grid(row=2, column=22)
-    
+myLabel = Label(frame4, text="Player 1").grid(row=2, column=22)  
 frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame5)).grid(row = 9, column = 22)
+board('p1_set')
 
-getboard1()
 
 #frame 5 code
-def getboard2():
-    for row_num in range(1,11): #iterate through rows
-        row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
-        for col_num in range(1,11): #iterate through columns
-            Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-            Button(frame7, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
-
-myLabel = Label(frame5, text="Player 2").grid(row=2, column=22)
-            
+myLabel = Label(frame5, text="Player 2").grid(row=2, column=22)            
 frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=lambda:show_frame(frame6)).grid(row = 9, column = 22)
+board('p2_set')
 
-getboard2()
 
 def checkWin(nextFrame):
-    win = False #for now
-    if win:
+    win = 'false' #for now
+    if win == 'true':
         show_frame(frame10) #show win frame
     else:
         show_frame(nextFrame)
 
 #frame 6 code = popup player 1
-frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='black', command=lambda:[show_frame(frame7), getboard2()]).grid()
+frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='black', command=lambda:[show_frame(frame7), board('p2_attack')]).grid()
 
 
 #frame 7 = player 1 turn
@@ -152,7 +159,7 @@ frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black
 
 
 #frame 8 = popup player 2   
-frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=lambda:[show_frame(frame9), getboard1()]).grid()
+frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=lambda:[show_frame(frame9), board('p1_attack')]).grid()
 
 #frame 9 = player 2 turn
     #frame 6 = player 1 turn
