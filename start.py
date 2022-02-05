@@ -6,14 +6,9 @@ def show_frame(frame):
 
 
 root = Tk()
-#root.geometry('1200x800')
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
-
-### Global Variables
-num_ships = Label(master=root, textvariable="0")
-###
 
 frame1 = Frame(root)
 frame2 = Frame(root)
@@ -87,7 +82,7 @@ def board(type):
         for row_num in range(1,11): #iterate through rows
             row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
             for col_num in range(1,11): #iterate through columns
-                Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+               button = Button(frame4, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew') 
     
     if type == 'p1_attack':
         for row_num in range(1,11): #iterate through rows
@@ -155,15 +150,17 @@ frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='bla
 
 
 #frame 7 = player 1 turn
-frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame8)).grid(row=1, column=11)
+mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=11)
+frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame8)).grid(row=2, column=11)
 
 
 #frame 8 = popup player 2   
 frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=lambda:[show_frame(frame9), board('p1_attack')]).grid()
 
 #frame 9 = player 2 turn
-    #frame 6 = player 1 turn
-frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame6)).grid(row=1, column=11)
+#frame 6 = player 1 turn
+mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=11)   
+frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=lambda:checkWin(frame6)).grid(row=2, column=11)
 
 #Frame 10 = endscreen
 frame10_button = Button(frame10, text="Yay Player x Wins!!", padx=20, pady=20, fg='black', command=lambda:exit()).grid()
