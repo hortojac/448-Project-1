@@ -3,8 +3,6 @@ from tkinter import *
 def show_frame(frame):
     frame.tkraise()
 
-
-
 root = Tk()
 #root.geometry('1200x800')
 
@@ -12,7 +10,7 @@ root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
 
 ### Global Variables
-num_ships = Label(master=root, textvariable="0")
+#num_ships = Entry(value=)
 ###
 
 frame1 = Frame(root)
@@ -77,7 +75,6 @@ def placeships(x):
                         ship5 = Button(frame5, text="EEEEE", padx=50, pady=10, fg='purple').grid(row = 7, column = 20)
 
 
-
 myButton1 = Button(frame2, text="1 ship ", padx=25, pady=25, command=lambda:[shipcount(1), placeships(1)], fg="black").grid(row=1, column=0)
 myButton2 = Button(frame2, text="2 ships", padx=25, pady=25, command=lambda:[shipcount(2), placeships(2)], fg="black").grid(row=2, column=0)
 myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=lambda:[shipcount(3), placeships(3)], fg="black").grid(row=3, column=0)
@@ -109,7 +106,7 @@ def int_to_char(x): #converts given integer into to a character
 def char_to_int(x): #converts given character into an integer
     return int(x) - 64
 
-def getboard1():
+def getboard1(f): #takes a frame
     for row_num in range(1,11): #iterate through rows
         row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
         for col_num in range(1,11): #iterate through columns
