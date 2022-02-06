@@ -9,13 +9,9 @@ def show_frame(frame):
 
 ### Global Variables
 num_ships = 0
-
-player1 = Player() #initialize players
-player2 = Player()
+player1 = Player() #initialize player1
+player2 = Player() #initialize player1
 ###
-positions = product(range(10), range(10))
-button_ids = []
-
 
 root = Tk()
 
@@ -165,7 +161,6 @@ board('p1_set', 20)
    #label created inside set_player_names function
 frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 9, column = 22)
 board('p2_set', 20)
-
 
 def checkWin(nextFrame):
     win = False #for now
