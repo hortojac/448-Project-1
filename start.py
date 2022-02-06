@@ -1,9 +1,12 @@
+from select import select
 from tkinter import *
 from functools import partial
 from player import Player
 from itertools import product
 
-button_ids = []
+button_ids_p1 = []
+button_ids_p2 = []
+
 positions = product(range(10), range(10))
 
 def show_frame(frame):
@@ -11,6 +14,8 @@ def show_frame(frame):
 
 ### Global Variables
 num_ships = 0
+text_variable = 'A'
+selected_ships=0
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -89,13 +94,31 @@ def changeBoard(): #helper function for board
 
 def revert(i):
     # get the button's identity, destroy it
-    bname = (button_ids[i])
+    global selected_ships
+    print(selected_ships)
+    bname = (button_ids_p1[i])
     bname.configure(text="", command=partial(change, i))
+    selected_ships = selected_ships - 1
 
 def change(i):
-    # get the button's identity, destroy it
-    bname = (button_ids[i])
-    bname.configure(text='selected', command=partial(revert, i))
+    global text_variable
+    global selected_ships
+    print(selected_ships)
+    if(selected_ships==0):
+        text_variable = 'A'
+    elif(selected_ships>0 and selected_ships<=2):
+        text_variable = 'B'
+    elif(selected_ships>2 and selected_ships<=5):
+        text_variable = 'C'
+    elif(selected_ships>5 and selected_ships<=9):
+        text_variable = 'D'
+    else:
+        text_variable = 'E'
+    
+    bname = (button_ids_p1[i])
+    bname.configure(text=text_variable, command=partial(revert, i))
+    selected_ships = selected_ships + 1
+    
 
 def board(type):
     if type == 'p1_set': 
@@ -107,7 +130,7 @@ def board(type):
         for i, item in enumerate(positions):
             button = Button(frame4, command=partial(change, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
-            button_ids.append(button)
+            button_ids_p1.append(button)
 
     if type == 'p1_attack':
         for row_num in range(1,11): #iterate through rows
