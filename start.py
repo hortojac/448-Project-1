@@ -95,7 +95,6 @@ def changeBoard(): #helper function for board
 def revert(i):
     # get the button's identity, destroy it
     global selected_ships
-    print(selected_ships)
     bname = (button_ids_p1[i])
     bname.configure(text="", command=partial(change, i))
     selected_ships = selected_ships - 1
@@ -103,21 +102,33 @@ def revert(i):
 def change(i):
     global text_variable
     global selected_ships
-    print(selected_ships)
-    if(selected_ships==0):
-        text_variable = 'A'
-    elif(selected_ships>0 and selected_ships<=2):
-        text_variable = 'B'
-    elif(selected_ships>2 and selected_ships<=5):
-        text_variable = 'C'
-    elif(selected_ships>5 and selected_ships<=9):
-        text_variable = 'D'
+    global num_ships
+    if(num_ships==1):
+        enter_amount = 1
+    elif(num_ships==2):
+        enter_amount = 3
+    elif(num_ships==3):
+        enter_amount = 6
+    elif(num_ships==4):
+        enter_amount = 10
     else:
-        text_variable = 'E'
+        enter_amount = 15
+
+    if(selected_ships < enter_amount):
+        if(selected_ships==0):
+            text_variable = 'A'
+        elif(selected_ships>0 and selected_ships<=2):
+            text_variable = 'B'
+        elif(selected_ships>2 and selected_ships<=5):
+            text_variable = 'C'
+        elif(selected_ships>5 and selected_ships<=9):
+            text_variable = 'D'
+        else:
+            text_variable = 'E'
     
-    bname = (button_ids_p1[i])
-    bname.configure(text=text_variable, command=partial(revert, i))
-    selected_ships = selected_ships + 1
+        bname = (button_ids_p1[i])
+        bname.configure(text=text_variable, command=partial(revert, i))
+        selected_ships = selected_ships + 1
     
 
 def board(type):
