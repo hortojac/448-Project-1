@@ -16,6 +16,7 @@ def show_frame(frame):
 num_ships = 0
 text_variable = 'A'
 selected_ships=0
+enter_amount=0
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -92,17 +93,18 @@ def char_to_int(x): #converts given character into an integer
 def changeBoard(): #helper function for board 
     return
 
-def revert(i):
+#def revert(i):
     # get the button's identity, destroy it
-    global selected_ships
-    bname = (button_ids_p1[i])
-    bname.configure(text="", command=partial(change, i))
-    selected_ships = selected_ships - 1
+    #global selected_ships
+    #bname = (button_ids_p1[i])
+    #bname.configure(text="", command=partial(change, i))
+    #selected_ships = selected_ships - 1
 
 def change(i):
     global text_variable
     global selected_ships
     global num_ships
+    global enter_amount
     if(num_ships==1):
         enter_amount = 1
     elif(num_ships==2):
@@ -125,10 +127,12 @@ def change(i):
             text_variable = 'D'
         else:
             text_variable = 'E'
-    
+         
         bname = (button_ids_p1[i])
-        bname.configure(text=text_variable, command=partial(revert, i))
+        bname.configure(text=text_variable)#, command=partial(revert, i))
         selected_ships = selected_ships + 1
+        if(selected_ships==enter_amount):
+            frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
     
 
 def board(type):
@@ -199,7 +203,6 @@ frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).
 
 #Frame 4 code   
     #label created inside set_player_names function
-frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
 board('p1_set')
 
 #frame 5 code
