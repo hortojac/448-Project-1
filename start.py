@@ -17,6 +17,8 @@ num_ships = 0
 text_variable = 'A'
 selected_ships=0
 enter_amount=0
+placing_ships=0
+current_index=0
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -100,11 +102,17 @@ def changeBoard(): #helper function for board
     #bname.configure(text="", command=partial(change, i))
     #selected_ships = selected_ships - 1
 
-def change(i):
-    global text_variable
-    global selected_ships
+def ValidMove(i):
+    global current_index
+    if(i==current_index+1 or i==current_index-1 or i==current_index+10 or i==current_index-10):
+        return(True)
+
+
+def PlaceShip(i):
     global num_ships
     global enter_amount
+    global placing_ships
+    global current_index
     if(num_ships==1):
         enter_amount = 1
     elif(num_ships==2):
@@ -116,17 +124,43 @@ def change(i):
     else:
         enter_amount = 15
 
+    if(placing_ships==0):
+        change(i)
+    elif(placing_ships==1):
+        change(i)
+        current_index = i
+    elif(placing_ships==2):
+        if(ValidMove(i)):
+            change(i)
+            current_index = i
+    elif(placing_ships<=5):
+        change(i)
+    elif(placing_ships<=9):
+        change(i)
+    elif(placing_ships<=14):
+        change(i)
+
+def change(i):
+    global text_variable
+    global selected_ships
+    global enter_amount
+    global placing_ships
     if(selected_ships < enter_amount):
         if(selected_ships==0):
             text_variable = 'A'
+            placing_ships = placing_ships + 1
         elif(selected_ships>0 and selected_ships<=2):
             text_variable = 'B'
+            placing_ships = placing_ships + 1
         elif(selected_ships>2 and selected_ships<=5):
             text_variable = 'C'
+            placing_ships = placing_ships + 1
         elif(selected_ships>5 and selected_ships<=9):
             text_variable = 'D'
+            placing_ships = placing_ships + 1
         else:
             text_variable = 'E'
+            placing_ships = placing_ships + 1
          
         bname = (button_ids_p1[i])
         bname.configure(text=text_variable)#, command=partial(revert, i))
@@ -143,7 +177,7 @@ def board(type):
             setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
 
         for i, item in enumerate(positions):
-            button = Button(frame4, command=partial(change, i))
+            button = Button(frame4, command=partial(PlaceShip, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p1.append(button)
 
