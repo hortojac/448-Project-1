@@ -104,10 +104,14 @@ def changeBoard(): #helper function for board
 
 def ValidMove(i):
     global current_index
-    print(button_ids_p1[i])
-    if(i==current_index+1 or i==current_index-1 or i==current_index+10 or i==current_index-10):
+    if(i==current_index+1) and (i%10!=0):
         return(True)
-
+    if(i==current_index-1) and (i%10!=1):
+        return(True)
+    if(i==current_index+10):
+        return(True)
+    if(i==current_index-10):
+        return(True)
 
 
 def PlaceShip(i):
@@ -166,7 +170,7 @@ def change(i):
             placing_ships = placing_ships + 1
          
         bname = (button_ids_p1[i])
-        bname.configure(text=text_variable)#, command=partial(revert, i))
+        bname.configure(text=text_variable)
         selected_ships = selected_ships + 1
         if(selected_ships==enter_amount):
             frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
