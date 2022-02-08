@@ -12,8 +12,8 @@ button_ids_p2_enemy= []
 
 positions_p1 = product(range(10), range(10))
 positions_p2 = product(range(10), range(10))
-positions_enemy1 = product(range(10), range(10))
-positions_enemy2 = product(range(10), range(10))
+positions_p1_enemy = product(range(10), range(10))
+positions_p2_enemy = product(range(10), range(10))
 
 def show_frame(frame):
     frame.tkraise()
@@ -183,51 +183,94 @@ def change(i):
         if(selected_ships==enter_amount):
             frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
     
-# @drawBoard:Helper Function for Board
+# @drawBoard:Helper Function for drawing the boards for the player turn screens
     #frame = frame to draw board on 
-    #board = board to draw (pass the array itself ex: player1.my_board)
+    #type = "p1" or "p2" - specifies which enemy board to work with
     #size = size of button i.e. value of padx and pady
     #offset_r = number of rows to offset by
     #offset_c = number of columns to offset by
-def drawBoard(frame, type, board, size, offset_r, offset_c):
-    for i in range(10):
-            # shape the grid
-        setsize = Canvas(frame, width=size, height=0).grid(row=11, column=i+offset_c)
-        setsize = Canvas(frame, width=0, height=size).grid(row=i+offset_r, column=11)
-    if(type == "p1"):
+def drawBoards(type, size, offset_r, offset_c):
+    print("test DRAWBOARDS")
+    
+    if type == "p1":
+        print("HERE P1")
         global positions_p1
+        global positions_p1_enemy
+        #draw enemy board
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame7, width=size, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame7, width=0, height=size).grid(row=i, column=11)
+        for i, item in enumerate(positions_p1_enemy):
+            button = button_ids_p1_enemy[i]
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+
+        #draw player board  
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame7, width=size, height=0).grid(row=11+offset_r, column=i+offset_c)
+            setsize = Canvas(frame7, width=0, height=size).grid(row=i+offset_r, column=11+offset_c)
         for i, item in enumerate(positions_p1):
             button = button_ids_p1[i]
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
-    else:
+    else: #type = "p2"
+        print("HERE P2")
         global positions_p2
-        for i, item in enumerate(positions_p2):
-            button = button_ids_p2[i]
+        global positions_p2_enemy
+        #draw enemy board
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame9, width=size, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
+        for i, item in enumerate(positions_p2_enemy):
+            button = button_ids_p1_enemy[i]
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+
+        #draw player board  
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame9, width=size, height=0).grid(row=11, column=i+offset_c)
+            setsize = Canvas(frame9, width=0, height=size).grid(row=i+offset_r, column=11)
+        for i, item in enumerate(positions_p2):
+            button = button_ids_p1[i]
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+
 
 
 def board(type, size): #size = width and length of the canvas
     global P1_ENEMY_CREATED
     global P2_ENEMY_CREATED
-    global positions_p1
-    global positions_p2
     if type == 'p1_set':
         #initialize player 1's board
         for i in range(10):
             # shape the grid
-            setsize = Canvas(frame4, width=30, height=0).grid(row=11, column=i)
-            setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
+            setsize = Canvas(frame4, width=size, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame4, width=0, height=size).grid(row=i, column=11)
 
+        global positions_p1
         for i, item in enumerate(positions_p1):
             button = Button(frame4, command=partial(PlaceShip, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p1.append(button)
-
-        #draw it    
+ 
     
     if type == 'p1_attack':
-        drawBoard(frame7, type, player1.my_board, "p1", offset_r=0, offset_c=0)
-        drawBoard(frame7, type, player1.enemy_board, "p2", offset_r=0, offset_c=12)
+        if not P1_ENEMY_CREATED:
+            #create
+            for i in range(10):
+                # shape the grid
+                setsize = Canvas(frame7, width=30, height=0).grid(row=11, column=i)
+                setsize = Canvas(frame7, width=0, height=30).grid(row=i, column=11)
+            global positions_p1_enemy
+            for i, item in enumerate(positions_p1_enemy):
+                button = Button(frame7, command=partial(PlaceShip, i))
+                button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+                button_ids_p1_enemy.append(button)
+
+            P1_ENEMY_CREATED = True    
+
+        #draw the frame7 screen
+        drawBoards("p1", size, offset_r=0, offset_c=14) #offset between boards
         show_frame(frame7)
 
     if type == 'p2_set':
@@ -235,15 +278,29 @@ def board(type, size): #size = width and length of the canvas
             # shape the grid
             setsize = Canvas(frame5, width=30, height=0).grid(row=11, column=i)
             setsize = Canvas(frame5, width=0, height=30).grid(row=i, column=11)
-
+        global positions_p2
         for i, item in enumerate(positions_p2):
             button = Button(frame5, command=partial(PlaceShip, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p2.append(button)
 
     if type == 'p2_attack': #Draw p2's board
-        drawBoard(frame9, type, player2.my_board, "p2", offset_r=0, offset_c=0)
-        drawBoard(frame9, type, player2.enemy_board, "p1", offset_r=0, offset_c=12)
+        if not P2_ENEMY_CREATED:
+            global positions_
+            #create
+            for i in range(10):
+                # shape the grid
+                setsize = Canvas(frame9, width=30, height=0).grid(row=11, column=i)
+                setsize = Canvas(frame9, width=0, height=30).grid(row=i, column=11)
+
+            for i, item in enumerate(positions_p2_enemy):
+                button = Button(frame9, command=partial(PlaceShip, i))
+                button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+                button_ids_p2_enemy.append(button)
+            P2_ENEMY_CREATED = True  
+       
+        #draw the frame9 screen
+        drawBoards("p2", size, offset_r=0, offset_c=14) #offset between boards
         show_frame(frame9)
 
 
@@ -284,7 +341,7 @@ frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).
 
 #Frame 4 code   
     #label created inside set_player_names function
-frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 9, column = 22)
+#frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 9, column = 22)
 
 board('p1_set', 30)
 
@@ -305,16 +362,16 @@ frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='bla
 
 
 #frame 7 = player 1 turn
-mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=11)
-frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=12, column=11)
+mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=12)
+frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=12, column=12)
 
 
 #frame 8 = popup player 2   
 frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=partial(board, "p2_attack", 10)).place(anchor=CENTER, relx=0.5, rely=0.3,)
 
 #frame 9 = player 2 turn
-mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=11)   
-frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=11)
+mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=12)   
+frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
 
 #Frame 10 = endscreen
 frame10_button = Button(frame10, text="Yay Player x Wins!!", padx=20, pady=20, fg='black').grid()
