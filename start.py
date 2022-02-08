@@ -211,9 +211,9 @@ def ValidMove_D(i):
         if(i==current_index-1) and (i%10!=1):
             return(True)
     elif(vertical_down==True):
-        if(i==current_index-10) and (i%10!=0):
+        if(i==current_index+10) and (i%10!=0):
             return(True)
-        if(i==current_index+30) and (i%10!=1):
+        if(i==current_index-30) and (i%10!=1):
             return(True)
     elif(vertical_up==True):
         if(i==current_index-10) and (i%10!=0):
