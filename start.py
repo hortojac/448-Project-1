@@ -1,3 +1,4 @@
+from calendar import c
 from select import select
 from tkinter import *
 from functools import partial
@@ -20,6 +21,11 @@ selected_ships=0
 enter_amount=0
 placing_ships=0
 current_index=0
+vertical_up = False
+vertical_down = False
+horizontal_right = False
+horizontal_left = False
+
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -96,24 +102,61 @@ def char_to_int(x): #converts given character into an integer
 def changeBoard(): #helper function for board 
     return
 
-#def revert(i):
-    # get the button's identity, destroy it
-    #global selected_ships
-    #bname = (button_ids_p1[i])
-    #bname.configure(text="", command=partial(change, i))
-    #selected_ships = selected_ships - 1
-
-def ValidMove(i):
+def ValidMove_2(i):
     global current_index
+    global vertical_up 
+    global vertical_down
+    global horizontal_right
+    global horizontal_left
     if(i==current_index+1) and (i%10!=0):
+        horizontal_right = True
         return(True)
-    if(i==current_index-1) and (i%10!=1):
+    if(i==current_index-1) and (i%10!=9):
+        horizontal_left = True
         return(True)
     if(i==current_index+10):
+        vertical_up = True
         return(True)
     if(i==current_index-10):
+        vertical_down = True
         return(True)
 
+def ValidMove_3(i):
+    global current_index
+    global vertical_up 
+    global vertical_down
+    global horizontal_right
+    global horizontal_left
+    if(horizontal_left):
+        if(i==current_index+1) and (i%10!=0):
+            return(True)
+        if(i==current_index-2) and (i%10!=9):
+            return(True)
+    elif(horizontal_right):
+        if(i==current_index-1) and (i%10!=9):
+            return(True)
+        if(i==current_index+2) and (i%10!=0):
+            return(True)
+    elif(vertical_down):
+        if(i==current_index+10):
+            return(True)
+        if(i==current_index-20):
+            return(True)
+    elif(vertical_up):
+        if(i==current_index-10):
+            return(True)
+        if(i==current_index+20):
+            return(True)
+
+def reset_direction():
+    global vertical_up 
+    global vertical_down
+    global horizontal_right
+    global horizontal_left
+    vertical_up = False
+    vertical_down = False
+    horizontal_right = False
+    horizontal_left = False
 
 def PlaceShip(i, button_ids):
     global num_ships
@@ -133,17 +176,24 @@ def PlaceShip(i, button_ids):
     else:
         enter_amount = 15
 
-    if(placing_ships==0):
-        change(i, button_ids)
-    elif(placing_ships==1):
-        change(i, button_ids)
-        current_index = i
-    elif(placing_ships==2):
-        if(ValidMove(i)):
+    if(placing_ships==0): #placing ship A
+        change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
+    elif(placing_ships==1):#placing first B
+        change(i, button_ids)#the button will be changed to B. (The first B can be placed anywhere on the board)
+        current_index = i #the index of the original B placement is stored
+    elif(placing_ships==2):#placing second/final B
+        if(ValidMove_2(i)): #if the second B is above/below the original B or to the right/left of original B then this is a valid move
+            change(i, button_ids)#the button will be changed to B
+    elif(placing_ships==3):#placing first C
+        change(i, button_ids)#the button will be changed to C. (The first C can be placed anywhere on the board)
+        current_index = i #the index of the original C placement is stored
+        reset_direction()
+    elif(placing_ships==4):#placing second C
+        if(ValidMove_2(i)): #if the second C is above/below the original C or to the right/left of original C then this is a valid move
+            change(i, button_ids)#the button will be changed to C
+    elif(placing_ships==5):#placing third/final C
+        if(ValidMove_3(i)):
             change(i, button_ids)
-            current_index = i
-    elif(placing_ships<=5):
-        change(i, button_ids)
     elif(placing_ships<=9):
         change(i. button_ids)
     elif(placing_ships<=14):
@@ -187,11 +237,19 @@ def reset(button_ids):
     global enter_amount
     global placing_ships
     global current_index
+    global vertical_up 
+    global vertical_down
+    global horizontal_right
+    global horizontal_left
     text_variable = 'A'
     selected_ships = 0
     enter_amount = 0
     placing_ships = 0
     current_index = 0
+    vertical_up = False
+    vertical_down = False
+    horizontal_right = False
+    horizontal_left = False
     if(button_ids == button_ids_p1):
         frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
     else:
