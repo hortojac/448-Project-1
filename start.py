@@ -2,6 +2,7 @@ from calendar import c
 from select import select
 from tkinter import *
 from functools import partial
+from xml.etree.ElementTree import TreeBuilder
 from player import Player
 from itertools import product
 
@@ -25,6 +26,14 @@ vertical_up = False
 vertical_down = False
 horizontal_right = False
 horizontal_left = False
+left_left = False
+left_right = False
+right_right = False
+right_left = False
+up_up = False
+up_down = False
+down_down = False
+down_up = False
 
 
 player1 = Player() #initialize players
@@ -127,36 +136,109 @@ def ValidMove_3(i):
     global vertical_down
     global horizontal_right
     global horizontal_left
+    global left_left
+    global left_right
+    global right_right
+    global right_left
+    global up_up
+    global up_down
+    global down_down
+    global down_up
     if(horizontal_left):
         if(i==current_index+1) and (i%10!=0):
+            left_right = True
             return(True)
         if(i==current_index-2) and (i%10!=9):
+            left_left = True
             return(True)
     elif(horizontal_right):
         if(i==current_index-1) and (i%10!=9):
+            right_left = True
             return(True)
         if(i==current_index+2) and (i%10!=0):
+            left_right = True
             return(True)
     elif(vertical_down):
         if(i==current_index+10):
+            down_up = True
             return(True)
         if(i==current_index-20):
+            down_down = True
             return(True)
     elif(vertical_up):
         if(i==current_index-10):
+            up_down = True
             return(True)
         if(i==current_index+20):
+            up_up = True
             return(True)
+
+def ValidMove_4(i):
+    global left_left
+    global left_right
+    global right_right
+    global right_left
+    global up_up
+    global up_down
+    global down_down
+    global down_up
+    if(left_left):
+        if(i==current_index+1) and (i%10!=0):
+            return(True)
+        if(i==current_index-3) and (i%10!=9):
+            return(True)
+    elif(left_right or right_left):
+        if(i==current_index+2) and (i%10!=0):
+            return(True)
+        if(i==current_index-2) and (i%10!=9):
+            return(True)
+    elif(right_right):
+        if(i==current_index-1) and (i%10!=9):
+            return(True)
+        if(i==current_index+3) and (i%10!=0):
+            return(True)
+    elif(up_up):
+        if(i==current_index-10):
+            return(True)
+        if(i==current_index+30):
+            return(True)
+    elif(up_down or down_up):
+        if(i==current_index+20):
+            return(True)
+        if(i==current_index-20):
+            return(True)
+    elif(down_down):
+        if(i==current_index+10):
+            return(True)
+        if(i==current_index-30):
+            return(TreeBuilder)
+
 
 def reset_direction():#direction of vertical or horizontal is reset once each ship is finalized
     global vertical_up 
     global vertical_down
     global horizontal_right
     global horizontal_left
+    global left_left
+    global left_right
+    global right_right
+    global right_left
+    global up_up
+    global up_down
+    global down_down
+    global down_up
     vertical_up = False
     vertical_down = False
     horizontal_right = False
     horizontal_left = False
+    left_left = False
+    left_right = False
+    right_right = False
+    right_left = False
+    up_up = False
+    up_down = False
+    down_down = False
+    down_up = False
 
 def PlaceShip(i, button_ids): #sends the index to be changed to change function after checking if the placement is valid
     global num_ships
@@ -187,15 +269,26 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     elif(placing_ships==3):#placing first C
         change(i, button_ids)#the button will be changed to C. (The first C can be placed anywhere on the board)
         current_index = i #the index of the original C placement is stored
-        reset_direction()
+        reset_direction() #forget whatever orientation B was in and reset it for ship C
     elif(placing_ships==4):#placing second C
         if(ValidMove_2(i)): #if the second C is above/below the original C or to the right/left of original C then this is a valid move
             change(i, button_ids)#the button will be changed to C
     elif(placing_ships==5):#placing third/final C
-        if(ValidMove_3(i)):
+        if(ValidMove_3(i)):#if the third C is either to above/below the other 2 C's or to the right/left of the other 2 C's then this is a valid move
+            change(i, button_ids)#the button will be changed to C.
+    elif(placing_ships==6):
+        change(i, button_ids)#the button will be changed to D. (The first D can be placed anywhere on the board)
+        current_index = i #the index of the original D placement is stored
+        reset_direction() #forget whatever orientation C was in and reset it for ship D
+    elif(placing_ships==7):
+        if(ValidMove_2(i)): #if the second D is above/below the original C or to the right/left of original D then this is a valid move
+            change(i, button_ids)#the button will be changed to D
+    elif(placing_ships==8):
+        if(ValidMove_3(i)):#if the third D is either to above/below the other 2 D's or to the right/left of the other 2 D's then this is a valid move
+            change(i, button_ids)#the button will be changed to D.
+    elif(placing_ships==9):
+        if(ValidMove_4(i)):
             change(i, button_ids)
-    elif(placing_ships<=9):
-        change(i. button_ids)
     elif(placing_ships<=14):
         change(i, button_ids)
 
