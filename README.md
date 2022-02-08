@@ -8,7 +8,9 @@ The interactive GUI allows for button pressing and clicking on <abbr title="any 
 
 Here is a demo: 
 
-[Video embed]
+<figure class="video_container">
+    <iframe src="https://www.youtube.com/embed/eAZES9qJyAM" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
 # The Code
 
