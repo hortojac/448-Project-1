@@ -1,8 +1,19 @@
+from select import select
 from tkinter import *
 from functools import partial
 from itertools import product
-
 from player import Player
+from itertools import product
+
+button_ids_p1 = []
+button_ids_p2 = []
+button_ids_p1_enemy = []
+button_ids_p2_enemy= []
+
+positions_p1 = product(range(10), range(10))
+positions_p2 = product(range(10), range(10))
+positions_enemy1 = product(range(10), range(10))
+positions_enemy2 = product(range(10), range(10))
 
 def show_frame(frame):
     frame.tkraise()
@@ -10,8 +21,17 @@ def show_frame(frame):
 ### Global Variables
 num_ships = 0
 player1 = Player() #initialize player1
-player2 = Player() #initialize player1
+player2 = Player() #initialize player2
+
+P1_ENEMY_CREATED = False
+P2_ENEMY_CREATED = False
 ###
+
+text_variable = 'A'
+selected_ships=0
+enter_amount=0
+placing_ships=0
+current_index=0
 
 root = Tk()
 
@@ -52,11 +72,12 @@ def shipcount(x):
     mylabel = Label(frame5, text="Place your ships (" + num + ")").grid(row=1, column=22) #label for p2 on frame5
     placeships()
 
+
 def placeships():
     global num_ships
     x = num_ships
     print("num_ships: " + str(x))
-    if x >= 1:
+    if x >= 1: 
         ship1 = Button(frame4, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
         ship1 = Button(frame5, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
         if x >= 2:
@@ -79,40 +100,150 @@ def char_to_int(x): #converts given character into an integer
     return int(x) - 64
 
 
+
+
+
+#def revert(i):
+    # get the button's identity, destroy it
+    #global selected_ships
+    #bname = (button_ids_p1[i])
+    #bname.configure(text="", command=partial(change, i))
+    #selected_ships = selected_ships - 1
+
+def ValidMove(i):
+    global current_index
+    if(i==current_index+1) and (i%10!=0):
+        return(True)
+    if(i==current_index-1) and (i%10!=1):
+        return(True)
+    if(i==current_index+10):
+        return(True)
+    if(i==current_index-10):
+        return(True)
+
+
+def PlaceShip(i):
+    global num_ships
+    global enter_amount
+    global placing_ships
+    global current_index
+    if(num_ships==1):
+        enter_amount = 1
+    elif(num_ships==2):
+        enter_amount = 3
+    elif(num_ships==3):
+        enter_amount = 6
+    elif(num_ships==4):
+        enter_amount = 10
+    else:
+        enter_amount = 15
+
+    if(placing_ships==0):
+        change(i)
+    elif(placing_ships==1):
+        change(i)
+        current_index = i
+    elif(placing_ships==2):
+        if(ValidMove(i)):
+            change(i)
+            current_index = i
+    elif(placing_ships<=5):
+        change(i)
+    elif(placing_ships<=9):
+        change(i)
+    elif(placing_ships<=14):
+        change(i)
+
+def change(i):
+    global button_ids_p1
+    global text_variable
+    global selected_ships
+    global enter_amount
+    global placing_ships
+    if (selected_ships < enter_amount) and (button_ids_p1[i].cget('text') == ""):
+        if(selected_ships==0):
+            text_variable = 'A'
+            placing_ships = placing_ships + 1
+        elif(selected_ships>0 and selected_ships<=2):
+            text_variable = 'B'
+            placing_ships = placing_ships + 1
+        elif(selected_ships>2 and selected_ships<=5):
+            text_variable = 'C'
+            placing_ships = placing_ships + 1
+        elif(selected_ships>5 and selected_ships<=9):
+            text_variable = 'D'
+            placing_ships = placing_ships + 1
+        else:
+            text_variable = 'E'
+            placing_ships = placing_ships + 1
+
+        bname = (button_ids_p1[i])
+        bname.configure(text=text_variable)
+        selected_ships = selected_ships + 1
+        if(selected_ships==enter_amount):
+            frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
+    
 # @drawBoard:Helper Function for Board
     #frame = frame to draw board on 
     #board = board to draw (pass the array itself ex: player1.my_board)
     #size = size of button i.e. value of padx and pady
     #offset_r = number of rows to offset by
     #offset_c = number of columns to offset by
-def drawBoard(frame, board, size, offset_r, offset_c):
-    #Doesn't work right now. For now it will just creates a new board. 
-    for row_num in range(1,11): #iterate through rows
-        row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
-        for col_num in range(1,11): #iterate through columns
-            button = Button(frame, text=(row_letter,col_num), padx=size, pady=size, fg='black').grid(row=row_num+offset_r, column=col_num+offset_c, sticky='nsew') 
+def drawBoard(frame, type, board, size, offset_r, offset_c):
+    for i in range(10):
+            # shape the grid
+        setsize = Canvas(frame, width=size, height=0).grid(row=11, column=i+offset_c)
+        setsize = Canvas(frame, width=0, height=size).grid(row=i+offset_r, column=11)
+    if(type == "p1"):
+        global positions_p1
+        for i, item in enumerate(positions_p1):
+            button = button_ids_p1[i]
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+    else:
+        global positions_p2
+        for i, item in enumerate(positions_p2):
+            button = button_ids_p2[i]
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
 
-def board(type, size):
+
+def board(type, size): #size = width and length of the canvas
+    global P1_ENEMY_CREATED
+    global P2_ENEMY_CREATED
+    global positions_p1
+    global positions_p2
     if type == 'p1_set':
         #initialize player 1's board
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame4, width=30, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
 
-        #draw it
-        drawBoard(frame4, player1.my_board, size, offset_r=0, offset_c=0)
-        
+        for i, item in enumerate(positions_p1):
+            button = Button(frame4, command=partial(PlaceShip, i))
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+            button_ids_p1.append(button)
+
+        #draw it    
+    
     if type == 'p1_attack':
-        drawBoard(frame7, player1.my_board, size, offset_r=0, offset_c=0)
-        drawBoard(frame7, player1.enemy_board, size, offset_r=0, offset_c=12)
+        drawBoard(frame7, type, player1.my_board, "p1", offset_r=0, offset_c=0)
+        drawBoard(frame7, type, player1.enemy_board, "p2", offset_r=0, offset_c=12)
         show_frame(frame7)
 
     if type == 'p2_set':
-        #initialize player 2's board
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame5, width=30, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame5, width=0, height=30).grid(row=i, column=11)
 
-        #draw it
-        drawBoard(frame5, player2.my_board, size, offset_r=0, offset_c=0)
+        for i, item in enumerate(positions_p2):
+            button = Button(frame5, command=partial(PlaceShip, i))
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+            button_ids_p2.append(button)
 
     if type == 'p2_attack': #Draw p2's board
-        drawBoard(frame9, player2.my_board, size, offset_r=0, offset_c=0)
-        drawBoard(frame9, player2.enemy_board, size, offset_r=0, offset_c=12)
+        drawBoard(frame9, type, player2.my_board, "p2", offset_r=0, offset_c=0)
+        drawBoard(frame9, type, player2.enemy_board, "p1", offset_r=0, offset_c=12)
         show_frame(frame9)
 
 
@@ -123,7 +254,6 @@ myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(shi
 myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(shipcount, 5), fg="black").grid(row=5, column=0)
 myButton6 = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=partial(show_frame,frame3)).grid(row=7, column=0)
 
-            
 #Frame 3 code
 e = Entry(frame3,width=50)
 e.grid()
@@ -139,28 +269,29 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     print(b.get())
     player1.name = e.get()
     player2.name = b.get()
-
-    #set up frame 4 label
-    p1_label = "Player 1 (" + player1.name + ")"
-    frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)  
-    
-    #set up frame 5 label
-    p2_label = "Player 2 (" + player2.name + ")"
-    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
-
     show_frame(frame4)
+
+#set up frame 4 label
+p1_label = "Player 1 (" + player1.name + ")"
+frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)  
+
+#set up frame 5 label
+p2_label = "Player 2 (" + player2.name + ")"
+frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
+
 
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).grid()
 
 #Frame 4 code   
     #label created inside set_player_names function
 frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 9, column = 22)
-board('p1_set', 20)
+
+board('p1_set', 30)
 
 #frame 5 code
    #label created inside set_player_names function
 frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 9, column = 22)
-board('p2_set', 20)
+board('p2_set', 30)
 
 def checkWin(nextFrame):
     win = False #for now
