@@ -19,6 +19,10 @@ selected_ships=0
 enter_amount=0
 placing_ships=0
 current_index=0
+vertical_down = False
+vertical_up = False
+horizontal_left = False
+horizontal_right = False
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -102,17 +106,120 @@ def changeBoard(): #helper function for board
     #bname.configure(text="", command=partial(change, i))
     #selected_ships = selected_ships - 1
 
-def ValidMove(i):
+def ValidMove_B(i):
     global current_index
+    global vertical_up 
+    global vertical_down
+    global horizontal_right
+    global horizontal_left
     if(i==current_index+1) and (i%10!=0):
+        vertical_down = False
+        vertical_up = False
+        horizontal_left = False
+        horizontal_right = True
         return(True)
     if(i==current_index-1) and (i%10!=1):
+        vertical_down = False
+        vertical_up = False
+        horizontal_left = True
+        horizontal_right = False
         return(True)
     if(i==current_index+10):
+        vertical_down = False
+        vertical_up = True
+        horizontal_left = False
+        horizontal_right = False
         return(True)
     if(i==current_index-10):
+        vertical_down = True
+        vertical_up = False
+        horizontal_left = False
+        horizontal_right = False
         return(True)
 
+def ValidMove_C(i):
+    global horizontal_left
+    global horizontal_right
+    global vertical_down
+    global vertical_up
+    if(horizontal_left==True):
+        if(i==current_index+1) and (i%10!=0):
+            vertical_down = False
+            vertical_up = False
+            horizontal_left = False
+            horizontal_right = True
+            return(True)
+        if(i==current_index-2) and (i%10!=1):
+            vertical_down = False
+            vertical_up = False
+            horizontal_left = True
+            horizontal_right = False
+            return(True)
+    elif(horizontal_right==True):
+        if(i==current_index+2) and (i%10!=0):
+            vertical_down = False
+            vertical_up = False
+            horizontal_left = False
+            horizontal_right = True
+            return(True)
+        if(i==current_index-1) and (i%10!=1):
+            vertical_down = False
+            vertical_up = False
+            horizontal_left = True
+            horizontal_right = False
+            return(True)
+    elif(vertical_down==True):
+        if(i==current_index+10) and (i%10!=0):
+            vertical_down = False
+            vertical_up = True
+            horizontal_left = False
+            horizontal_right = False
+            return(True)
+        if(i==current_index-20) and (i%10!=1):
+            vertical_down = True
+            vertical_up = False
+            horizontal_left = False
+            horizontal_right = False
+            return(True)
+    elif(vertical_up==True):
+        if(i==current_index+20) and (i%10!=0):
+            vertical_down = False
+            vertical_up = True
+            horizontal_left = False
+            horizontal_right = False
+            return(True)
+        if(i==current_index-10) and (i%10!=1):
+            vertical_down = True
+            vertical_up = False
+            horizontal_left = False
+            horizontal_right = False
+            return(True)
+
+def ValidMove_D(i):
+    global horizontal_left
+    global horizontal_right
+    global vertical_down
+    global vertical_up
+    if(horizontal_left==True):
+        if(i==current_index-1) and (i%10!=0):
+            return(True)
+        if(i==current_index+3) and (i%10!=1):
+            return(True)
+    elif(horizontal_right==True):
+        if(i==current_index+3) and (i%10!=0):
+            return(True)
+        if(i==current_index-1) and (i%10!=1):
+            return(True)
+    elif(vertical_down==True):
+        if(i==current_index-10) and (i%10!=0):
+            return(True)
+        if(i==current_index+30) and (i%10!=1):
+            return(True)
+    elif(vertical_up==True):
+        if(i==current_index-10) and (i%10!=0):
+            return(True)
+        if(i==current_index+30) and (i%10!=1):
+            return(True)
 
 def PlaceShip(i):
     global num_ships
@@ -136,13 +243,29 @@ def PlaceShip(i):
         change(i)
         current_index = i
     elif(placing_ships==2):
-        if(ValidMove(i)):
+        if(ValidMove_B(i)):
             change(i)
-            current_index = i
-    elif(placing_ships<=5):
+    elif(placing_ships==3):
         change(i)
-    elif(placing_ships<=9):
+        current_index = i
+    elif(placing_ships==4):
+        if(ValidMove_B(i)):
+            change(i)
+    elif(placing_ships==5):
+        if(ValidMove_C(i)):
+            change(i)
+    elif(placing_ships==6):
         change(i)
+        current_index = i
+    elif(placing_ships==7):
+        if(ValidMove_B(i)):
+            change(i)
+    elif(placing_ships==8):
+        if(ValidMove_C(i)):
+            change(i)
+    elif(placing_ships==9):
+        if(ValidMove_D(i)):
+            change(i)
     elif(placing_ships<=14):
         change(i)
 
