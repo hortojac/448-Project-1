@@ -148,7 +148,7 @@ def ValidMove_3(i):
         if(i==current_index+20):
             return(True)
 
-def reset_direction():
+def reset_direction():#direction of vertical or horizontal is reset once each ship is finalized
     global vertical_up 
     global vertical_down
     global horizontal_right
@@ -158,7 +158,7 @@ def reset_direction():
     horizontal_right = False
     horizontal_left = False
 
-def PlaceShip(i, button_ids):
+def PlaceShip(i, button_ids): #sends the index to be changed to change function after checking if the placement is valid
     global num_ships
     global enter_amount
     global placing_ships
@@ -166,15 +166,15 @@ def PlaceShip(i, button_ids):
     global button_ids_p2
     global button_ids_p1
     if(num_ships==1):
-        enter_amount = 1
+        enter_amount = 1 #you will only be clicking the board once (A)
     elif(num_ships==2):
-        enter_amount = 3
+        enter_amount = 3 #you will be clicking the board 3 times (ABB)
     elif(num_ships==3):
-        enter_amount = 6
+        enter_amount = 6 #you will be clicking the board 6 times (ABBCCC)
     elif(num_ships==4):
-        enter_amount = 10
+        enter_amount = 10 #you will be clicking the board 10 times (ABBCCCDDDD)
     else:
-        enter_amount = 15
+        enter_amount = 15 #you will be clicking the board 15 times (ABBCCCDDDDEEEEE)
 
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
@@ -199,7 +199,7 @@ def PlaceShip(i, button_ids):
     elif(placing_ships<=14):
         change(i, button_ids)
 
-def change(i, button_ids):
+def change(i, button_ids):#changes the button to a letter (or ship)
     global button_ids_p1
     global button_ids_p2
     global text_variable
@@ -207,13 +207,13 @@ def change(i, button_ids):
     global enter_amount 
     global placing_ships 
     if (selected_ships < enter_amount) and (button_ids[i].cget('text') == ""):
-        if(selected_ships==0):
+        if(selected_ships==0): #if you haven't clicked the board yet, your first click will be placing A
             text_variable = 'A'
             placing_ships = placing_ships + 1
-        elif(selected_ships>0 and selected_ships<=2):
+        elif(selected_ships>0 and selected_ships<=2):#if you have clicked the board once, the next two clicks will place ship B
             text_variable = 'B'
             placing_ships = placing_ships + 1
-        elif(selected_ships>2 and selected_ships<=5):
+        elif(selected_ships>2 and selected_ships<=5):#if you have clicked the board three times, you are now placing ship C
             text_variable = 'C'
             placing_ships = placing_ships + 1
         elif(selected_ships>5 and selected_ships<=9):
@@ -229,7 +229,7 @@ def change(i, button_ids):
         if(selected_ships==enter_amount):
             reset(button_ids)
 
-def reset(button_ids):
+def reset(button_ids):#resets entire board and variables so player 2 sees fresh board when placing their battleships
     global button_ids_p2
     global button_ids_p1
     global text_variable
