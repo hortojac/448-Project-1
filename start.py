@@ -34,6 +34,14 @@ up_up = False
 up_down = False
 down_down = False
 down_up = False
+lll = False
+llr = False
+rrr = False
+rrl = False
+uuu = False
+uud = False
+ddu = False
+ddd = False
 
 
 player1 = Player() #initialize players
@@ -174,6 +182,7 @@ def ValidMove_3(i):
             return(True)
 
 def ValidMove_4(i):
+    global current_index
     global left_left
     global left_right
     global right_right
@@ -182,37 +191,107 @@ def ValidMove_4(i):
     global up_down
     global down_down
     global down_up
+    global llr
+    global lll 
+    global rrl
+    global rrr
+    global uud
+    global uuu
+    global ddu 
+    global ddd
     if(left_left):
         if(i==current_index+1) and (i%10!=0):
+            llr = True
             return(True)
         if(i==current_index-3) and (i%10!=9):
+            lll=True
             return(True)
     elif(left_right or right_left):
         if(i==current_index+2) and (i%10!=0):
+            rrl = True
             return(True)
         if(i==current_index-2) and (i%10!=9):
+            llr = True
             return(True)
     elif(right_right):
         if(i==current_index-1) and (i%10!=9):
+            rrl = True
             return(True)
         if(i==current_index+3) and (i%10!=0):
+            rrr = True
             return(True)
     elif(up_up):
         if(i==current_index-10):
+            uud = True
             return(True)
         if(i==current_index+30):
+            uuu = True
             return(True)
     elif(up_down or down_up):
         if(i==current_index+20):
+            uud = True
             return(True)
         if(i==current_index-20):
+            ddu = True
             return(True)
     elif(down_down):
         if(i==current_index+10):
+            ddu = True
             return(True)
         if(i==current_index-30):
-            return(TreeBuilder)
+            ddd = True
+            return(True)
 
+def ValidMove_5(i):
+    global current_index
+    global llr
+    global lll 
+    global rrl
+    global rrr
+    global uud
+    global uuu
+    global ddu 
+    global ddd
+    if(llr):
+        if(i==current_index-3) and (i%10!=9):
+            return(True)
+        if(i==current_index+2) and (i%10!=0):
+            return(True)
+    elif(lll):
+        if(i==current_index+1) and (i%10!=0):
+            return(True)
+        if(i==current_index-4) and (i%10!=9):
+            return(True)
+    elif(rrl):
+        if(i==current_index-2) and (i%10!=9):
+            return(True)
+        if(i==current_index+3) and (i%10!=0):
+            return(True)
+    elif(rrr):
+        if(i==current_index-1) and (i%10!=9):
+            return(True)
+        if(i==current_index+4) and (i%10!=0):
+            return(True)
+    elif(uud):
+        if(i==current_index+30):
+            return(True)
+        if(i==current_index-20):
+            return(True)
+    elif(uuu):
+        if(i==current_index+40):
+            return(True)
+        if(i==current_index-10):
+            return(True)
+    elif(ddu):
+        if(i==current_index+20):
+            return(True)
+        if(i==current_index-30):
+            return(True)
+    elif(ddd):
+        if(i==current_index+10):
+            return(True)
+        if(i==current_index-40):
+            return(True)
 
 def reset_direction():#direction of vertical or horizontal is reset once each ship is finalized
     global vertical_up 
@@ -260,37 +339,22 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
 
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
-    elif(placing_ships==1):#placing first B
-        change(i, button_ids)#the button will be changed to B. (The first B can be placed anywhere on the board)
-        current_index = i #the index of the original B placement is stored
-    elif(placing_ships==2):#placing second/final B
-        if(ValidMove_2(i)): #if the second B is above/below the original B or to the right/left of original B then this is a valid move
-            change(i, button_ids)#the button will be changed to B
-    elif(placing_ships==3):#placing first C
-        change(i, button_ids)#the button will be changed to C. (The first C can be placed anywhere on the board)
-        current_index = i #the index of the original C placement is stored
-        reset_direction() #forget whatever orientation B was in and reset it for ship C
-    elif(placing_ships==4):#placing second C
-        if(ValidMove_2(i)): #if the second C is above/below the original C or to the right/left of original C then this is a valid move
-            change(i, button_ids)#the button will be changed to C
-    elif(placing_ships==5):#placing third/final C
-        if(ValidMove_3(i)):#if the third C is either to above/below the other 2 C's or to the right/left of the other 2 C's then this is a valid move
-            change(i, button_ids)#the button will be changed to C.
-    elif(placing_ships==6):
-        change(i, button_ids)#the button will be changed to D. (The first D can be placed anywhere on the board)
-        current_index = i #the index of the original D placement is stored
-        reset_direction() #forget whatever orientation C was in and reset it for ship D
-    elif(placing_ships==7):
-        if(ValidMove_2(i)): #if the second D is above/below the original C or to the right/left of original D then this is a valid move
-            change(i, button_ids)#the button will be changed to D
-    elif(placing_ships==8):
-        if(ValidMove_3(i)):#if the third D is either to above/below the other 2 D's or to the right/left of the other 2 D's then this is a valid move
-            change(i, button_ids)#the button will be changed to D.
-    elif(placing_ships==9):
-        if(ValidMove_4(i)):
+    elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
+        change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
+        current_index = i #the index of the first letter of a ship placement is stored
+        reset_direction() #forget the previous orientations and reset for the next ship
+    elif(placing_ships==2 or placing_ships==4 or placing_ships==7 or placing_ships==11):#placing second letter of ship
+        if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
+            change(i, button_ids)#the button will be changed to the letter of the ship being placed
+    elif(placing_ships==5 or placing_ships==8 or placing_ships == 12):#placing third letter of ship
+        if(ValidMove_3(i)):#if the third index of the third letter to be placed is either above/below the other 2 letters or to the right/left of the other 2 letters then this is a valid move
+            change(i, button_ids)#the button will be changed to the letter of the ship being placed
+    elif(placing_ships==9 or placing_ships==13):#placing fourth letter of ship
+        if(ValidMove_4(i)):#if the fourth index of the fourth letter to be placed is either above/below the other 3 letters or to the right/left of the other 3 letters then this is a valid move
+            change(i, button_ids)#the button will be changed to the letter of the ship being placed
+    elif(placing_ships==14):
+        if(ValidMove_5(i)):
             change(i, button_ids)
-    elif(placing_ships<=14):
-        change(i, button_ids)
 
 def change(i, button_ids):#changes the button to a letter (or ship)
     global button_ids_p1
