@@ -8,6 +8,7 @@ button_ids_p1 = []
 button_ids_p2 = []
 
 positions = product(range(10), range(10))
+positions_2 = product(range(10), range(10))
 
 def show_frame(frame):
     frame.tkraise()
@@ -19,10 +20,6 @@ selected_ships=0
 enter_amount=0
 placing_ships=0
 current_index=0
-vertical_down = False
-vertical_up = False
-horizontal_left = False
-horizontal_right = False
 
 player1 = Player() #initialize players
 player2 = Player()
@@ -106,126 +103,25 @@ def changeBoard(): #helper function for board
     #bname.configure(text="", command=partial(change, i))
     #selected_ships = selected_ships - 1
 
-def ValidMove_B(i):
+def ValidMove(i):
     global current_index
-    global vertical_up 
-    global vertical_down
-    global horizontal_right
-    global horizontal_left
     if(i==current_index+1) and (i%10!=0):
-        vertical_down = False
-        vertical_up = False
-        horizontal_left = False
-        horizontal_right = True
         return(True)
     if(i==current_index-1) and (i%10!=1):
-        vertical_down = False
-        vertical_up = False
-        horizontal_left = True
-        horizontal_right = False
         return(True)
     if(i==current_index+10):
-        vertical_down = False
-        vertical_up = True
-        horizontal_left = False
-        horizontal_right = False
         return(True)
     if(i==current_index-10):
-        vertical_down = True
-        vertical_up = False
-        horizontal_left = False
-        horizontal_right = False
         return(True)
 
-def ValidMove_C(i):
-    global horizontal_left
-    global horizontal_right
-    global vertical_down
-    global vertical_up
-    if(horizontal_left==True):
-        if(i==current_index+1) and (i%10!=0):
-            vertical_down = False
-            vertical_up = False
-            horizontal_left = False
-            horizontal_right = True
-            return(True)
-        if(i==current_index-2) and (i%10!=1):
-            vertical_down = False
-            vertical_up = False
-            horizontal_left = True
-            horizontal_right = False
-            return(True)
-    elif(horizontal_right==True):
-        if(i==current_index+2) and (i%10!=0):
-            vertical_down = False
-            vertical_up = False
-            horizontal_left = False
-            horizontal_right = True
-            return(True)
-        if(i==current_index-1) and (i%10!=1):
-            vertical_down = False
-            vertical_up = False
-            horizontal_left = True
-            horizontal_right = False
-            return(True)
-    elif(vertical_down==True):
-        if(i==current_index+10) and (i%10!=0):
-            vertical_down = False
-            vertical_up = True
-            horizontal_left = False
-            horizontal_right = False
-            return(True)
-        if(i==current_index-20) and (i%10!=1):
-            vertical_down = True
-            vertical_up = False
-            horizontal_left = False
-            horizontal_right = False
-            return(True)
-    elif(vertical_up==True):
-        if(i==current_index+20) and (i%10!=0):
-            vertical_down = False
-            vertical_up = True
-            horizontal_left = False
-            horizontal_right = False
-            return(True)
-        if(i==current_index-10) and (i%10!=1):
-            vertical_down = True
-            vertical_up = False
-            horizontal_left = False
-            horizontal_right = False
-            return(True)
 
-def ValidMove_D(i):
-    global horizontal_left
-    global horizontal_right
-    global vertical_down
-    global vertical_up
-    if(horizontal_left==True):
-        if(i==current_index-1) and (i%10!=0):
-            return(True)
-        if(i==current_index+3) and (i%10!=1):
-            return(True)
-    elif(horizontal_right==True):
-        if(i==current_index+3) and (i%10!=0):
-            return(True)
-        if(i==current_index-1) and (i%10!=1):
-            return(True)
-    elif(vertical_down==True):
-        if(i==current_index+10) and (i%10!=0):
-            return(True)
-        if(i==current_index-30) and (i%10!=1):
-            return(True)
-    elif(vertical_up==True):
-        if(i==current_index-10) and (i%10!=0):
-            return(True)
-        if(i==current_index+30) and (i%10!=1):
-            return(True)
-
-def PlaceShip(i):
+def PlaceShip(i, button_ids):
     global num_ships
     global enter_amount
     global placing_ships
     global current_index
+    global button_ids_p2
+    global button_ids_p1
     if(num_ships==1):
         enter_amount = 1
     elif(num_ships==2):
@@ -238,44 +134,29 @@ def PlaceShip(i):
         enter_amount = 15
 
     if(placing_ships==0):
-        change(i)
+        change(i, button_ids)
     elif(placing_ships==1):
-        change(i)
+        change(i, button_ids)
         current_index = i
     elif(placing_ships==2):
-        if(ValidMove_B(i)):
-            change(i)
-    elif(placing_ships==3):
-        change(i)
-        current_index = i
-    elif(placing_ships==4):
-        if(ValidMove_B(i)):
-            change(i)
-    elif(placing_ships==5):
-        if(ValidMove_C(i)):
-            change(i)
-    elif(placing_ships==6):
-        change(i)
-        current_index = i
-    elif(placing_ships==7):
-        if(ValidMove_B(i)):
-            change(i)
-    elif(placing_ships==8):
-        if(ValidMove_C(i)):
-            change(i)
-    elif(placing_ships==9):
-        if(ValidMove_D(i)):
-            change(i)
+        if(ValidMove(i)):
+            change(i, button_ids)
+            current_index = i
+    elif(placing_ships<=5):
+        change(i, button_ids)
+    elif(placing_ships<=9):
+        change(i. button_ids)
     elif(placing_ships<=14):
-        change(i)
+        change(i, button_ids)
 
-def change(i):
+def change(i, button_ids):
     global button_ids_p1
+    global button_ids_p2
     global text_variable
     global selected_ships
-    global enter_amount
-    global placing_ships
-    if (selected_ships < enter_amount) and (button_ids_p1[i].cget('text') == ""):
+    global enter_amount 
+    global placing_ships 
+    if (selected_ships < enter_amount) and (button_ids[i].cget('text') == ""):
         if(selected_ships==0):
             text_variable = 'A'
             placing_ships = placing_ships + 1
@@ -292,12 +173,29 @@ def change(i):
             text_variable = 'E'
             placing_ships = placing_ships + 1
          
-        bname = (button_ids_p1[i])
+        bname = (button_ids[i])
         bname.configure(text=text_variable)
         selected_ships = selected_ships + 1
         if(selected_ships==enter_amount):
-            frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
-    
+            reset(button_ids)
+
+def reset(button_ids):
+    global button_ids_p2
+    global button_ids_p1
+    global text_variable
+    global selected_ships
+    global enter_amount
+    global placing_ships
+    global current_index
+    text_variable = 'A'
+    selected_ships = 0
+    enter_amount = 0
+    placing_ships = 0
+    current_index = 0
+    if(button_ids == button_ids_p1):
+        frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
+    else:
+        frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)
 
 def board(type):
     if type == 'p1_set': 
@@ -307,7 +205,7 @@ def board(type):
             setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
 
         for i, item in enumerate(positions):
-            button = Button(frame4, command=partial(PlaceShip, i))
+            button = Button(frame4, command=partial(PlaceShip, i, button_ids_p1))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p1.append(button)
 
@@ -318,10 +216,15 @@ def board(type):
                 Button(frame9, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
 
     if type == 'p2_set':
-        for row_num in range(1,11): #iterate through rows
-            row_letter = int_to_char(row_num) # 1 = A, 2 = B, etc...
-            for col_num in range(1,11): #iterate through columns
-                Button(frame5, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
+        for i in range(10):
+            # shape the grid
+            setsize = Canvas(frame5, width=30, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame5, width=0, height=30).grid(row=i, column=11)
+
+        for i, item in enumerate(positions_2):
+            button = Button(frame5, command=partial(PlaceShip, i, button_ids_p2))
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+            button_ids_p2.append(button)
 
     if type == 'p2_attack':
         for row_num in range(1,11): #iterate through rows
@@ -371,7 +274,7 @@ board('p1_set')
 
 #frame 5 code
    #label created inside set_player_names function
-frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 9, column = 22)
+#frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)
 board('p2_set')
 
 
