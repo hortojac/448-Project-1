@@ -104,8 +104,10 @@ def changeBoard(): #helper function for board
 
 def ValidMove(i):
     global current_index
+    print(button_ids_p1[i])
     if(i==current_index+1 or i==current_index-1 or i==current_index+10 or i==current_index-10):
         return(True)
+
 
 
 def PlaceShip(i):
@@ -141,11 +143,12 @@ def PlaceShip(i):
         change(i)
 
 def change(i):
+    global button_ids_p1
     global text_variable
     global selected_ships
     global enter_amount
     global placing_ships
-    if(selected_ships < enter_amount):
+    if (selected_ships < enter_amount) and (button_ids_p1[i].cget('text') == ""):
         if(selected_ships==0):
             text_variable = 'A'
             placing_ships = placing_ships + 1
