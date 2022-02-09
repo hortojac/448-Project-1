@@ -262,41 +262,49 @@ def ValidMove_5(i):
     global ddu 
     global ddd
     if(llr):
+        print("1")
         if(i==current_index-3) and (i%10!=9):
             return(True)
         if(i==current_index+2) and (i%10!=0):
             return(True)
     elif(lll):
+        print("2")
         if(i==current_index+1) and (i%10!=0):
             return(True)
         if(i==current_index-4) and (i%10!=9):
             return(True)
     elif(rrl):
+        print("3")
         if(i==current_index-2) and (i%10!=9):
             return(True)
         if(i==current_index+3) and (i%10!=0):
             return(True)
     elif(rrr):
+        print("4")
         if(i==current_index-1) and (i%10!=9):
             return(True)
         if(i==current_index+4) and (i%10!=0):
             return(True)
     elif(uud):
+        print("5")
         if(i==current_index+30):
             return(True)
         if(i==current_index-20):
             return(True)
     elif(uuu):
+        print("6")
         if(i==current_index+40):
             return(True)
         if(i==current_index-10):
             return(True)
     elif(ddu):
+        print("7")
         if(i==current_index+20):
             return(True)
         if(i==current_index-30):
             return(True)
     elif(ddd):
+        print("8")
         if(i==current_index+10):
             return(True)
         if(i==current_index-40):
@@ -315,6 +323,14 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     global up_down
     global down_down
     global down_up
+    global llr
+    global lll 
+    global rrl
+    global rrr
+    global uud
+    global uuu
+    global ddu 
+    global ddd
     vertical_up = False
     vertical_down = False
     horizontal_right = False
@@ -327,6 +343,14 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     up_down = False
     down_down = False
     down_up = False
+    lll = False
+    llr = False
+    rrr = False
+    rrl = False
+    uuu = False
+    uud = False
+    ddu = False
+    ddd = False
 
 def EnoughSpace(i,button_ids):
     global placing_ships
@@ -423,10 +447,10 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
+        reset_direction() #forget the previous orientations and reset for the next ship
         if(EnoughSpace(i, button_ids)):
             change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
             current_index = i #the index of the first letter of a ship placement is stored
-            reset_direction() #forget the previous orientations and reset for the next ship
     elif(placing_ships==2 or placing_ships==4 or placing_ships==7 or placing_ships==11):#placing second letter of ship
         if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
