@@ -63,8 +63,8 @@ uud = False
 ddu = False
 ddd = False
 
-
 root = Tk()
+root.attributes('-fullscreen',True)
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -316,6 +316,14 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     global up_down
     global down_down
     global down_up
+    global llr
+    global lll 
+    global rrl
+    global rrr
+    global uud
+    global uuu
+    global ddu 
+    global ddd
     vertical_up = False
     vertical_down = False
     horizontal_right = False
@@ -328,6 +336,14 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     up_down = False
     down_down = False
     down_up = False
+    lll = False
+    llr = False
+    rrr = False
+    rrl = False
+    uuu = False
+    uud = False
+    ddu = False
+    ddd = False
 
 def EnoughSpace(i,button_ids):
     global placing_ships
@@ -356,29 +372,74 @@ def EnoughSpace(i,button_ids):
         else:
             return(False)
     elif(placing_ships==6): #is there 4 spaces for D to go?
-        return(True)
-        #check 3 spaces above index
-        #check 3 spaces below index
-        #check 3 spaces to right of index
-        #check 3 spaces to left of index
-
-        #check 1 space below and 2 spaces above index
-        #check 1 space above and 2 spaces below index
-        #check 1 space to the left of index and 2 spaces to the right of index
-        #check 1 space to the right of index and 2 spaces to the left of index
+        if((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99):#check 3 spaces above index
+            if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i-30)>=0):#check 3 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i-30].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i+10)<=99) and ((i+20)<=99):#check 1 space below and 2 spaces above index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i+3)<=99):#check 3 spaces to right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i+3)%10!=0):
+                if(button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == "") and (button_ids[i+3].cget('text') == ""):
+                    return(True)
+        if((i-1)>=0) and ((i-2)>=0) and ((i-3)>=0):#check 3 spaces to left of index
+            if((i-1)%10!=9) and ((i-2)%10!=9) and ((i-3)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i-3].cget('text') == ""):
+                    return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i+10)<=99):#check 1 space above and 2 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i+10].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i-1)>=0) and ((i-2)>=0):#check 1 space to the right of index and 2 spaces to the left of index
+            if((i+1)%10!=0) and ((i-1)%10!=9) and ((i-2)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i+1].cget('text') == ""):
+                    return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i-1)>=0):#check 1 space to the left of index and 2 spaces to the right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i-1)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == ""):
+                    return(True)
+        else:
+            return(False)
     elif(placing_ships==10): #is there 5 spaces for E to go?
-        return(True)
-        #check 4 spaces above index
-        #check 4 spaces below index
-        #check 4 spaces to right of index
-        #check 4 spaces to left of index
-
-        #check 1 space below and 3 spaces above index
-        #check 2 spaces below and 2 spaces above index
-        #check 1 space above and 3 spaces below index
-        #check 1 space to the left of index and 3 spaces to the right of index
-        #check 2 spaces to the left of index and 2 spaces to the right of index
-        #check 1 space to the right of index and 3 spaces to the left of index
+        if((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99) and ((i+40)<=99): #check 4 spaces above index
+            if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == "") and (button_ids[i+40].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i-30)>=0) and ((i-40)>=0):#check 4 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i-30].cget('text') == "") and (button_ids[i-40].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i+3)<=99) and ((i+4)<=99):#check 4 spaces to right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i+3)%10!=0) and ((i+4)%10!=0):
+                if(button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == "") and (button_ids[i+3].cget('text') == "") and (button_ids[i+4].cget('text') == ""):
+                    return(True)
+        if((i-1)>=0) and ((i-2)>=0) and ((i-3)>=0) and ((i-4)>=0):#check 4 spaces to left of index
+            if((i-1)%10!=9) and ((i-2)%10!=9) and ((i-3)%10!=9) and ((i-4)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i-3].cget('text') == "") and (button_ids[i-4].cget('text') == ""):
+                    return(True)
+        if((i-10)>=0) and ((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99):#check 1 space below and 3 spaces above index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i+10)<=99) and ((i+20)<=99):#check 2 spaces below and 2 spaces above index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i-30)>=0) and ((i+10)<=99):#check 1 space above and 3 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i-30].cget('text') == "") and (button_ids[i+10].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i+3)<=99) and ((i-1)>=0):#check 1 space to the left of index and 3 spaces to the right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i+3)%10!=0) and ((i-1)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == "") and (button_ids[i+3].cget('text') == ""):
+                    return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i-1)>=0) and ((i-2)>=0):#check 2 spaces to the left of index and 2 spaces to the right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i-1)%10!=9) and ((i-2)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == ""):
+                    return(True)
+        if((i+1)<=99) and ((i-1)>=0) and ((i-2)>=0) and ((i-3)>=0):#check 1 space to the right of index and 3 spaces to the left of index
+            if((i+1)%10!=0) and ((i-1)%10!=9) and ((i-2)%10!=9) and ((i-3)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i-3].cget('text') == "") and (button_ids[i+1].cget('text') == ""):
+                    return(True)
+        else:
+            return(False)
     else:
         return(True)
 
@@ -404,10 +465,10 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
+        reset_direction() #forget the previous orientations and reset for the next ship
         if(EnoughSpace(i, button_ids)):
             change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
             current_index = i #the index of the first letter of a ship placement is stored
-            reset_direction() #forget the previous orientations and reset for the next ship
     elif(placing_ships==2 or placing_ships==4 or placing_ships==7 or placing_ships==11):#placing second letter of ship
         if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
