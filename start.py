@@ -446,20 +446,28 @@ def EnoughSpace(i,button_ids):#is there enough space on the board to fit the ent
 def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the correct direction to fit the entire ship?
     global placing_ships
     global current_index
+    print("i = ", i)
+    print("current_index = ", current_index)
     if(placing_ships==4): #is the second C going to block the user from not being able to place the third C? 
-        if((i+1)<=99):
-            if((i+1)%10!=0) and (i==current_index+1):
-                if(button_ids[i+1].cget('text') == ""): #if i is to the right of index then check that the next space to the right is empty
-                    return(True)
-        if((i-1)>=0):
-            if((i-1)%10!=9) and (i==current_index-1):
-                if(button_ids[i-1].cget('text') == ""): #if i is to the left of index then check that the next space to the left is empty
-                    return(True)
-        if((i+10)<=99) and (i==current_index+10):
-            if(button_ids[i+10].cget('text') == ""): #if i is below the index then check that the next space down is empty
+        if(i==current_index+1): #if i is to the right of index
+            if(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0): #check that the next space to the right is empty
                 return(True)
-        if((i-10)>=0) and (i==current_index-10):
-            if(button_ids[i-10].cget('text') == ""): #if i is above the index then check that the next space up is empty
+            elif(button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9): #check that the space to the left of the original is empty
+                return(True)
+        if(i==current_index-1): #if i is to the left of index
+            if(button_ids[i-1].cget('text') == "") and ((i-1)>=0) and ((i-1)%10!=9): #check that the next space to the left is empty
+                return(True)
+            if(button_ids[current_index+1].cget('text') == "") and ((current_index+1)<=99) and ((current_index+1)<=99): #check that the space to the right of the original is empty
+                return(True)
+        if(i==current_index+10): #if i is below the index
+            if(button_ids[i+10].cget('text') == "") and ((i+10)<=99): #check that the next space down is empty
+                return(True)
+            if(button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0): #check that the space above the original is empty
+                return(True)
+        if(i==current_index-10): #if i is above the index
+            if(button_ids[i-10].cget('text') == "") and ((i-10)>=0): #check that the next space up is empty
+                return(True)
+            if(button_ids[current_index+10].cget('text') == "") and ((current_index+10)<=99): #check that the space below the original is empty
                 return(True)
         else:
             return(False)
