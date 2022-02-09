@@ -6,9 +6,7 @@ from PIL import ImageTk, Image
 
 
 
-##my_img = ImageTk.PhotoImage(Image.open("assets/white.png"))
-#btn = Button(text="HELLO", compound="center", fg="black", image=my_img)
-#lol = btn.cget("image")
+
 
 
 button_ids_p1 = []
@@ -63,8 +61,16 @@ uud = False
 ddu = False
 ddd = False
 
+###
+
 root = Tk()
 root.state('zoomed')
+root.title("Battleship")
+
+### Images Used
+img_red = ImageTk.PhotoImage(Image.open("assets/red.png"))
+img_white = ImageTk.PhotoImage(Image.open("assets/white.png"))
+###
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -781,7 +787,7 @@ def board(type, size): #size = width and length of the canvas
                 setsize = Canvas(frame7, width=30, height=0).grid(row=11, column=i)
                 setsize = Canvas(frame7, width=0, height=30).grid(row=i, column=11)
             for i, item in enumerate(pos):
-                button = Button(frame7, text="", command=partial(PlaceShip, i, button_ids_p1_enemy))
+                button = Button(frame7, text="", command=partial(Attack, i, "p1"))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 button_ids_p1_enemy.append(button)
             #print(button_ids_p1_enemy)
@@ -816,7 +822,7 @@ def board(type, size): #size = width and length of the canvas
                 setsize = Canvas(frame9, width=0, height=30).grid(row=i, column=11)
 
             for i, item in enumerate(pos):
-                button = Button(frame9, text="", command=partial(PlaceShip, i, button_ids_p2_enemy))
+                button = Button(frame9, text="", command=partial(Attack, i, "p2"))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 button_ids_p2_enemy.append(button)
             #print(button_ids_p2_enemy)
@@ -856,9 +862,55 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     p1_label = "Player 1 (" + player1.name + ")"
     frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
 
-    #set up frame 5 label
-    p2_label = "Player 2 (" + player2.name + ")"
-    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
+##my_img = ImageTk.PhotoImage(Image.open("assets/white.png"))
+#btn = Button(text="HELLO", compound="center", fg="black", image=my_img)
+#lol = btn.cget("image")
+##color image
+
+#Attack_Method
+def Attack(i, type): #playerId = "p1" or "p2"
+    global p1_hit_counter 
+    global enter_amount
+    global p2_hit_counter 
+
+    global img_white
+    global img_red
+
+    p1_hit_counter = enter_amount
+    p2_hit_counter = enter_amount
+    if(type == "p1"): #miss
+        if(button_ids_p2[i].cget("text") == ""):
+            button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+            button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+        else: #there is a ship at i
+            #get image
+            p1_hit_counter -= 1
+            button_ids_p1_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+            button_ids_p2[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+        show_frame(frame7)
+    else: #id is p2 
+        if(button_ids_p1[i].cget("text") == ""):
+            button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+            button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+        else:
+            p2_hit_counter -= 1
+            button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+            button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
+        show_frame(frame9)
+        
+    
+
+#set up frame 4 label
+p1_label = "Player 1 (" + player1.name + ")"
+frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)  
+
+#set up frame 5 label
+p2_label = "Player 2 (" + player2.name + ")"
+frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
+
+#set up frame 5 label
+p2_label = "Player 2 (" + player2.name + ")"
+frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
 
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).grid()
 
@@ -883,8 +935,8 @@ frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='bla
 
 #frame 7 = player 1 turn
 mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=12)
-my_board_label = Label(frame7, text="Your Board", fg="white").grid(row=12, column=3, columnspan=3)
-enemy_board_label = Label(frame7, text="Enemy Board", fg="white").grid(row=12, column=17,columnspan=3)
+my_board_label = Label(frame7, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
+enemy_board_label = Label(frame7, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)
 frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
 
 
@@ -894,8 +946,8 @@ frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='bla
 
 #frame 9 = player 2 turn
 mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=12) 
-my_board_label = Label(frame9, text="Your Board", fg="white").grid(row=12, column=3, columnspan=3)
-enemy_board_label = Label(frame9, text="Enemy Board", fg="white").grid(row=12, column=17,columnspan=3)  
+my_board_label = Label(frame9, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
+enemy_board_label = Label(frame9, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)  
 frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
 
 #Frame 10 = endscreen
