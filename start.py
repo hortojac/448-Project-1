@@ -353,8 +353,8 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
         if(ValidMove_4(i)):#if the fourth index of the fourth letter to be placed is either above/below the other 3 letters or to the right/left of the other 3 letters then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
     elif(placing_ships==14):
-        if(ValidMove_5(i)):
-            change(i, button_ids)
+        #if(ValidMove_5(i)):
+        change(i, button_ids)
 
 def change(i, button_ids):#changes the button to a letter (or ship)
     global button_ids_p1
@@ -384,11 +384,18 @@ def change(i, button_ids):#changes the button to a letter (or ship)
         bname.configure(text=text_variable)
         selected_ships = selected_ships + 1
         if(selected_ships==enter_amount):
-            reset(button_ids)
+            if(button_ids == button_ids_p1):
+                frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(setup_frame5)).grid(row = 11, column = 22)
+            else:
+                frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)
+            
 
-def reset(button_ids):#resets entire board and variables so player 2 sees fresh board when placing their battleships
-    global button_ids_p2
-    global button_ids_p1
+def setup_frame5():
+    reset()
+    show_frame(frame5)
+
+
+def reset():#resets entire board and variables so player 2 sees fresh board when placing their battleships
     global text_variable
     global selected_ships
     global enter_amount
@@ -407,10 +414,6 @@ def reset(button_ids):#resets entire board and variables so player 2 sees fresh 
     vertical_down = False
     horizontal_right = False
     horizontal_left = False
-    if(button_ids == button_ids_p1):
-        frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 11, column = 22)
-    else:
-        frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)
 
 def board(type):
     if type == 'p1_set': 
@@ -431,6 +434,7 @@ def board(type):
                 Button(frame9, text=(row_letter,col_num), padx=25, pady=25, fg='black').grid(row=row_num, column=col_num, sticky='nsew')
 
     if type == 'p2_set':
+
         for i in range(10):
             # shape the grid
             setsize = Canvas(frame5, width=30, height=0).grid(row=11, column=i)
