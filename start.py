@@ -491,7 +491,7 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
                 return(True)
             elif(button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0) and (button_ids[current_index-20].cget('text') == "") and ((current_index-20)>=0): #check that 2 spaces above the original index is empty
                 return(True)
-            elif(button_ids[i+10].cget('text') == "") and ((i+10)<=99) and(button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0): #check that the next space down is empty and 1 space above the original index is empty
+            elif(button_ids[i+10].cget('text') == "") and ((i+10)<=99) and (button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0): #check that the next space down is empty and 1 space above the original index is empty
                 return(True)
         if(i==current_index-10): #if i is above the index
             if(button_ids[i-10].cget('text') == "") and ((i-10)>=0) and (button_ids[i-20].cget('text') == "") and ((i-20)>=0): #check that the next 2 spaces up are empty
@@ -506,33 +506,41 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
         if(i==current_index+1): #if i is to the right of index
             if(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0) and (button_ids[i+2].cget('text') == "") and ((i+2)<=99) and ((i+2)%10!=0) and (button_ids[i+3].cget('text') == "") and ((i+3)<=99) and ((i+3)%10!=0): #check that the next 3 spaces to the right are empty
                 return(True)
-            elif(button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9) and (button_ids[current_index-2].cget('text') == "") and ((current_index-2)>=0) and ((current_index-2)%10!=9): #check that 2 spaces to the left of the original index are empty
+            elif(button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9) and (button_ids[current_index-2].cget('text') == "") and ((current_index-2)>=0) and ((current_index-2)%10!=9) and (button_ids[current_index-3].cget('text') == "") and ((current_index-3)>=0) and ((current_index-3)%10!=9): #check that 3 spaces to the left of the original index are empty
                 return(True)
-            elif(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0) and (button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9):#check that the next space to the right is empty and 1 space to the left of the original index is empty
+            elif(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0) and (button_ids[i+2].cget('text') == "") and ((i+2)<=99) and ((i+2)%10!=0) and (button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9):#check that the next 2 spaces to the right are empty and 1 space to the left of the original index is empty
                 return(True) 
-        
-        #if i is to the right of index 
-            #check that the next 3 spaces to the right are empty
-            #check that 3 spaces to the left of the original index are empty
-            #check that the next 2 spaces to the right are empty and 1 space to the left of the original index is empty
-            #check that the next space to the right is empty and 2 spaces to the left of the original index is empty
-        
-        
-        #if i is to the left of index 
-            #check that the next 3 spaces to the left are empty
-            #check that 3 spaces to the right of the original index are empty
-            #check that the next 2 spaces to the left are empty and 1 space to the right of the original index is empty
-            #check that the next space to the left is empty and 2 spaces to the right of the original index is empty
-        #if i is below the index 
-            #check that the next 3 spaces down are empty
-            #check that 3 spaces above the original index are empty
-            #check that the next 2 spaces down are empty and 1 space above the original index is empty
-            #check that the next space down is empty and 2 spaces above the original index is empty
-        #if i is above the index 
-            #check that the next 3 spaces up are empty
-            #check that 3 spaces below the original index are empty
-            #check that the next 2 spaces up are empty and 1 space below the original index is empty
-            #check that the next space up is empty and 2 spaces below the original index is empty
+            elif(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0) and (button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9) and (button_ids[current_index-2].cget('text') == "") and ((current_index-2)>=0) and ((current_index-2)%10!=9): #check that the next space to the right is empty and 2 spaces to the left of the original index is empty
+                return(True)
+        if(i==current_index-1): #if i is to the left of index
+            if(button_ids[i-1].cget('text') == "") and ((i-1)>=0) and ((i-1)%10!=9) and (button_ids[i-2].cget('text') == "") and ((i-2)>=0) and ((i-2)%10!=9) and (button_ids[i-3].cget('text') == "") and ((i-3)>=0) and ((i-3)%10!=9): #check that the next 3 spaces to the left are empty
+                return(True)
+            elif(button_ids[current_index+1].cget('text') == "") and ((current_index+1)<=99) and ((current_index+1)<=99) and (button_ids[current_index+2].cget('text') == "") and ((current_index+2)<=99) and ((current_index+2)<=99) and (button_ids[current_index+3].cget('text') == "") and ((current_index+3)<=99) and ((current_index+3)<=99): #check that 3 spaces to the right of the original index are empty
+                return(True)
+            elif(button_ids[i-1].cget('text') == "") and ((i-1)>=0) and ((i-1)%10!=9) and (button_ids[i-2].cget('text') == "") and ((i-2)>=0) and ((i-2)%10!=9) and (button_ids[current_index+1].cget('text') == "") and ((current_index+1)<=99) and ((current_index+1)<=99): #check that the next 2 spaces to the left are empty and 1 space to the right of the original index is empty
+                return(True)
+            elif(button_ids[i-1].cget('text') == "") and ((i-1)>=0) and ((i-1)%10!=9) and (button_ids[current_index+1].cget('text') == "") and ((current_index+1)<=99) and ((current_index+1)<=99) and (button_ids[current_index+2].cget('text') == "") and ((current_index+2)<=99) and ((current_index+2)<=99): #check that the next space to the left is empty and 2 spaces to the right of the original index is empty
+                return(True)
+        if(i==current_index+10): #if i is below the index
+            if(button_ids[i+10].cget('text') == "") and ((i+10)<=99) and (button_ids[i+20].cget('text') == "") and ((i+20)<=99) and (button_ids[i+30].cget('text') == "") and ((i+30)<=99): #check that the next 3 spaces down are empty
+                return(True)
+            elif(button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0) and (button_ids[current_index-20].cget('text') == "") and ((current_index-20)>=0) and (button_ids[current_index-30].cget('text') == "") and ((current_index-30)>=0): #check that 3 spaces above the original index are empty
+                return(True)
+            elif(button_ids[i+10].cget('text') == "") and ((i+10)<=99) and (button_ids[i+20].cget('text') == "") and ((i+20)<=99) and (button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0): #check that the next 2 spaces down are empty and 1 space above the original index is empty
+                return(True)
+            elif(button_ids[i+10].cget('text') == "") and ((i+10)<=99) and (button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0) and (button_ids[current_index-20].cget('text') == "") and ((current_index-20)>=0): #check that the next space down is empty and 2 spaces above the original index is empty
+                return(True)
+        if(i==current_index-10): #if i is above the index
+            if(button_ids[i-10].cget('text') == "") and ((i-10)>=0) and (button_ids[i-20].cget('text') == "") and ((i-20)>=0) and (button_ids[i-30].cget('text') == "") and ((i-30)>=0): #check that the next 3 spaces up are empty
+                return(True)
+            elif(button_ids[current_index+10].cget('text') == "") and ((current_index+10)<=99) and (button_ids[current_index+20].cget('text') == "") and ((current_index+20)<=99) and (button_ids[current_index+30].cget('text') == "") and ((current_index+30)<=99): #check that 3 spaces below the original index are empty
+                return(True)    
+            elif(button_ids[i-10].cget('text') == "") and ((i-10)>=0) and (button_ids[i-20].cget('text') == "") and ((i-20)>=0)and (button_ids[current_index+10].cget('text') == "") and ((current_index+10)<=99): #check that the next 2 spaces up are empty and 1 space below the original index is empty
+                return(True)
+            elif(button_ids[i-10].cget('text') == "") and ((i-10)>=0) and (button_ids[current_index+10].cget('text') == "") and ((current_index+10)<=99) and (button_ids[current_index+20].cget('text') == "") and ((current_index+20)<=99): #check that the next space up is empty and 2 spaces below the original index is empty
+                return(True)
+        else:
+            return(False)
     else:
         return(True)
 
