@@ -64,7 +64,7 @@ ddu = False
 ddd = False
 
 root = Tk()
-root.attributes('-fullscreen',True)
+root.state('zoomed')
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -84,11 +84,11 @@ for frame in (frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, fr
 
 show_frame(frame1)
 #Frame 1 code
-myLabel1 = Label(frame1, text="Battleship!\nPress start to begin playing.", fg="white").grid(row=0, column=0)
+myLabel1 = Label(frame1, text="Battleship!\nPress start to begin playing.", fg="black").grid(row=0, column=0)
 frame1_button = Button(frame1, text="Start", padx=25, pady=25, command=partial(show_frame,frame2), fg="black", bg="white").grid(row=1, column=0)
 
 #Frame 2 code
-myLabel2 = Label(frame2, text="Choose the number of ships each player will have.", fg="white").grid(row=0, column=0)
+myLabel2 = Label(frame2, text="Choose the number of ships each player will have.", fg="black").grid(row=0, column=0)
 
 def shipcount(x):
     global num_ships
@@ -816,21 +816,18 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     player2.name = b.get()
     show_frame(frame4)
 
-#set up frame 4 label
-p1_label = "Player 1 (" + player1.name + ")"
-frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)  
+    #set up frame 4 label
+    p1_label = "Player 1 (" + player1.name + ")"
+    frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
 
-#set up frame 5 label
-p2_label = "Player 2 (" + player2.name + ")"
-frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
-
+    #set up frame 5 label
+    p2_label = "Player 2 (" + player2.name + ")"
+    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
 
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).grid()
 
 #Frame 4 code   
     #label created inside set_player_names function
-#frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame5)).grid(row = 9, column = 22)
-
 board('p1_set', 30)
 
 #frame 5 code
