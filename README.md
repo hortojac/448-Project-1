@@ -81,16 +81,16 @@ We store button locations not as x/y coordinates, but as a _single_ integer, whe
 
 ### Boards
 
-In the Board object, we have 4 versions: `p1_set`, `p1_attack`, `p2_set`, and `p2_attack`.
-The `set` boards are what each repsect player sees while they set-up/place ships. The ships are visible in this board. The `attack` boards are what the _other_ player sees while they attack. The ships are _not_ visible in this board.
-So, during the attack phase, player 1 will see `p1_set` and `p2_attack`. 
+In the Board object, we have 4 versions: `p1`, `p1_enemy`, `p2`, and `p2_enemy`.
+The `set` boards are what each repsect player sees while they set-up/place ships. The ships are visible in this board. The `enemy` boards are what that player sees while they attack. The enemy's ships are _not_ visible to the player on this board.
+So, during the attack phase, player 1 will see `p1_set` and `p1_enemy` boards. 
 
 `p1_set` will show them
 - the current location of their ships
 - where player 2 has fired at, and whether each guess was a hit/miss.
 
-`p2_attack` will show them 
-- where they have guessed so far, and whether each guess was a hit/miss
+`p1_enemy` will show them 
+- where p1 has guessed on p2 so far, and whether each guess was a hit/miss
 
 ### Function List
 | Function |Type | Arguements | Return Type | Purpose | 
