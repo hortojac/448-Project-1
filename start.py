@@ -471,17 +471,45 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
                 return(True)
         else:
             return(False)
-    elif(placing_ships==7): #is the second D going to block the user from not being able to place the third and fourth D?
-        #if i is to the right of index then check that the next 2 spaces to the right are empty
-        #if i is to the left of index then check that the next 2 spaces to the left are empty
-        #if i is below the index then check that the next 2 spaces down are empty
-        #if i is above the index then check that the next 2 spaces up are empty
+    elif(placing_ships==7): #is the second D going to block the user from not being able to place the third and fourth D?    
+        #if i is to the right of index 
+            #check that the next 2 spaces to the right are empty
+            #check that the next space to the right is empty and 1 space to the left of the original index is empty
+            #check that 2 spaces to the left of the original index is empty
+        #if i is to the left of index 
+            #check that the next 2 spaces to the left are empty
+            #check that the next space to the left is empty and 1 space to the right of the original index is empty
+            #check that 2 spaces to the right of the original index is empty
+        #if i is below the index 
+            #check that the next 2 spaces down are empty
+            #check that the next space down is empty and 1 space above the original index is empty
+            #check that 2 spaces above the original index is empty
+        #if i is above the index
+            #check that the next 2 spaces up are empty
+            #check that the next space up is empty and 1 space below the original index is empty
+            #check that 2 spaces below the original index is empty
         return(True)
     elif(placing_ships==11): #is the second E going to block the user from not being able to place the third, fourth, and fifth E?
-        #if i is to the right of index then check that the next 3 spaces to the right are empty
-        #if i is to the left of index then check that the next 3 spaces to the left are empty
-        #if i is below the index then check that the next 3 spaces down are empty
-        #if i is above the index then check that the next 3 spaces up are empty 
+        #if i is to the right of index 
+            #check that the next 3 spaces to the right are empty
+            #check that 3 spaces to the left of the original index are empty
+            #check that the next 2 spaces to the right are empty and 1 space to the left of the original index is empty
+            #check that the next space to the right is empty and 2 spaces to the left of the original index is empty
+        #if i is to the left of index 
+            #check that the next 3 spaces to the left are empty
+            #check that 3 spaces to the right of the original index are empty
+            #check that the next 2 spaces to the left are empty and 1 space to the right of the original index is empty
+            #check that the next space to the left is empty and 2 spaces to the right of the original index is empty
+        #if i is below the index 
+            #check that the next 3 spaces down are empty
+            #check that 3 spaces above the original index are empty
+            #check that the next 2 spaces down are empty and 1 space above the original index is empty
+            #check that the next space down is empty and 2 spaces above the original index is empty
+        #if i is above the index 
+            #check that the next 3 spaces up are empty
+            #check that 3 spaces below the original index are empty
+            #check that the next 2 spaces up are empty and 1 space below the original index is empty
+            #check that the next space up is empty and 2 spaces below the original index is empty
         return(True)
     else:
         return(True)
