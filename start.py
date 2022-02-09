@@ -355,12 +355,23 @@ def EnoughSpace(i,button_ids):
         else:
             return(False)
     elif(placing_ships==6): #is there 4 spaces for D to go?
-        return(True)
-        #check 3 spaces above index
-        #check 3 spaces below index
-        #check 3 spaces to right of index
-        #check 3 spaces to left of index
-
+        if((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99):#check 3 spaces above index
+            if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0) and ((i-30)>=0):#check 3 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == "") and (button_ids[i-30].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i+2)<=99) and ((i+3)<=99):#check 3 spaces to right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0) and ((i+3)%10!=0):
+                if(button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == "") and (button_ids[i+3].cget('text') == ""):
+                    return(True)
+        if((i-1)>=0) and ((i-2)>=0) and ((i-3)>=0):#check 3 spaces to left of index
+            if((i-1)%10!=9) and ((i-2)%10!=9) and ((i-3)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i-3].cget('text') == ""):
+                    return(True)
+        if((i-10)>=0) and ((i+10)<=99):#check 1 space below and 2 space aboves index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i+10].cget('text') == ""):
+                return(True)
         #check 1 space below and 2 spaces above index
         #check 1 space above and 2 spaces below index
         #check 1 space to the left of index and 2 spaces to the right of index
