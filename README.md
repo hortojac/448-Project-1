@@ -6,9 +6,7 @@ For our Battleship game, we used `Python` with the libraries of
 
 The interactive GUI allows for button pressing and clicking on <abbr title="any Tkinter element that builds the interface">**widgets**</abbr> to perform actions. 
 
-Here is a demo: 
-
-[![Watch the video](https://cdn.discordapp.com/attachments/345868817320116226/940756176591802378/unknown.png)](https://youtu.be/eAZES9qJyAM)
+Here is a [demo](https://youtu.be/eAZES9qJyAM).
 
 # The Code
 
