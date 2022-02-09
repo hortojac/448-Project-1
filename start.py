@@ -61,11 +61,11 @@ for frame in (frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, fr
 
 show_frame(frame1)
 #Frame 1 code
-myLabel1 = Label(frame1, text="Battleship!\nPress start to begin playing.", fg="blue").grid(row=0, column=0)
-frame1_button = Button(frame1, text="Start", padx=25, pady=25, command=partial(show_frame,frame2), fg="black").grid(row=1, column=0)
+myLabel1 = Label(frame1, text="Battleship!\nPress start to begin playing.", fg="white").grid(row=0, column=0)
+frame1_button = Button(frame1, text="Start", padx=25, pady=25, command=partial(show_frame,frame2), fg="black", bg="white").grid(row=1, column=0)
 
 #Frame 2 code
-myLabel2 = Label(frame2, text="Choose the number of ships each player will have.", fg="black", bg="white").grid(row=0, column=0)
+myLabel2 = Label(frame2, text="Choose the number of ships each player will have.", fg="white").grid(row=0, column=0)
 
 def shipcount(x):
     global num_ships
@@ -205,23 +205,25 @@ def drawBoards(type, size, offset_r, offset_c):
             # shape the grid
             setsize2 = Canvas(frame7, width=size, height=0).grid(row=11, column=i)
             setsize2 = Canvas(frame7, width=0, height=size).grid(row=i, column=11)
-        
-        #counter = 0
-        print("HELLO")
-        pos = product(range(10), range(10))
-        for i, item in enumerate(pos):
-            #detach player buttons from frame4 canvas
-            #button.grid_forget()
-           # button.configure(master=frame7)
-            button = button_ids_p1[i]
-            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
 
         pos = product(range(10), range(10))
+        for i, item in enumerate(pos):
+            #copy important attributes of current button
+            img= button_ids_p1[i].cget("image")
+            txt = button_ids_p1[i].cget("text")
+            b = button_ids_p1[i].cget("bg")
+         
+            button = Button(master=frame7, image=img, text=txt, bg=b) #make a copy
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+            button_ids_p1[i] = button #replace button with copied button
+
+       
         #draw enemy board
         for i in range(10):
             # shape the grid
             setsize1 = Canvas(frame7, width=size, height=0).grid(row=11, column=i+offset_c)
             setsize1 = Canvas(frame7, width=0, height=size).grid(row=i, column=11+offset_c)
+        pos = product(range(10), range(10))
         for i, item in enumerate(pos):
             button = button_ids_p1_enemy[i]
             button.grid(row=item[0], column=item[1]+offset_c, sticky="n,e,s,w")
@@ -229,27 +231,30 @@ def drawBoards(type, size, offset_r, offset_c):
     else: #type = "p2"
         #detach buttons from frame5 canvas
 
-        print("HERE P2")
-        global button_ids_p2
-        global button_ids_p2_enemy
-
-        pos = product(range(10), range(10))
-       
         #draw player board  
         for i in range(10):
             # shape the grid
-            setsize = Canvas(frame9, width=size, height=0).grid(row=11+offset_r, column=i)
-            setsize = Canvas(frame9, width=0, height=size).grid(row=i+offset_r, column=11)
-        for i, item in enumerate(pos):
-            button = button_ids_p2[i]
-            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
-        
+            setsize2 = Canvas(frame9, width=size, height=0).grid(row=11, column=i)
+            setsize2 = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
+
         pos = product(range(10), range(10))
+        for i, item in enumerate(pos):
+            #copy important attributes of current button
+            img= button_ids_p2[i].cget("image")
+            txt = button_ids_p2[i].cget("text")
+            b = button_ids_p2[i].cget("bg")
+         
+            button = Button(master=frame9, image=img, text=txt, bg=b) #make a copy
+            button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
+            button_ids_p2[i] = button #replace button with copied button
+
+       
         #draw enemy board
         for i in range(10):
             # shape the grid
-            setsize = Canvas(frame9, width=size, height=0).grid(row=11, column=i+offset_c)
-            setsize = Canvas(frame9, width=0, height=size).grid(row=i, column=11+offset_c)
+            setsize1 = Canvas(frame9, width=size, height=0).grid(row=11, column=i+offset_c)
+            setsize1 = Canvas(frame9, width=0, height=size).grid(row=i, column=11+offset_c)
+        pos = product(range(10), range(10))
         for i, item in enumerate(pos):
             button = button_ids_p2_enemy[i]
             button.grid(row=item[0], column=item[1]+offset_c, sticky="n,e,s,w")
@@ -269,7 +274,7 @@ def board(type, size): #size = width and length of the canvas
             setsize = Canvas(frame4, width=30, height=0).grid(row=11, column=i)
             setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
         for i, item in enumerate(pos):
-            button = Button(frame4, bg="red",command=partial(PlaceShip, i))
+            button = Button(frame4, command=partial(PlaceShip, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p1.append(button)
  
@@ -278,19 +283,17 @@ def board(type, size): #size = width and length of the canvas
         if not P1_ENEMY_CREATED:
             global button_ids_p1_enemy
             pos = product(range(10), range(10))
-
             #create
             for i in range(10):
                 # shape the grid
                 setsize = Canvas(frame7, width=30, height=0).grid(row=11, column=i)
                 setsize = Canvas(frame7, width=0, height=30).grid(row=i, column=11)
             for i, item in enumerate(pos):
-                button = Button(frame7, text="T1", command=partial(PlaceShip, i))
+                button = Button(frame7, text="", command=partial(PlaceShip, i))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 button_ids_p1_enemy.append(button)
             #print(button_ids_p1_enemy)
             P1_ENEMY_CREATED = True   
-            frame4.forget() 
 
         #draw the frame7 screen
         drawBoards("p1", size, offset_r=0, offset_c=14) #offset between boards
@@ -306,7 +309,7 @@ def board(type, size): #size = width and length of the canvas
             setsize = Canvas(frame5, width=0, height=30).grid(row=i, column=11)
         
         for i, item in enumerate(pos):
-            button = Button(frame5, bg="red", command=partial(PlaceShip, i))
+            button = Button(frame5, command=partial(PlaceShip, i))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p2.append(button)
 
@@ -321,7 +324,7 @@ def board(type, size): #size = width and length of the canvas
                 setsize = Canvas(frame9, width=0, height=30).grid(row=i, column=11)
 
             for i, item in enumerate(pos):
-                button = Button(frame9, text="T2", command=partial(PlaceShip, i))
+                button = Button(frame9, text="", command=partial(PlaceShip, i))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 button_ids_p2_enemy.append(button)
             #print(button_ids_p2_enemy)
