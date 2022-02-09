@@ -345,7 +345,7 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     ddu = False
     ddd = False
 
-def EnoughSpace(i,button_ids):
+def EnoughSpace(i,button_ids):#is there enough space on the board to fit the entire ship here?
     global placing_ships
     if(placing_ships==3): #is there 3 spaces for C to go?
         if((i+10)<=99) and ((i+20)<=99):#check 2 spaces above index
@@ -443,6 +443,48 @@ def EnoughSpace(i,button_ids):
     else:
         return(True)
 
+def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the correct direction to fit the entire ship?
+    global placing_ships
+    global current_index
+    print("i = ", i)
+    print("current_index = ", current_index)
+    if(placing_ships==4): #is the second C going to block the user from not being able to place the third C? 
+        if(i==current_index+1): #if i is to the right of index
+            if(button_ids[i+1].cget('text') == "") and ((i+1)<=99) and ((i+1)%10!=0): #check that the next space to the right is empty
+                return(True)
+            elif(button_ids[current_index-1].cget('text') == "") and ((current_index-1)>=0) and ((current_index-1)%10!=9): #check that the space to the left of the original is empty
+                return(True)
+        if(i==current_index-1): #if i is to the left of index
+            if(button_ids[i-1].cget('text') == "") and ((i-1)>=0) and ((i-1)%10!=9): #check that the next space to the left is empty
+                return(True)
+            if(button_ids[current_index+1].cget('text') == "") and ((current_index+1)<=99) and ((current_index+1)<=99): #check that the space to the right of the original is empty
+                return(True)
+        if(i==current_index+10): #if i is below the index
+            if(button_ids[i+10].cget('text') == "") and ((i+10)<=99): #check that the next space down is empty
+                return(True)
+            if(button_ids[current_index-10].cget('text') == "") and ((current_index-10)>=0): #check that the space above the original is empty
+                return(True)
+        if(i==current_index-10): #if i is above the index
+            if(button_ids[i-10].cget('text') == "") and ((i-10)>=0): #check that the next space up is empty
+                return(True)
+            if(button_ids[current_index+10].cget('text') == "") and ((current_index+10)<=99): #check that the space below the original is empty
+                return(True)
+        else:
+            return(False)
+    elif(placing_ships==7): #is the second D going to block the user from not being able to place the third and fourth D?
+        #if i is to the right of index then check that the next 2 spaces to the right are empty
+        #if i is to the left of index then check that the next 2 spaces to the left are empty
+        #if i is below the index then check that the next 2 spaces down are empty
+        #if i is above the index then check that the next 2 spaces up are empty
+        return(True)
+    elif(placing_ships==11): #is the second E going to block the user from not being able to place the third, fourth, and fifth E?
+        #if i is to the right of index then check that the next 3 spaces to the right are empty
+        #if i is to the left of index then check that the next 3 spaces to the left are empty
+        #if i is below the index then check that the next 3 spaces down are empty
+        #if i is above the index then check that the next 3 spaces up are empty 
+        return(True)
+    else:
+        return(True)
 
 def PlaceShip(i, button_ids): #sends the index to be changed to change function after checking if the placement is valid
     global num_ships
@@ -466,21 +508,22 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
         reset_direction() #forget the previous orientations and reset for the next ship
-        if(EnoughSpace(i, button_ids)):
+        if(EnoughSpace(i, button_ids)):#before beginning to place a ship, it checks if there is even enough spaces on the board to fit the entire ship
             change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
             current_index = i #the index of the first letter of a ship placement is stored
     elif(placing_ships==2 or placing_ships==4 or placing_ships==7 or placing_ships==11):#placing second letter of ship
-        if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
-            change(i, button_ids)#the button will be changed to the letter of the ship being placed
+        if(EnoughSpace_2(i, button_ids)):#there is clearly enough space on the board to fit the entire ship. This check makes sure the user starts clicking in the right direction that has enough spaces. 
+            if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
+                change(i, button_ids)#the button will be changed to the letter of the ship being placed
     elif(placing_ships==5 or placing_ships==8 or placing_ships == 12):#placing third letter of ship
         if(ValidMove_3(i)):#if the third index of the third letter to be placed is either above/below the other 2 letters or to the right/left of the other 2 letters then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
     elif(placing_ships==9 or placing_ships==13):#placing fourth letter of ship
         if(ValidMove_4(i)):#if the fourth index of the fourth letter to be placed is either above/below the other 3 letters or to the right/left of the other 3 letters then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
-    elif(placing_ships==14):
-        if(ValidMove_5(i)):
-            change(i, button_ids)
+    elif(placing_ships==14):#placing fifth letter of ship (only applies to ship E)
+        if(ValidMove_5(i)):#if the final E is either above/below the other E's or to the right/left of the other E's then this is a valid move
+            change(i, button_ids)#the button will be changed to E
 
 def change(i, button_ids):#changes the button to a letter (or ship)
     global button_ids_p1
