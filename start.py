@@ -49,7 +49,6 @@ player2 = Player()
 ###
 
 
-
 root = Tk()
 
 root.rowconfigure(0, weight=1)
@@ -164,7 +163,7 @@ def ValidMove_3(i):
             right_left = True
             return(True)
         if(i==current_index+2) and (i%10!=0):
-            left_right = True
+            right_right = True
             return(True)
     elif(vertical_down):
         if(i==current_index+10):
@@ -319,6 +318,42 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
     down_down = False
     down_up = False
 
+def EnoughSpace(i,button_ids):
+    global placing_ships
+    if(placing_ships==3): #is there 3 spaces for C to go?
+        return(True)
+        #check 2 spaces above index
+        #check 2 spaces below index
+        #check 2 spaces to right of index
+        #check 2 spaces to left of index
+        #check 1 space below and 1 space above index
+        #check 1 space to the right of index and 1 space to the left of index
+    elif(placing_ships==6): #is there 4 spaces for D to go?
+        return(True)
+        #check 3 spaces above index
+        #check 3 spaces below index
+        #check 3 spaces to right of index
+        #check 3 spaces to left of index
+        #check 1 space below and 2 spaces above index
+        #check 1 space above and 2 spaces below index
+        #check 1 space to the left of index and 2 spaces to the right of index
+        #check 1 space to the right of index and 2 spaces to the left of index
+    elif(placing_ships==10): #is there 5 spaces for E to go?
+        return(True)
+        #check 4 spaces above index
+        #check 4 spaces below index
+        #check 4 spaces to right of index
+        #check 4 spaces to left of index
+        #check 1 space below and 3 spaces above index
+        #check 2 spaces below and 2 spaces above index
+        #check 1 space above and 3 spaces below index
+        #check 1 space to the left of index and 3 spaces to the right of index
+        #check 2 spaces to the left of index and 2 spaces to the right of index
+        #check 1 space to the right of index and 3 spaces to the left of index
+    else:
+        return(True)
+
+
 def PlaceShip(i, button_ids): #sends the index to be changed to change function after checking if the placement is valid
     global num_ships
     global enter_amount
@@ -340,9 +375,10 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
-        change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
-        current_index = i #the index of the first letter of a ship placement is stored
-        reset_direction() #forget the previous orientations and reset for the next ship
+        if(EnoughSpace(i, button_ids)):
+            change(i, button_ids)#the button will be changed. (The first letter placed of a ship can be placed anywhere on the board)
+            current_index = i #the index of the first letter of a ship placement is stored
+            reset_direction() #forget the previous orientations and reset for the next ship
     elif(placing_ships==2 or placing_ships==4 or placing_ships==7 or placing_ships==11):#placing second letter of ship
         if(ValidMove_2(i)): #if the index of the second letter to be placed is above/below the original index or to the right/left of the original index then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
@@ -353,8 +389,8 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
         if(ValidMove_4(i)):#if the fourth index of the fourth letter to be placed is either above/below the other 3 letters or to the right/left of the other 3 letters then this is a valid move
             change(i, button_ids)#the button will be changed to the letter of the ship being placed
     elif(placing_ships==14):
-        #if(ValidMove_5(i)):
-        change(i, button_ids)
+        if(ValidMove_5(i)):
+            change(i, button_ids)
 
 def change(i, button_ids):#changes the button to a letter (or ship)
     global button_ids_p1
