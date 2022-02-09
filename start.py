@@ -1,5 +1,6 @@
 from calendar import c
 from select import select
+from tabnanny import check
 from tkinter import *
 from functools import partial
 from xml.etree.ElementTree import TreeBuilder
@@ -321,19 +322,36 @@ def reset_direction():#direction of vertical or horizontal is reset once each sh
 def EnoughSpace(i,button_ids):
     global placing_ships
     if(placing_ships==3): #is there 3 spaces for C to go?
-        return(True)
-        #check 2 spaces above index
-        #check 2 spaces below index
-        #check 2 spaces to right of index
-        #check 2 spaces to left of index
-        #check 1 space below and 1 space above index
-        #check 1 space to the right of index and 1 space to the left of index
+        if((i+10)<=99) and ((i+20)<=99):#check 2 spaces above index
+            if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i-20)>=0):#check 2 spaces below index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i-20].cget('text') == ""):
+                return(True)
+        if((i-10)>=0) and ((i+10)<=99):#check 1 space below and 1 space above index
+            if(button_ids[i-10].cget('text') == "") and (button_ids[i+10].cget('text') == ""):
+                return(True)
+        if((i+1)<=99) and ((i+2)<=99):#check 2 spaces to right of index
+            if((i+1)%10!=0) and ((i+2)%10!=0):
+                if(button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == ""):
+                    return(True)
+        if((i-1)>=0) and ((i-2)>=0):#check 2 spaces to left of index
+            if((i-1)%10!=9) and ((i-2)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == ""):
+                    return(True)
+        if((i+1)<=99) and ((i-1)>=0):#check 1 space to the right of index and 1 space to the left of index
+            if((i+1)%10!=0) and ((i-1)%10!=9):
+                if(button_ids[i-1].cget('text') == "") and (button_ids[i+1].cget('text') == ""):
+                    return(True)
+        else:
+            return(False)
     elif(placing_ships==6): #is there 4 spaces for D to go?
         return(True)
         #check 3 spaces above index
         #check 3 spaces below index
         #check 3 spaces to right of index
         #check 3 spaces to left of index
+
         #check 1 space below and 2 spaces above index
         #check 1 space above and 2 spaces below index
         #check 1 space to the left of index and 2 spaces to the right of index
@@ -344,6 +362,7 @@ def EnoughSpace(i,button_ids):
         #check 4 spaces below index
         #check 4 spaces to right of index
         #check 4 spaces to left of index
+
         #check 1 space below and 3 spaces above index
         #check 2 spaces below and 2 spaces above index
         #check 1 space above and 3 spaces below index
