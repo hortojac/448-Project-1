@@ -144,18 +144,20 @@ def ValidMove_2(i):
     global vertical_down
     global horizontal_right
     global horizontal_left
-    if(i==current_index+1) and (i%10!=0):
-        horizontal_right = True
-        return(True)
-    if(i==current_index-1) and (i%10!=9):
-        horizontal_left = True
-        return(True)
-    if(i==current_index+10):
-        vertical_up = True
-        return(True)
-    if(i==current_index-10):
-        vertical_down = True
-        return(True)
+    if(i==current_index+1) and (i%10!=0): #if the second move is to the right of the original index and it is not wrapping around the sides of the board...
+        horizontal_right = True #the players second move was to the right
+        return(True)#this is a valid move
+    if(i==current_index-1) and (i%10!=9): #if the second move is to the left of the original index and it is not wrapping around the sides of the board...
+        horizontal_left = True #the players second move was to the left
+        return(True)#this is a valid move
+    if(i==current_index+10): #if the second move is below the original index...
+        vertical_down = True #the players second move was down
+        return(True)#this is a valid move
+    if(i==current_index-10): #if the second move is above the original index...
+        vertical_up = True #the players second move was up
+        return(True)#this is a valid move
+    else:
+        return(False)#this is not a valid move
 
 def ValidMove_3(i):
     global current_index
@@ -171,33 +173,33 @@ def ValidMove_3(i):
     global up_down
     global down_down
     global down_up
-    if(horizontal_left):
-        if(i==current_index+1) and (i%10!=0):
-            left_right = True
-            return(True)
-        if(i==current_index-2) and (i%10!=9):
-            left_left = True
-            return(True)
-    elif(horizontal_right):
-        if(i==current_index-1) and (i%10!=9):
-            right_left = True
-            return(True)
-        if(i==current_index+2) and (i%10!=0):
-            right_right = True
-            return(True)
+    if(horizontal_left): #if the players second move was to the left of the original index...
+        if(i==current_index+1) and (i%10!=0): #if the third move is to the right of the original index and it is not wrapping around the sides of the board...
+            left_right = True #the players third move is to the right of the original index 
+            return(True) #this is a valid move
+        if(i==current_index-2) and (i%10!=9): #if the third move is 2 to the left of the original index (or to the left of the second move)...
+            left_left = True #the players third move is to the left of the second move
+            return(True) #this is a valid move
+    elif(horizontal_right): #if the players second move was to the right of the original index...
+        if(i==current_index-1) and (i%10!=9):#if the third move is to the left of the original index and it is not wrapping around the sides of the board...
+            right_left = True #the players third move is to the left of the original index
+            return(True)#this is a valid move
+        if(i==current_index+2) and (i%10!=0):#if the third move is to the right of the original index (or to the right of the second move)...
+            right_right = True #the players third move is to the right of the second move
+            return(True) #this is a valid move
     elif(vertical_down):
-        if(i==current_index+10):
-            down_up = True
-            return(True)
-        if(i==current_index-20):
+        if(i==current_index+20):
             down_down = True
             return(True)
-    elif(vertical_up):
         if(i==current_index-10):
-            up_down = True
+            down_up = True
             return(True)
-        if(i==current_index+20):
+    elif(vertical_up):
+        if(i==current_index-20):
             up_up = True
+            return(True)
+        if(i==current_index+10):
+            up_down = True
             return(True)
 
 def ValidMove_4(i):
@@ -240,24 +242,24 @@ def ValidMove_4(i):
             rrr = True
             return(True)
     elif(up_up):
-        if(i==current_index-10):
+        if(i==current_index+10):
             uud = True
             return(True)
-        if(i==current_index+30):
+        if(i==current_index-30):
             uuu = True
             return(True)
     elif(up_down or down_up):
         if(i==current_index+20):
-            uud = True
+            uuu = True
             return(True)
         if(i==current_index-20):
-            ddu = True
+            uud = True
             return(True)
     elif(down_down):
-        if(i==current_index+10):
+        if(i==current_index-10):
             ddu = True
             return(True)
-        if(i==current_index-30):
+        if(i==current_index+30):
             ddd = True
             return(True)
 
@@ -292,27 +294,27 @@ def ValidMove_5(i):
         if(i==current_index+4) and (i%10!=0):
             return(True)
     elif(uud):
-        if(i==current_index+30):
-            return(True)
-        if(i==current_index-20):
-            return(True)
-    elif(uuu):
-        if(i==current_index+40):
-            return(True)
-        if(i==current_index-10):
-            return(True)
-    elif(ddu):
-        if(i==current_index+20):
-            return(True)
         if(i==current_index-30):
             return(True)
-    elif(ddd):
-        if(i==current_index+10):
+        if(i==current_index+20):
             return(True)
+    elif(uuu):
         if(i==current_index-40):
             return(True)
+        if(i==current_index+10):
+            return(True)
+    elif(ddu):
+        if(i==current_index-20):
+            return(True)
+        if(i==current_index+30):
+            return(True)
+    elif(ddd):
+        if(i==current_index-10):
+            return(True)
+        if(i==current_index+40):
+            return(True)
 
-def reset_direction():#direction of vertical or horizontal is reset once each ship is finalized
+def reset_direction():#direction of vertical or horizontal and order of placement is reset once each ship has been finalized
     global vertical_up 
     global vertical_down
     global horizontal_right
@@ -379,7 +381,7 @@ def EnoughSpace(i, button_ids):#is there enough space on the board to fit the en
                 if(button_ids[i-1].cget('text') == "") and (button_ids[i+1].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False)#this is not a valid move because the user won't be able to fit their entire ship in any orientation
     elif(placing_ships==6): #is there 4 spaces for D to go?
         if((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99):#check 3 spaces above index
             if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == ""):
@@ -410,7 +412,7 @@ def EnoughSpace(i, button_ids):#is there enough space on the board to fit the en
                 if(button_ids[i-1].cget('text') == "") and (button_ids[i+1].cget('text') == "") and (button_ids[i+2].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False)#this is not a valid move because the user won't be able to fit their entire ship in any orientation
     elif(placing_ships==10): #is there 5 spaces for E to go?
         if((i+10)<=99) and ((i+20)<=99) and ((i+30)<=99) and ((i+40)<=99): #check 4 spaces above index
             if(button_ids[i+10].cget('text') == "") and (button_ids[i+20].cget('text') == "") and (button_ids[i+30].cget('text') == "") and (button_ids[i+40].cget('text') == ""):
@@ -448,15 +450,13 @@ def EnoughSpace(i, button_ids):#is there enough space on the board to fit the en
                 if(button_ids[i-1].cget('text') == "") and (button_ids[i-2].cget('text') == "") and (button_ids[i-3].cget('text') == "") and (button_ids[i+1].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False) #this is not a valid move because the user won't be able to fit their entire ship in any orientation
     else:
         return(True)
 
 def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the correct direction to fit the entire ship?
     global placing_ships
     global current_index
-    print("i = ", i)
-    print("current_index = ", current_index)
     if(placing_ships==4): #is the second C going to block the user from not being able to place the third C? 
         if(i==current_index+1): #if i is to the right of index...
             if((i+1)<=99) and ((i+1)%10!=0): #check that the next space to the right is empty
@@ -487,7 +487,7 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
                 if(button_ids[current_index+10].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False) #this is not a valid move because the user won't be able to finish placing their ship
     elif(placing_ships==7): #is the second D going to block the user from not being able to place the third and fourth D?    
         if(i==current_index+1): #if i is to the right of index...
             if((i+1)<=99) and ((i+1)%10!=0) and ((i+2)<=99) and ((i+2)%10!=0): #check that the next 2 spaces to the right are empty
@@ -530,7 +530,7 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
                 if(button_ids[i-10].cget('text') == "") and (button_ids[current_index+10].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False) #this is not a valid move because the user won't be able to finish placing their ship
     elif(placing_ships==11): #is the second E going to block the user from not being able to place the third, fourth, and fifth E?
         if(i==current_index+1): #if i is to the right of index...
             if((i+1)<=99) and ((i+1)%10!=0) and ((i+2)<=99) and ((i+2)%10!=0) and ((i+3)<=99) and ((i+3)%10!=0): #check that the next 3 spaces to the right are empty
@@ -585,7 +585,7 @@ def EnoughSpace_2(i, button_ids):#is the user orientating their ship in the corr
                 if(button_ids[i-10].cget('text') == "") and (button_ids[current_index+10].cget('text') == "") and (button_ids[current_index+20].cget('text') == ""):
                     return(True)
         else:
-            return(False)
+            return(False) #this is not a valid move because the user won't be able to finish placing their ship
     else:
         return(True)
 
@@ -598,13 +598,13 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     global button_ids_p1
     global p1_hit_counter
     global p2_hit_counter
-    if(num_ships==1):
+    if(num_ships==1): #if the user chose for each player to have one ship
         enter_amount = 1 #you will only be clicking the board once (A)
-    elif(num_ships==2):
+    elif(num_ships==2): #if the user chose for each player to have two ships
         enter_amount = 3 #you will be clicking the board 3 times (ABB)
-    elif(num_ships==3):
+    elif(num_ships==3): #if the user chose for each player to have three ships
         enter_amount = 6 #you will be clicking the board 6 times (ABBCCC)
-    elif(num_ships==4):
+    elif(num_ships==4): #if the user chose for each player to have four ships
         enter_amount = 10 #you will be clicking the board 10 times (ABBCCCDDDD)
     else:
         enter_amount = 15 #you will be clicking the board 15 times (ABBCCCDDDDEEEEE)
@@ -632,64 +632,56 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
         if(ValidMove_5(i)):#if the final E is either above/below the other E's or to the right/left of the other E's then this is a valid move
             change(i, button_ids)#the button will be changed to E
 
-def change(i, button_ids):#changes the button to a letter (or ship)
+def change(i, button_ids):#changes the button to a letter and the button ids are updated based on if the player 1 or player 2 buttons are being clicked
     global button_ids_p1
     global button_ids_p2
     global text_variable
     global selected_ships
     global enter_amount 
     global placing_ships 
-    if (selected_ships < enter_amount) and (button_ids[i].cget('text') == ""):
-        if(selected_ships==0): #if you haven't clicked the board yet, your first click will be placing A
+    if (selected_ships < enter_amount) and (button_ids[i].cget('text') == ""):#you are only allowed to change a button if you have not finished placing all your ships and if that button hasn't been clicked yet 
+        if(selected_ships==0): #if you haven't clicked the board yet, your first click will place ship A and placing_ships will be updated to keep track of what click the user is on in order to check for bad user input in the ValidMove functions
             text_variable = 'A'
-            placing_ships = placing_ships + 1
-        elif(selected_ships>0 and selected_ships<=2):#if you have clicked the board once, the next two clicks will place ship B
+            placing_ships = placing_ships + 1 
+        elif(selected_ships>0 and selected_ships<=2):#if you have clicked the board once, the next two clicks will place ship B and placing_ships will be updated to keep track of what click the user is on in order to check for bad user input in the ValidMove functions
             text_variable = 'B'
             placing_ships = placing_ships + 1
-        elif(selected_ships>2 and selected_ships<=5):#if you have clicked the board three times, you are now placing ship C
+        elif(selected_ships>2 and selected_ships<=5):#if you have clicked the board three times, you are now placing ship C and placing_ships will be updated to keep track of what click the user is on in order to check for bad user input in the ValidMove functions
             text_variable = 'C'
             placing_ships = placing_ships + 1
-        elif(selected_ships>5 and selected_ships<=9):
+        elif(selected_ships>5 and selected_ships<=9):#if you have clicked the board five times, you are now placing ships D and placing_ships will be updated to keep track of what click the user is on in order to check for bad user input in the ValidMove functions
             text_variable = 'D'
             placing_ships = placing_ships + 1
-        else:
+        else: #else you are placing ship E and placing_ships will be updated to keep track of what click the user is on in order to check for bad user input in the ValidMove functions
             text_variable = 'E'
             placing_ships = placing_ships + 1
          
-        bname = (button_ids[i])
-        bname.configure(text=text_variable)
-        selected_ships = selected_ships + 1
-        if(selected_ships==enter_amount):
-            if(button_ids == button_ids_p1):
-                frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(setup_frame5)).grid(row = 11, column = 22)
-            else:
-                frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)
+        bname = (button_ids[i])#store the current button id in bname
+        bname.configure(text=text_variable)#update the current button to be a different text (either A,B,C,D,E)
+        selected_ships = selected_ships + 1 #every time a button is actually changed to a letter, selected_ships is updated. Once selected_ships==enter_amount then the user can't keep placing more letters/ships
+        if(selected_ships==enter_amount): #once the player has clicked the placing ships board the full number of times so that every ship is placed then the Finalize Ship Placement button apears
+            if(button_ids == button_ids_p1):#have the button appear on player 1's screen if player 1's board was just finalized 
+                frame4_button = Button(frame4, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(setup_frame5)).grid(row = 11, column = 22)#when Finalize Ship Placement is pressed then setup_frame5 function is called
+            else:#have the button appear on player 2's screen if player 2's board was just finalized 
+                frame5_button = Button(frame5, text="Finalize Ship\nPlacement", padx=20, pady=20, fg='black', command=partial(show_frame,frame6)).grid(row = 11, column = 22)#when Finalized Ship Placement is pressed then frame6 displays on the screen
             
 
-def setup_frame5():
-    reset()
+def setup_frame5():#simple function that resets all the variables so player 2 sees a fresh board and frame 5 is shown so player 2 can start placing their ships.
+    reset()#important that reset doesn't happen until Finalize Ship Placement is pressed otherwise variables will be reset too early and player 1 can keep placing more ships 
     show_frame(frame5)
 
 
-def reset():#resets entire board and variables so player 2 sees fresh board when placing their battleships
+def reset():#resets variables that handle the general board placement so player 2 sees fresh board when placing their battleships
     global text_variable
     global selected_ships
     global enter_amount
     global placing_ships
     global current_index
-    global vertical_up 
-    global vertical_down
-    global horizontal_right
-    global horizontal_left
     text_variable = 'A'
     selected_ships = 0
     enter_amount = 0
     placing_ships = 0
     current_index = 0
-    vertical_up = False
-    vertical_down = False
-    horizontal_right = False
-    horizontal_left = False
 
 # @drawBoard:Helper Function for drawing the boards for the player turn screens
     #frame = frame to draw board on 
