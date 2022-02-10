@@ -837,13 +837,18 @@ def board(type, size): #size = width and length of the canvas
         drawBoards("p2", size, offset_r=0, offset_c=14) #offset between boards
         show_frame(frame9)
 
+def SetupFrame3(number_of_ships):
+    shipcount(number_of_ships)
+    show_frame(frame3)
+    
+myButton1 = Button(frame2, text="1 ship ", padx=25, pady=25, command=partial(SetupFrame3, 1), fg="black").grid(row=1, column=0)
+myButton2 = Button(frame2, text="2 ships", padx=25, pady=25, command=partial(SetupFrame3, 2), fg="black").grid(row=2, column=0)
+myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=partial(SetupFrame3, 3), fg="black").grid(row=3, column=0)
+myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(SetupFrame3, 4), fg="black").grid(row=4, column=0)
+myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(SetupFrame3, 5), fg="black").grid(row=5, column=0)
 
-myButton1 = Button(frame2, text="1 ship ", padx=25, pady=25, command=partial(shipcount, 1), fg="black").grid(row=1, column=0)
-myButton2 = Button(frame2, text="2 ships", padx=25, pady=25, command=partial(shipcount, 2), fg="black").grid(row=2, column=0)
-myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=partial(shipcount, 3), fg="black").grid(row=3, column=0)
-myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(shipcount, 4), fg="black").grid(row=4, column=0)
-myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(shipcount, 5), fg="black").grid(row=5, column=0)
-myButton6 = Button(frame2, text="Next", padx=5, pady=5, fg="black", command=partial(show_frame,frame3)).grid(row=7, column=0)
+
+
 
 #Frame 3 code
 e = Entry(frame3,width=50)
