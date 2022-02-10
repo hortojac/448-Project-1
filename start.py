@@ -923,9 +923,14 @@ board('p1_set', 30)
 board('p2_set', 30)
 
 def checkWin(nextFrame):
-    win = False #for now
-    if win == True:
-        show_frame(frame10) #show win frame
+    global p1_hit_counter
+    global p2_hit_counter
+    if p1_hit_counter == 0:
+        show_frame(frame10)
+        label_10_p1 = Label(frame10, text="Player 2 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
+    elif p2_hit_counter == 0:
+        show_frame(frame10)
+        label_10_p2 = Label(frame10, text="Player 1 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
     else:
         show_frame(nextFrame)
 
@@ -951,6 +956,6 @@ enemy_board_label = Label(frame9, text="Enemy Board", fg="black").grid(row=12, c
 frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
 
 #Frame 10 = endscreen
-frame10_button = Button(frame10, text="Yay Player x Wins!!", padx=20, pady=20, fg='black').grid()
+frame10_button = Button(frame10, text="Press to Quit", padx=20, pady=20, fg='black', command=root.destroy).grid(row=2, column = 0)
 
 root.mainloop()
