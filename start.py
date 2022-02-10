@@ -51,6 +51,8 @@ uud = False
 ddu = False
 ddd = False
 
+p1_hit_counter = 0
+p2_hitcounter = 0
 ###
 
 root = Tk()
@@ -58,7 +60,11 @@ root.state('zoomed')
 root.title("Battleship")
 
 ### Images Used
-image=Image.open("assets/red.png")
+image=Image.open("assets/sunk.jpeg")
+img_s=image.resize((40,40))
+img_sunk=ImageTk.PhotoImage(img_s)
+
+image=Image.open("assets/hit.jpeg") #image for hit (bg for button will be set to red)
 img_r=image.resize((40,40))
 img_red=ImageTk.PhotoImage(img_r)
 
