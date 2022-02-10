@@ -99,14 +99,37 @@ frame1_button = Button(frame1, text="Start", padx=25, pady=25, command=partial(s
 #Frame 2 code
 myLabel2 = Label(frame2, text="Choose the number of ships each player will have.", fg="black").grid(row=0, column=0)
 
+#Frame 3 code
+e = Entry(frame3,width=50)
+e.grid()
+e.insert(0, "Enter Player 1 Name Here")
+b = Entry(frame3, width=50)
+b.grid()
+b.insert(0, "Enter Player 2 Name Here")
+
+def set_player_names(): #sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively
+    global player1
+    global player2
+    print(e.get())
+    print(b.get())
+    player1.name = e.get()
+    player2.name = b.get()
+    show_frame(frame4)
+
+    #set up frame 4 label
+    p1_label = "Player 1 (" + player1.name + ")"
+    frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
+
+    #set up frame 5 label
+    p2_label = "Player 2 (" + player2.name + ")"
+    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
+
 def shipcount(x):
     global num_ships
     global player1
     global player2
     num_ships = x
     num = str(x) # get the number as a string
-
-    myLabel = Label(frame2, text="Ships per player: " + num, fg="red").grid(row=6, column=0)
     mylabel = Label(frame4, text="Place your ships (" + num + ")").grid(row=1, column=22) #label for p1 on frame4
     mylabel = Label(frame5, text="Place your ships (" + num + ")").grid(row=1, column=22) #label for p2 on frame5
     choose_ship_number()
@@ -115,7 +138,6 @@ def shipcount(x):
 def choose_ship_number():
     global num_ships
     x = num_ships
-    print("num_ships: " + str(x))
     if x >= 1: 
         ship1 = Button(frame4, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
         ship1 = Button(frame5, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
@@ -846,35 +868,6 @@ myButton2 = Button(frame2, text="2 ships", padx=25, pady=25, command=partial(Set
 myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=partial(SetupFrame3, 3), fg="black").grid(row=3, column=0)
 myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(SetupFrame3, 4), fg="black").grid(row=4, column=0)
 myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(SetupFrame3, 5), fg="black").grid(row=5, column=0)
-
-
-
-
-#Frame 3 code
-e = Entry(frame3,width=50)
-e.grid()
-e.insert(0, "Enter Player 1 Name Here")
-b = Entry(frame3, width=50)
-b.grid()
-b.insert(0, "Enter Player 2 Name Here")
-
-def set_player_names(): #sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively
-    global player1
-    global player2
-    print(e.get())
-    print(b.get())
-    player1.name = e.get()
-    player2.name = b.get()
-    show_frame(frame4)
-
-    #set up frame 4 label
-    p1_label = "Player 1 (" + player1.name + ")"
-    frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
-
-    #set up frame 5 label
-    p2_label = "Player 2 (" + player2.name + ")"
-    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
-
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
