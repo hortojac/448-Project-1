@@ -50,6 +50,8 @@ uuu = False
 uud = False
 ddu = False
 ddd = False
+p1_fired = False
+p2_fired = False
 
 p1_hit_counter = 0
 p2_hit_counter = 0
@@ -875,31 +877,37 @@ def set_player_names(): #sets player names, then makes a label with the correspo
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
     global p1_hit_counter 
-    global p2_hit_counter 
-    print(p1_hit_counter)
-    print(p2_hit_counter)
     global enter_amount
+    global p2_hit_counter 
+    global p1_fired
+    global p2_fired
     global img_white
     global img_red
-
+    p1_hit_counter = enter_amount
+    p2_hit_counter = enter_amount
     if(type == "p1"): #miss
-        if(button_ids_p2[i].cget("text") == ""):
-            button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
-            button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
-        else: #there is a ship at i     
-            p1_hit_counter -= 1
-            print("p1 hits left: ")
-            print(p1_hit_counter)
-            button_ids_p1_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
-            button_ids_p2[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
-    else: #if typw is p2 
-        if(button_ids_p1[i].cget("text") == ""):
-            button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
-            button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
-        else:
-            p2_hit_counter -= 1
-            button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
-            button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
+        p2_fired = False
+        if not p1_fired:
+            if(button_ids_p2[i].cget("text") == ""):
+                button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+            else: #there is a ship at i
+                #get image
+                p1_hit_counter -= 1
+                button_ids_p1_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                button_ids_p2[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+            p1_fired = True
+    elif(type == "p2"):
+        p1_fired = False
+        if not p2_fired:
+            if(button_ids_p1[i].cget("text") == ""):
+                button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+            else:
+                p2_hit_counter -= 1
+                button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
+            p2_fired = True
 
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).grid()
 
