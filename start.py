@@ -52,7 +52,7 @@ ddu = False
 ddd = False
 
 p1_hit_counter = 0
-p2_hitcounter = 0
+p2_hit_counter = 0
 ###
 
 root = Tk()
@@ -594,6 +594,8 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     global current_index
     global button_ids_p2
     global button_ids_p1
+    global p1_hit_counter
+    global p2_hit_counter
     if(num_ships==1):
         enter_amount = 1 #you will only be clicking the board once (A)
     elif(num_ships==2):
@@ -605,6 +607,8 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     else:
         enter_amount = 15 #you will be clicking the board 15 times (ABBCCCDDDDEEEEE)
 
+    p1_hit_counter = enter_amount
+    p2_hit_counter = enter_amount
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
@@ -863,29 +867,32 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     p1_label = "Player 1 (" + player1.name + ")"
     frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
 
+    #set up frame 5 label
+    p2_label = "Player 2 (" + player2.name + ")"
+    frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
+
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
     global p1_hit_counter 
-    global enter_amount
     global p2_hit_counter 
-
+    print(p1_hit_counter)
+    print(p2_hit_counter)
+    global enter_amount
     global img_white
     global img_red
 
-    p1_hit_counter = enter_amount
-    p2_hit_counter = enter_amount
     if(type == "p1"): #miss
         if(button_ids_p2[i].cget("text") == ""):
             button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
             button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
-        else: #there is a ship at i
-            #get image
+        else: #there is a ship at i     
             p1_hit_counter -= 1
+            print("p1 hits left: ")
+            print(p1_hit_counter)
             button_ids_p1_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
             button_ids_p2[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
-        show_frame(frame7)
-    else: #id is p2 
+    else: #if typw is p2 
         if(button_ids_p1[i].cget("text") == ""):
             button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
             button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
@@ -893,21 +900,6 @@ def Attack(i, type): #playerId = "p1" or "p2"
             p2_hit_counter -= 1
             button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
             button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
-        show_frame(frame9)
-        
-    
-
-#set up frame 4 label
-p1_label = "Player 1 (" + player1.name + ")"
-frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)  
-
-#set up frame 5 label
-p2_label = "Player 2 (" + player2.name + ")"
-frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
-
-#set up frame 5 label
-p2_label = "Player 2 (" + player2.name + ")"
-frame4_label = Label(frame5, text=p2_label).grid(row=2, column=22) 
 
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).grid()
 
