@@ -68,8 +68,13 @@ root.state('zoomed')
 root.title("Battleship")
 
 ### Images Used
-img_red = ImageTk.PhotoImage(Image.open("assets/red.png"))
-img_white = ImageTk.PhotoImage(Image.open("assets/white.png"))
+image=Image.open("assets/red.png")
+img_r=image.resize((40,40))
+img_red=ImageTk.PhotoImage(img_r)
+
+image=Image.open("assets/white.png")
+img_w=image.resize((40,40))
+img_white=ImageTk.PhotoImage(img_w)
 ###
 
 root.rowconfigure(0, weight=1)
