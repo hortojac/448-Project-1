@@ -716,10 +716,14 @@ def drawBoards(type, size, offset_r, offset_c):
             img= button_ids_p1[i].cget("image")
             txt = button_ids_p1[i].cget("text")
             b = button_ids_p1[i].cget("bg")
-         
+
+            temp = button_ids_p1[i]
             button = Button(master=frame7, image=img, text=txt, bg=b) #make a copy
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p1[i] = button #replace button with copied button
+            temp.destroy() #destroy old button
+
+            
 
        
         #draw enemy board
@@ -747,11 +751,12 @@ def drawBoards(type, size, offset_r, offset_c):
             img= button_ids_p2[i].cget("image")
             txt = button_ids_p2[i].cget("text")
             b = button_ids_p2[i].cget("bg")
-         
+
+            temp = button_ids_p2[i]
             button = Button(master=frame9, image=img, text=txt, bg=b) #make a copy
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             button_ids_p2[i] = button #replace button with copied button
-
+            temp.destroy()
        
         #draw enemy board
         for i in range(10):
@@ -876,15 +881,16 @@ def set_player_names(): #sets player names, then makes a label with the correspo
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
-    global p1_hit_counter 
     global enter_amount
+    global p1_hit_counter 
     global p2_hit_counter 
+    print(p1_hit_counter)
+    print(p2_hit_counter)
+
     global p1_fired
     global p2_fired
     global img_white
     global img_red
-    p1_hit_counter = enter_amount
-    p2_hit_counter = enter_amount
     if(type == "p1"): #miss
         p2_fired = False
         if not p1_fired:
