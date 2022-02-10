@@ -5,21 +5,11 @@ from player import Player
 from PIL import ImageTk, Image
 
 
-
-
-
-
 button_ids_p1 = []
 button_ids_p2 = []
 button_ids_p1_enemy = []
 button_ids_p2_enemy = []
 
-
-
-# positions_p1 = product(range(10), range(10))
-# positions_p2 = product(range(10), range(10))
-# positions_p1_enemy = product(range(10), range(10))
-# positions_p2_enemy = product(range(10), range(10))
 
 def show_frame(frame):
     frame.tkraise()
@@ -867,10 +857,6 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     p1_label = "Player 1 (" + player1.name + ")"
     frame4_label = Label(frame4, text=p1_label).grid(row=2, column=22)
 
-##my_img = ImageTk.PhotoImage(Image.open("assets/white.png"))
-#btn = Button(text="HELLO", compound="center", fg="black", image=my_img)
-#lol = btn.cget("image")
-##color image
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
