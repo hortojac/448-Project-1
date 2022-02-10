@@ -273,45 +273,45 @@ def ValidMove_5(i): #is the fifth letter being placed on a valid button in relat
     global uuu
     global ddu 
     global ddd
-    if(llr):
-        if(i==current_index-3) and (i%10!=9):
+    if(llr): #if there are 2 letters to the left of the original index and 1 letter to the right of the original index
+        if(i==current_index-3) and (i%10!=9): #if the fifth move is 3 to the left of the original index
             return(True) #this is a valid move
-        if(i==current_index+2) and (i%10!=0):
+        if(i==current_index+2) and (i%10!=0): #if the fifth move is 2 to the right of the original index
             return(True) #this is a valid move
-    elif(lll):
-        if(i==current_index+1) and (i%10!=0):
+    elif(lll): #if there are 3 letters to the left of the original index
+        if(i==current_index+1) and (i%10!=0): #if the fifth move is 1 to the right of the original index
             return(True) #this is a valid move
-        if(i==current_index-4) and (i%10!=9):
+        if(i==current_index-4) and (i%10!=9): #if the fifth move is 4 to the left of the original index
             return(True) #this is a valid move
-    elif(rrl):
-        if(i==current_index-2) and (i%10!=9):
+    elif(rrl): #if there are 2 letters to the right of the original index and 1 letter to the left of the original index
+        if(i==current_index-2) and (i%10!=9): #if the fifth move is 2 to the left of the original index
             return(True) #this is a valid move
-        if(i==current_index+3) and (i%10!=0):
+        if(i==current_index+3) and (i%10!=0): #if the fifth move is 3 to the right of the original index
             return(True) #this is a valid move
-    elif(rrr):
-        if(i==current_index-1) and (i%10!=9):
+    elif(rrr): #if there are 3 letters to the right of the original index
+        if(i==current_index-1) and (i%10!=9): #if the fifth move is 1 to the left of the original index
             return(True) #this is a valid move
-        if(i==current_index+4) and (i%10!=0):
+        if(i==current_index+4) and (i%10!=0): #if the fifth move is 4 to the right of the original index
             return(True) #this is a valid move
-    elif(uud):
-        if(i==current_index-30):
-            return(True)
-        if(i==current_index+20):
+    elif(uud): #if there are 2 letters above the original index and 1 letter below the original index
+        if(i==current_index-30): #if the fifth move is 3 above the original index
             return(True) #this is a valid move
-    elif(uuu):
-        if(i==current_index-40):
-            return(True)
-        if(i==current_index+10):
+        if(i==current_index+20): #if the fifth move is 2 below the original index
             return(True) #this is a valid move
-    elif(ddu):
-        if(i==current_index-20):
+    elif(uuu): #if there are 3 letters above the original index
+        if(i==current_index-40): #if the fifth move is 4 above the original index
             return(True) #this is a valid move
-        if(i==current_index+30):
+        if(i==current_index+10): #if the fifth move is 1 below the original index
             return(True) #this is a valid move
-    elif(ddd):
-        if(i==current_index-10):
+    elif(ddu): #if there are 2 letters below the original index and 1 letter above the original index
+        if(i==current_index-20): #if the fifth move is 2 above the original index
             return(True) #this is a valid move
-        if(i==current_index+40):
+        if(i==current_index+30): #if the fifth move is 3 below the original index 
+            return(True) #this is a valid move
+    elif(ddd): #if there are 3 letters below the original index 
+        if(i==current_index-10): #if the fifth move is 1 above the original index
+            return(True) #this is a valid move
+        if(i==current_index+40): #if the fifth move is 4 below the original index
             return(True) #this is a valid move
 
 def reset_direction():#direction of vertical or horizontal and order of placement is reset once each ship has been finalized
@@ -356,7 +356,7 @@ def reset_direction():#direction of vertical or horizontal and order of placemen
     ddu = False
     ddd = False
 
-def EnoughSpace(i, button_ids):#is there enough space on the board to fit the entire ship here?
+def EnoughSpace(i, button_ids):#is there enough space on the board to fit the entire ship here? are the spaces to the left/right/up/down empty?
     global placing_ships
     if(placing_ships==3): #is there 3 spaces for C to go?
         if((i+10)<=99) and ((i+20)<=99):#check 2 spaces above index
