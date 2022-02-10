@@ -692,7 +692,6 @@ def reset():#resets entire board and variables so player 2 sees fresh board when
     #offset_c = number of columns to offset by
 def drawBoards(type, size, offset_r, offset_c):
     print("test DRAWBOARDS")
-    
     if type == "p1":
         print("HERE P1")
         global button_ids_p1
@@ -763,14 +762,15 @@ def board(type, size): #size = width and length of the canvas
     global P2_ENEMY_CREATED
     print(P1_ENEMY_CREATED)
     print(P2_ENEMY_CREATED)
+    print(size)
     if type == 'p1_set': #it is player 1's turn and they are placing their ships
         pos = product(range(10), range(10))
         global button_ids_p1
         #initialize player 1's board
         for i in range(10):
             #shape the grid
-            setsize = Canvas(frame4, width=30, height=0).grid(row=11, column=i)
-            setsize = Canvas(frame4, width=0, height=30).grid(row=i, column=11)
+            setsize = Canvas(frame4, width=size, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame4, width=0, height=size).grid(row=i, column=11)
         for i, item in enumerate(pos):
             button = Button(frame4, command=partial(PlaceShip, i, button_ids_p1))
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
@@ -784,8 +784,8 @@ def board(type, size): #size = width and length of the canvas
             #create
             for i in range(10):
                 # shape the grid
-                setsize = Canvas(frame7, width=30, height=0).grid(row=11, column=i)
-                setsize = Canvas(frame7, width=0, height=30).grid(row=i, column=11)
+                setsize = Canvas(frame7, width=size, height=0).grid(row=11, column=i)
+                setsize = Canvas(frame7, width=0, height=size).grid(row=i, column=11)
             for i, item in enumerate(pos):
                 button = Button(frame7, text="", command=partial(Attack, i, "p1"))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
@@ -803,8 +803,8 @@ def board(type, size): #size = width and length of the canvas
 
         for i in range(10):
             # shape the grid
-            setsize = Canvas(frame5, width=30, height=0).grid(row=11, column=i)
-            setsize = Canvas(frame5, width=0, height=30).grid(row=i, column=11)
+            setsize = Canvas(frame5, width=size, height=0).grid(row=11, column=i)
+            setsize = Canvas(frame5, width=0, height=size).grid(row=i, column=11)
         
         for i, item in enumerate(pos):
             button = Button(frame5, command=partial(PlaceShip, i, button_ids_p2))
@@ -818,8 +818,8 @@ def board(type, size): #size = width and length of the canvas
             #create
             for i in range(10):
                 # shape the grid
-                setsize = Canvas(frame9, width=30, height=0).grid(row=11, column=i)
-                setsize = Canvas(frame9, width=0, height=30).grid(row=i, column=11)
+                setsize = Canvas(frame9, width=size, height=0).grid(row=11, column=i)
+                setsize = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
 
             for i, item in enumerate(pos):
                 button = Button(frame9, text="", command=partial(Attack, i, "p2"))
@@ -916,11 +916,11 @@ frame3_button = Button(frame3, text="Enter", command=partial(set_player_names)).
 
 #Frame 4 code   
     #label created inside set_player_names function
-board('p1_set', 30)
+board('p1_set', 40)
 
 #frame 5 code
    #label created inside set_player_names function
-board('p2_set', 30)
+board('p2_set', 40)
 
 def checkWin(nextFrame):
     global p1_hit_counter
@@ -935,11 +935,14 @@ def checkWin(nextFrame):
         show_frame(nextFrame)
 
 #frame 6 code = popup player 1
-frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='black', command=partial(board, "p1_attack", 10)).place(anchor=CENTER, relx=0.5, rely=0.3,)
+frame6_button = Button(frame6, text="Ready Player 1?", padx=20, pady=20, fg='black', command=partial(board, "p1_attack", 40)).place(anchor=CENTER, relx=0.5, rely=0.3,)
 
 
 #frame 7 = player 1 turn
 mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=12)
+label_key_red = Label(frame7, text="Red = HIT", fg='red', bg='grey').grid(row=2, column=12)
+label_key_white = Label(frame7, text="White = MISS", fg='white', bg='black').grid(row=3, column=12)
+label_key_black = Label(frame7, text="Black = SUNK", fg='black', bg='white').grid(row=4, column=12)
 my_board_label = Label(frame7, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame7, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)
 frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
@@ -947,10 +950,13 @@ frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black
 
 
 #frame 8 = popup player 2   
-frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=partial(board, "p2_attack", 10)).place(anchor=CENTER, relx=0.5, rely=0.3,)
+frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, fg='black', command=partial(board, "p2_attack",40)).place(anchor=CENTER, relx=0.5, rely=0.3,)
 
 #frame 9 = player 2 turn
-mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=12) 
+mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=12)
+label_key_red = Label(frame9, text="Red = HIT", fg='red', bg='grey').grid(row=2, column=12)
+label_key_white = Label(frame9, text="White = MISS", fg='white', bg='black').grid(row=3, column=12)
+label_key_black = Label(frame9, text="Black = SUNK", fg='black', bg='white').grid(row=4, column=12) 
 my_board_label = Label(frame9, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame9, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)  
 frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
