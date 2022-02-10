@@ -138,7 +138,7 @@ def int_to_char(x): #converts given integer into to a character
 def char_to_int(x): #converts given character into an integer
     return int(x) - 64
 
-def ValidMove_2(i):
+def ValidMove_2(i): #is the second letter being placed on a valid button in relation to the original index?
     global current_index
     global vertical_up 
     global vertical_down
@@ -159,7 +159,7 @@ def ValidMove_2(i):
     else:
         return(False)#this is not a valid move
 
-def ValidMove_3(i):
+def ValidMove_3(i): #is the third letter being placed on a valid button in relation to the original index and the second letter?
     global current_index
     global vertical_up 
     global vertical_down
@@ -177,32 +177,32 @@ def ValidMove_3(i):
         if(i==current_index+1) and (i%10!=0): #if the third move is to the right of the original index and it is not wrapping around the sides of the board...
             left_right = True #the players third move is to the right of the original index 
             return(True) #this is a valid move
-        if(i==current_index-2) and (i%10!=9): #if the third move is 2 to the left of the original index (or to the left of the second move)...
+        if(i==current_index-2) and (i%10!=9): #if the third move is 2 to the left of the original index and it is not wrapping around the side of the board (or to the left of the second move)...
             left_left = True #the players third move is to the left of the second move
             return(True) #this is a valid move
     elif(horizontal_right): #if the players second move was to the right of the original index...
         if(i==current_index-1) and (i%10!=9):#if the third move is to the left of the original index and it is not wrapping around the sides of the board...
             right_left = True #the players third move is to the left of the original index
             return(True)#this is a valid move
-        if(i==current_index+2) and (i%10!=0):#if the third move is to the right of the original index (or to the right of the second move)...
+        if(i==current_index+2) and (i%10!=0):#if the third move is 2 to the right of the original index and it is not wrapping around the sides of the board (or to the right of the second move)...
             right_right = True #the players third move is to the right of the second move
             return(True) #this is a valid move
-    elif(vertical_down):
-        if(i==current_index+20):
-            down_down = True
-            return(True)
-        if(i==current_index-10):
-            down_up = True
-            return(True)
-    elif(vertical_up):
-        if(i==current_index-20):
-            up_up = True
-            return(True)
-        if(i==current_index+10):
-            up_down = True
-            return(True)
+    elif(vertical_down): #if the players second move was below the original index...
+        if(i==current_index+20): #if the third move is 2 down from the original index (or below the second move)...
+            down_down = True #the players third move is below the second move
+            return(True) #this is a valid move
+        if(i==current_index-10): #if the third move is above the original index
+            down_up = True #the players third move is above the original index
+            return(True) #this is a valid move
+    elif(vertical_up): #if the players second move was above the original index...
+        if(i==current_index-20): #if the third move is 2 above the original index (or 1 above the second move)
+            up_up = True #the players third move is above the second move
+            return(True) #this is a valid move
+        if(i==current_index+10): #if the third move is below the original index
+            up_down = True #the players third move is below the original index
+            return(True) #this is a valid move
 
-def ValidMove_4(i):
+def ValidMove_4(i): #is the fourth letter being placed on a valid button in relation to the original index, the second letter, and the third letter?
     global current_index
     global left_left
     global left_right
@@ -220,50 +220,50 @@ def ValidMove_4(i):
     global uuu
     global ddu 
     global ddd
-    if(left_left):
-        if(i==current_index+1) and (i%10!=0):
-            llr = True
-            return(True)
-        if(i==current_index-3) and (i%10!=9):
-            lll=True
-            return(True)
-    elif(left_right or right_left):
-        if(i==current_index+2) and (i%10!=0):
-            rrl = True
-            return(True)
-        if(i==current_index-2) and (i%10!=9):
-            llr = True
-            return(True)
-    elif(right_right):
-        if(i==current_index-1) and (i%10!=9):
-            rrl = True
-            return(True)
-        if(i==current_index+3) and (i%10!=0):
-            rrr = True
-            return(True)
-    elif(up_up):
-        if(i==current_index+10):
-            uud = True
-            return(True)
-        if(i==current_index-30):
-            uuu = True
-            return(True)
-    elif(up_down or down_up):
-        if(i==current_index+20):
-            uuu = True
-            return(True)
-        if(i==current_index-20):
-            uud = True
-            return(True)
-    elif(down_down):
-        if(i==current_index-10):
-            ddu = True
-            return(True)
-        if(i==current_index+30):
-            ddd = True
-            return(True)
+    if(left_left): #if the last two moves were to the left of the original index
+        if(i==current_index+1) and (i%10!=0): #if the fourth move is to the right of the original index and it not wrapping around the sides of the board
+            llr = True #the fourth move is to the right of the original index
+            return(True) #this is a valid move
+        if(i==current_index-3) and (i%10!=9): #if the fourth move is 3 to the left of the original index and is not wrapping around the sides of the board
+            lll=True #the fourth move is to the left of the third move
+            return(True) #this is a valid move
+    elif(left_right or right_left): #if the last two moves were to the right and left of the original index
+        if(i==current_index+2) and (i%10!=0): #if the fourth move is 2 to the right of the original index and is not wrapping around the sides of the board
+            rrl = True #there are 2 letters to the right of the original index and 1 letter to the left of the original index
+            return(True) #this is a valid move
+        if(i==current_index-2) and (i%10!=9): #if the fourth move is 2 to the left of the original index and is not wrapping around the sides of the board
+            llr = True #there are 2 letters to the left of the origianl index and 1 letter to the right of the origianl index
+            return(True) #this is a valid move
+    elif(right_right): #if the last two moves were to the right of the original index
+        if(i==current_index-1) and (i%10!=9): #if the fourth move is to the left of the original index and is not wrapping around the sides of the board
+            rrl = True #the fourth move is to the left of the original index
+            return(True) #this is a valid move
+        if(i==current_index+3) and (i%10!=0): #if the fourth move is to the right of the third move and is not wrappign around the sides of the board
+            rrr = True #the fourth move is to the right of the third move
+            return(True) #this is a valid move
+    elif(up_up): #if the last two moves were above the original index
+        if(i==current_index+10): #if the fourth move is below the original index
+            uud = True #the fourth move is below the original index
+            return(True) #this is a valid move
+        if(i==current_index-30): #if the fourth move is above the third move
+            uuu = True #the fourth move is above the third move
+            return(True) #this is a valid move
+    elif(up_down or down_up): #if the last two moves were above and below the original index
+        if(i==current_index+20): #if the fourth move is 2 below the original index
+            ddu = True #there are 2 letters below the original index and 1 letter above the original index
+            return(True) #this is a valid move
+        if(i==current_index-20): #if the fourth move is 2 above the original index
+            uud = True #there are 2 letters above the original index and 1 letter below the original index
+            return(True) #this is a valid move
+    elif(down_down): #if the last two moves were below the original index
+        if(i==current_index-10): #if the fourth move is above the original index
+            ddu = True #the fourth move is above the original index 
+            return(True) #this is a valid move
+        if(i==current_index+30): #if the fourth move is below the third move
+            ddd = True #the fourth move is below the third move
+            return(True) #this is a valid move
 
-def ValidMove_5(i):
+def ValidMove_5(i): #is the fifth letter being placed on a valid button in relation to the original index, the second letter, the third letter, and the fourth letter?
     global current_index
     global llr
     global lll 
@@ -275,44 +275,44 @@ def ValidMove_5(i):
     global ddd
     if(llr):
         if(i==current_index-3) and (i%10!=9):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index+2) and (i%10!=0):
-            return(True)
+            return(True) #this is a valid move
     elif(lll):
         if(i==current_index+1) and (i%10!=0):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index-4) and (i%10!=9):
-            return(True)
+            return(True) #this is a valid move
     elif(rrl):
         if(i==current_index-2) and (i%10!=9):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index+3) and (i%10!=0):
-            return(True)
+            return(True) #this is a valid move
     elif(rrr):
         if(i==current_index-1) and (i%10!=9):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index+4) and (i%10!=0):
-            return(True)
+            return(True) #this is a valid move
     elif(uud):
         if(i==current_index-30):
             return(True)
         if(i==current_index+20):
-            return(True)
+            return(True) #this is a valid move
     elif(uuu):
         if(i==current_index-40):
             return(True)
         if(i==current_index+10):
-            return(True)
+            return(True) #this is a valid move
     elif(ddu):
         if(i==current_index-20):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index+30):
-            return(True)
+            return(True) #this is a valid move
     elif(ddd):
         if(i==current_index-10):
-            return(True)
+            return(True) #this is a valid move
         if(i==current_index+40):
-            return(True)
+            return(True) #this is a valid move
 
 def reset_direction():#direction of vertical or horizontal and order of placement is reset once each ship has been finalized
     global vertical_up 
