@@ -927,10 +927,10 @@ def checkWin(nextFrame):
     global p2_hit_counter
     if p1_hit_counter == 0:
         show_frame(frame10)
-        label_10_p1 = Label(frame10, text="Player 2 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
+        label_10_p1 = Label(frame10, text="Player 1 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
     elif p2_hit_counter == 0:
         show_frame(frame10)
-        label_10_p2 = Label(frame10, text="Player 1 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
+        label_10_p2 = Label(frame10, text="Player 2 Wins!!!", padx=20, pady=20, fg='black').grid(row=1, column=0)
     else:
         show_frame(nextFrame)
 
