@@ -655,9 +655,6 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     global enter_amount
     global placing_ships
     global current_index
-
-    global p1_hit_counter
-    global p2_hit_counter
     global player1
     global player2
     if(num_ships==1): #if the user chose for each player to have one ship
@@ -726,8 +723,8 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
             "E": Ship(5)
         }
 
-    p1_hit_counter = enter_amount
-    p2_hit_counter = enter_amount
+    player1.total_lives = enter_amount
+    player2.total_lives = enter_amount
     if(placing_ships==0): #placing ship A
         change(i, button_ids)#the button will be changed to A. (A can be placed anywhere on the board)
     elif(placing_ships==1 or placing_ships==3 or placing_ships==6 or placing_ships==10):#placing first letter of ship
@@ -972,6 +969,8 @@ def show_done_button(type):
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
+    global player1
+    global player2
     global enter_amount
     global p1_hit_counter 
     global p2_hit_counter 
@@ -985,29 +984,36 @@ def Attack(i, type): #playerId = "p1" or "p2"
     if(type == "p1"): #miss
         p2_fired = False
         if not p1_fired:
-            if(player2.my_board[i].cget("text") == ""):
+            btn_text = player2.my_board[i].cget("text")
+            if(btn_text == ""): #miss!
                 player1.enemy_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled') #miss
-                show_done_button("p1")
                 player2.my_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled')
-            else: #there is a ship at i
-                #get image
-                p1_hit_counter -= 1
-                player1.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
                 show_done_button("p1")
+            else: #hit! there is a ship at i
+                print(btn_text)
+                player2.ships[btn_text].lives = int(player2.ships[btn_text].lives) - 1 #update lives for hit ship
+                player2.total_lives -= 1 #update total lives for player two
+
+                
+                player1.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
                 player2.my_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
+                show_done_button("p1")
             p1_fired = True
     elif(type == "p2"):
         p1_fired = False
         if not p2_fired:
-            if(player1.my_board[i].cget("text") == ""):
+            btn_text = player1.my_board[i].cget("text")
+            if(player1.my_board[i].cget("text") == ""): #miss
                 player2.enemy_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled') #miss
-                show_done_button("p2")
                 player1.my_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled')
-            else:
-                p2_hit_counter -= 1
-                player2.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
                 show_done_button("p2")
+            else: #hit! there is a ship at i
+                player1.ships[btn_text].lives = int(player1.ships[btn_text].lives) - 1 #update lives for hit ship
+                player1.total_lives -= 1 #update total lives for player one
+
+                player2.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')   
                 player1.my_board[i].configure(bg = 'red', image=img_hit, compound = "center", state ='disabled')
+                show_done_button("p2")
             p2_fired = True
 
 #Frame 1 code
@@ -1036,12 +1042,24 @@ board('p1_set', 40)
 board('p2_set', 40)
 
 def checkWin(nextFrame):
-    global p1_hit_counter
-    global p2_hit_counter
-    if p1_hit_counter == 0:
+    global player1
+    global player2
+    
+    p1_lives = 0
+    for k in player1.ships.keys():
+        num = player1.ships[k].lives
+        p1_lives += num
+
+    p2_lives = 0
+    for k in player2.ships.keys():
+        num = player2.ships[k].lives
+        p2_lives += num
+
+
+    if p2_lives == 0:
         show_frame(frame10)
         label_10_p1 = Label(frame10, text="Player 1 Wins!!!", padx=20, pady=20).grid(row=1, column=0)
-    elif p2_hit_counter == 0:
+    elif p1_lives == 0:
         show_frame(frame10)
         label_10_p2 = Label(frame10, text="Player 2 Wins!!!", padx=20, pady=20).grid(row=1, column=0)
     else:
