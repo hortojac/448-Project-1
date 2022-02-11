@@ -869,6 +869,12 @@ myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=partial(Set
 myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(SetupFrame3, 4), fg="black").grid(row=4, column=0)
 myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(SetupFrame3, 5), fg="black").grid(row=5, column=0)
 
+def show_done_button_p1():
+    frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
+
+def show_done_button_p2():
+    frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
+
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
     global enter_amount
@@ -886,6 +892,7 @@ def Attack(i, type): #playerId = "p1" or "p2"
         if not p1_fired:
             if(button_ids_p2[i].cget("text") == ""):
                 button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                show_done_button_p1()
                 button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
             else: #there is a ship at i
                 #get image
@@ -898,6 +905,7 @@ def Attack(i, type): #playerId = "p1" or "p2"
         if not p2_fired:
             if(button_ids_p1[i].cget("text") == ""):
                 button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                show_done_button_p2()
                 button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
             else:
                 p2_hit_counter -= 1
@@ -938,7 +946,6 @@ label_key_white = Label(frame7, text="White = MISS", fg='white', bg='black').gri
 label_key_black = Label(frame7, text="Black = SUNK", fg='black', bg='white').grid(row=4, column=12)
 my_board_label = Label(frame7, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame7, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)
-frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
 
 
 
@@ -952,7 +959,6 @@ label_key_white = Label(frame9, text="White = MISS", fg='white', bg='black').gri
 label_key_black = Label(frame9, text="Black = SUNK", fg='black', bg='white').grid(row=4, column=12) 
 my_board_label = Label(frame9, text="Your Board", fg="black").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame9, text="Enemy Board", fg="black").grid(row=12, column=17,columnspan=3)  
-frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
 
 #Frame 10 = endscreen
 frame10_button = Button(frame10, text="Press to Quit", padx=20, pady=20, fg='black', command=root.destroy).grid(row=2, column = 0)
