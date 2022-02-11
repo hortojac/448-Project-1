@@ -28,6 +28,7 @@ class Player:
             "E": 5,
         }
         '''
-        self.total_lives = 0
+       
+
 
     
