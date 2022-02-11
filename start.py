@@ -869,11 +869,11 @@ myButton3 = Button(frame2, text="3 ships", padx=25, pady=25, command=partial(Set
 myButton4 = Button(frame2, text="4 ships", padx=25, pady=25, command=partial(SetupFrame3, 4), fg="black").grid(row=4, column=0)
 myButton5 = Button(frame2, text="5 ships", padx=25, pady=25, command=partial(SetupFrame3, 5), fg="black").grid(row=5, column=0)
 
-def show_done_button_p1():
-    frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
-
-def show_done_button_p2():
-    frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
+def show_done_button(button_ids):
+    if(button_ids==button_ids_p1_enemy):
+        frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame8)).grid(row=14, column=12)
+    else:
+        frame9_button = Button(frame9, text="Player 2 Done", padx=20, pady=20, fg='black', command=partial(checkWin, frame6)).grid(row=14, column=12)
 
 #Attack_Method
 def Attack(i, type): #playerId = "p1" or "p2"
@@ -892,12 +892,13 @@ def Attack(i, type): #playerId = "p1" or "p2"
         if not p1_fired:
             if(button_ids_p2[i].cget("text") == ""):
                 button_ids_p1_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
-                show_done_button_p1()
+                show_done_button(button_ids_p1_enemy)
                 button_ids_p2[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
             else: #there is a ship at i
                 #get image
                 p1_hit_counter -= 1
                 button_ids_p1_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                show_done_button(button_ids_p1_enemy)
                 button_ids_p2[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
             p1_fired = True
     elif(type == "p2"):
@@ -905,11 +906,12 @@ def Attack(i, type): #playerId = "p1" or "p2"
         if not p2_fired:
             if(button_ids_p1[i].cget("text") == ""):
                 button_ids_p2_enemy[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
-                show_done_button_p2()
+                show_done_button(button_ids_p2_enemy)
                 button_ids_p1[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
             else:
                 p2_hit_counter -= 1
                 button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                show_done_button(button_ids_p1_enemy)
                 button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
             p2_fired = True
 
