@@ -1016,9 +1016,6 @@ enemy_board_label = Label(frame7, text="Enemy Board").grid(row=12, column=17,col
 frame7_button = Button(frame7, text="Player 1 Done", padx=20, pady=20, state = DISABLED, command=partial(checkWin, frame8))
 frame7_button.grid(row=14, column=12)
 
-
-
-
 #frame 8 = popup player 2   
 frame8_button = Button(frame8, text="Ready Player 2?", padx=20, pady=20, command=partial(board, "p2_attack",40)).place(anchor=CENTER, relx=0.5, rely=0.3,)
 
