@@ -911,7 +911,7 @@ def Attack(i, type): #playerId = "p1" or "p2"
             else:
                 p2_hit_counter -= 1
                 button_ids_p2_enemy[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
-                show_done_button(button_ids_p1_enemy)
+                show_done_button(button_ids_p2_enemy)
                 button_ids_p1[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
             p2_fired = True
 
