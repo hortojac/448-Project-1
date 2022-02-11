@@ -17,7 +17,7 @@ class Player:
         # .
         # .
         # [j1][j2][j3]....[j10]
-        self.ship_lives = {} #blank dicttionary (hashmap) of number of lives left of each ship belonging this player
+        self.ships = {} #blank dicttionary (hashmap) of Ships left of each ship belonging this player
 
         '''Example of a ship_lives dictionary at the start of a 5 ship game
         player1.ship_lives = {

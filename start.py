@@ -8,11 +8,6 @@ from PIL import ImageTk, Image
 
 def show_frame(frame):
     frame.tkraise()
-ship1 = Ship()
-ship1.name = "A"
-ship1.set_lives() 
-
-print(ship1.to_string())
 
 ### Global Variables
 num_ships = 0
@@ -68,11 +63,11 @@ img_sunk=ImageTk.PhotoImage(img_s)
 
 image=Image.open("assets/hit.jpeg") #image for hit (bg for button will be set to red)
 img_r=image.resize((40,40))
-img_red=ImageTk.PhotoImage(img_r)
+img_hit=ImageTk.PhotoImage(img_r)
 
-image=Image.open("assets/white.png")
+image=Image.open("assets/miss.jpeg")
 img_w=image.resize((40,40))
-img_white=ImageTk.PhotoImage(img_w)
+img_miss=ImageTk.PhotoImage(img_w)
 ###
 
 root.rowconfigure(0, weight=1)
@@ -121,6 +116,62 @@ def shipcount(x):
     mylabel = Label(frame4, text="Place your ships (" + num + ")").grid(row=1, column=22) #label for p1 on frame4
     mylabel = Label(frame5, text="Place your ships (" + num + ")").grid(row=1, column=22) #label for p2 on frame5
     choose_ship_number()
+    #instantiate players' ships
+    if(num_ships==1): 
+        player1.ships = {
+            "A": Ship(1)
+        }
+        player2.ships = {
+            "A": Ship(1)
+        }
+    elif(num_ships==2):
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2)
+        }
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2)
+        }
+    elif(num_ships==3):
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3)
+        }
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3)
+        }
+    elif(num_ships==4):
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4)
+        }
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4)
+        }
+    else: 
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4),
+            "E": Ship(5)
+        }
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4),
+            "E": Ship(5)
+        }
     show_frame(frame4)
 
 def choose_ship_number():
@@ -612,73 +663,68 @@ def PlaceShip(i, button_ids): #sends the index to be changed to change function 
     if(num_ships==1): #if the user chose for each player to have one ship
         enter_amount = 1 #you will only be clicking the board once (A)
         #instantiate players' ship_lives
-        player1.ship_lives = {
-            "A": 1
+        player1.ships = {
+            "A": Ship(1)
         }
-        player2.ship_lives = {
-            "A": 1
+        player2.ships = {
+            "A": Ship(1)
         }
     elif(num_ships==2): #if the user chose for each player to have two ships
         enter_amount = 3 #you will be clicking the board 3 times (ABB)
         #instantiate players' ship_lives
-        player1.ship_lives = {
-            "A": 1,
-            "B": 2
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2)
         }
-        player2.ship_lives = {
-            "A": 1,
-            "B": 2
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2)
         }
     elif(num_ships==3): #if the user chose for each player to have three ships
         enter_amount = 6 #you will be clicking the board 6 times (ABBCCC)
         #instantiate players' ship_lives
-        player1.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3)
         }
-        player2.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3)
         }
     elif(num_ships==4): #if the user chose for each player to have four ships
         enter_amount = 10 #you will be clicking the board 10 times (ABBCCCDDDD)
         #instantiate players' ship_lives
-        player1.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4)
         }
-        player2.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4)
         }
     else: #i.e. num_ships = 5
         enter_amount = 15 #you will be clicking the board 15 times (ABBCCCDDDDEEEEE)
         #instantiate players' ship_lives
-        player1.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5
+        player1.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4),
+            "E": Ship(5)
         }
-        player2.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5,
+        player2.ships = {
+            "A": Ship(1),
+            "B": Ship(2),
+            "C": Ship(3),
+            "D": Ship(4),
+            "E": Ship(5)
         }
-    print("ship lives 1:")
-    print(player1.ship_lives)
-    print("ship lives 2:")
-    print(player2.ship_lives)
-
 
     p1_hit_counter = enter_amount
     p2_hit_counter = enter_amount
@@ -934,34 +980,34 @@ def Attack(i, type): #playerId = "p1" or "p2"
 
     global p1_fired
     global p2_fired
-    global img_white
-    global img_red
+    global img_miss
+    global img_hit
     if(type == "p1"): #miss
         p2_fired = False
         if not p1_fired:
             if(player2.my_board[i].cget("text") == ""):
-                player1.enemy_board[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                player1.enemy_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled') #miss
                 show_done_button("p1")
-                player2.my_board[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+                player2.my_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled')
             else: #there is a ship at i
                 #get image
                 p1_hit_counter -= 1
-                player1.enemy_board[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                player1.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
                 show_done_button("p1")
-                player2.my_board[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                player2.my_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
             p1_fired = True
     elif(type == "p2"):
         p1_fired = False
         if not p2_fired:
             if(player1.my_board[i].cget("text") == ""):
-                player2.enemy_board[i].configure(bg="white", image=img_white, compound = "center", state ='disabled') #miss
+                player2.enemy_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled') #miss
                 show_done_button("p2")
-                player1.my_board[i].configure(bg="white", image=img_white, compound = "center", state ='disabled')
+                player1.my_board[i].configure(bg="white", image=img_miss, compound = "center", state ='disabled')
             else:
                 p2_hit_counter -= 1
-                player2.enemy_board[i].configure(bg="red", image=img_red, compound = "center", state ='disabled')
+                player2.enemy_board[i].configure(bg="red", image=img_hit, compound = "center", state ='disabled')
                 show_done_button("p2")
-                player1.my_board[i].configure(bg = 'red', image=img_red, compound = "center", state ='disabled')
+                player1.my_board[i].configure(bg = 'red', image=img_hit, compound = "center", state ='disabled')
             p2_fired = True
 
 #Frame 1 code
