@@ -1,6 +1,8 @@
+from ship import Ship
+
 class Player:
-    def __init__(self):
-        self.name = "NONE" #string for player's name
+    def __init__(self, name):
+        self.name = name #string for player's name
         self.my_board = [] # board to show player's full board
         self.enemy_board = [] #board to show player this player has marked on the other player's board
                               # all buttons in my_board array will be DISABLED so you can't click your own grid
@@ -17,6 +19,8 @@ class Player:
         # .
         # .
         # [j1][j2][j3]....[j10]
+
+
         self.ships = {} #blank dicttionary (hashmap) of Ships left of each ship belonging this player
 
         '''Example of a ship_lives dictionary at the start of a 5 ship game
@@ -28,7 +32,14 @@ class Player:
             "E": 5,
         }
         '''
-       
 
+    def set_ships(self, num_ships):
+        for i in range(num_ships):
+            self.ships.update({
+                chr(i + 65): Ship(i + 1)
+            })
 
-    
+    def playerToString(self):
+        print("name: " + self.name)
+        for k in self.ships.keys():
+            self.ships[k].shipToString()
