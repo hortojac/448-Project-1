@@ -215,7 +215,7 @@ For example:
     <td>90</td>
   </tr>
   <tr>
-    <th>100</th>
+    <th>10</th>
     <td>91</td>
     <td>92</td>
     <td>93</td>
