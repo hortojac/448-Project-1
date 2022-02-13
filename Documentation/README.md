@@ -1,4 +1,8 @@
-[Our timesheet](https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
+# Our Timesheet
+https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
+
+# Use this video to learn the basics of Tkinter
+https://www.youtube.com/watch?v=YXPyB4XeYLA
 
 # Playing the Game
 
