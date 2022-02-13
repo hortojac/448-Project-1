@@ -39,7 +39,7 @@ class Player:
                 chr(i + 65): Ship(i + 1)
             })
 
-    def playerToString(self): 
+    def to_string(self): 
         print("name: " + self.name)
         for k in self.ships.keys():
             self.ships[k].shipToString()
