@@ -229,13 +229,13 @@ For example:
 | <ul><li>`P1_ENEMY_CREATED = False`</li><li>`P2_ENEMY_CREATED = False`</li></ul> | Frames 7, 9 | Prevents duplicate board creation |
 | <ul><li>`p1_fired = False`</li><li>`p2_fired = False`</li></ul> | Frames 7, 9 | Determines whether the player can move on to the next frame |
 
-### Functions
+### Function List
 
 | Function |Type | Arguments | Return Type | Purpose | 
 | :--: | :--:  | :-- | :-- | :-- |
 | drawBoards |  |  |  |  |
 | assign_positions |  |  |  |  |
-| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | henerates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
+| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | generates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
 | set_player_names | GUI | None | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
 | setup_frame3 | GUI | None | None | setup frame 3 |
 | ship_count | GUI | int x | None | set the num_ships for the game |
