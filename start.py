@@ -438,10 +438,12 @@ def checkWin(nextFrame):
 
     if p2_lives == 0:
         show_frame(frame10)
-        label_10_p1 = Label(frame10, text=player_1.name + " Wins!!!", padx=20, pady=20).grid(row=1, column=0)
+        label_10_p1 = Label(frame10, text=player_1.name + " Wins!!!", font=("Arial", 60))
+        label_10_p1.place(relx=.5, rely=.2,anchor= CENTER)
     elif p1_lives == 0:
         show_frame(frame10)
-        label_10_p2 = Label(frame10, text=player_2.name + " Wins!!!", padx=20, pady=20).grid(row=1, column=0)
+        label_10_p2 = Label(frame10, text=player_2.name + " Wins!!!", font=("Arial", 60))
+        label_10_p2.place(relx=.5, rely=.2,anchor= CENTER)
     else:
         show_frame(nextFrame)
 
@@ -477,6 +479,7 @@ frame9_button = Button(frame9, text=player_2.name + " Done", padx=20, pady=20, s
 frame9_button.grid(row=14, column=12)
 
 #Frame 10 = endscreen
-frame10_button = Button(frame10, text="Press to Quit", padx=20, pady=20, command=root.destroy).grid(row=2, column = 0)
+frame10_button = Button(frame10, text="Press to Quit" ,font=("Arial",50, BOLD), bg="white", padx=20,pady=20, command=root.destroy)
+frame10_button.place(relx=.50, rely=.5,anchor= CENTER)
 
 root.mainloop()
