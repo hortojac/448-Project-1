@@ -1,5 +1,8 @@
 [Our timesheet](https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
 
+# Use this video to learn the basics of Tkinter
+https://www.youtube.com/watch?v=YXPyB4XeYLA
+
 # Playing the Game
 
 The interactive GUI allows for button pressing and clicking on <abbr title="any Tkinter element that builds the interface">**widgets**</abbr> to perform actions. You can enter in your names, and click on buttons to both place your ships and attack your enemy's board. 
