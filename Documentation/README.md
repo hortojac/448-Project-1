@@ -1,4 +1,6 @@
-[Our timesheet](https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
+
+#Our Timesheet
+https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
 
 # Use this video to learn the basics of Tkinter
 https://www.youtube.com/watch?v=YXPyB4XeYLA
@@ -82,7 +84,7 @@ This handles the main sequence of scenes/frames/screens and all of the GUI.
 
 We store button locations not as x/y coordinates, but as a _single_ integer, where 
 - `index % 10` is the column number (A-J on an official Battleship board) 
-- `index / 10` is the row number (1-10 on an official Battleship board)
+- `ceil(index / 10)` is the row number (1-10 on an official Battleship board)
 
 For example: 
 
@@ -218,7 +220,7 @@ For example:
     <td>90</td>
   </tr>
   <tr>
-    <th>10</th>
+    <th>100</th>
     <td>91</td>
     <td>92</td>
     <td>93</td>
@@ -234,27 +236,53 @@ For example:
 
 </details>
 
-### Boards
+### Functions
 
-In the Board object, we have 4 versions: `p1_set`, `p1_attack`, `p2_set`, and `p2_attack`.
-The `set` boards are what each repsect player sees while they set-up/place ships. The ships are visible in this board. The `attack` boards are what the _other_ player sees while they attack. The ships are _not_ visible in this board.
-So, during the attack phase, player 1 will see `p1_set` and `p2_attack`. 
-
-`p1_set` will show them
-- the current location of their ships
-- where player 2 has fired at, and whether each guess was a hit/miss.
-
-`p2_attack` will show them 
-- where they have guessed so far, and whether each guess was a hit/miss
-
-### Function List
-| Function |Type | Arguements | Return Type | Purpose | 
+| Function |Type | Arguments | Return Type | Purpose | 
 | :--: | :--:  | :-- | :-- | :-- |
-| shipcount | GUI |number of ships as `x` | None | Tells player how many ships they chose, calls `placeships` |
-| placeships | GUI | None | None | <ul><li>Handles all ship placement interaction.</li><li>There are no undo's or resets.</li><li>Ships are placed onto the screen by clicking on buttons one by one.</li></ul>|
-| ValidMove | Helper | button index/location as `i` | boolean | Returns whether the given index is |
-| change | GUI | button index as `i`, array of buttons as `button_ids` | None | Changes the button to a letter (or ship) |
-| reset | GUI | array of buttons as `button_ids` | None | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
+| drawBoards |  |  |  |  |
+| assign_positions |  |  |  |  |
 | board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | Generates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
-| reset | GUI | array of buttons as `button_ids` | None | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
 | set_player_names | GUI | None | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
+| setup_frame3 |  |  |  |  |
+| set_player_names |  |  |  |  |
+| ship_count |  |  |  |  |
+| choose_ship_number |  |  |  |  |
+| p1_place_ships |  |  |  |  |
+| setup_frame5 |  |  |  |  |
+| p2_place_ships |  |  |  |  |
+| attack |  |  |  |  |
+| show_done_button |  |  |  |  |
+| check_win |  |  |  |  |
+
+## place_board.py
+
+| Function | Arguments  | Purpose | 
+| :--: |  :-- |  :-- |
+| <ul><li>valid_move_2</li><li>valid_move_3</li><li>valid_move_4</li><li>valid_move_5</li></ul> | button index/location as `i`  | Returns whether the given index is a valid move for the 2nd/3rd/4th/5th ship placement |
+| place_ships | None  | <ul><li>Handles all ship placement interaction.</li><li>There are no undo's or resets.</li><li>Ships are placed onto the screen by clicking on buttons one by one.</li></ul>|
+| change | button index as `i`, array of buttons as `button_ids`  | Changes the button to a letter (or ship) |
+| reset | array of buttons as `button_ids`  | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
+| reset | array of buttons as `button_ids`  | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
+| set_player_names   | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
+
+## ship.py
+
+Member Variables:
+- `positions` - the location(s) of each ship
+- `lives` - how many lives a ship has. At the start of the game, this is initalized based on the ship type (e.g. A has 1, B has 2, etc.) and decreases as players land hits. 
+
+Member functions: 
+- `to_string()` - prints ship information 
+
+## player.py
+
+Member Variables: 
+- `name` - the player name; retrieved during frame 3, used in labels and popups throughout gameplay
+- `my_board` - displays the player's board with ships visible
+- `enemy_board` - displays the enemy's board with no ships visible UNLESS the player has landed hits/sinks
+- `ships` - a dictionary of the player's ships. See code for structure. 
+
+Member functions: 
+- `set_ships(num_ships)` - updates `player.ships` depending on the number of ships chosen by the player
+- `to_string()` - prints player information except boards 
