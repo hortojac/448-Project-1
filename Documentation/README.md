@@ -233,9 +233,9 @@ For example:
 
 | Function |Type | Arguments | Return Type | Purpose | 
 | :--: | :--:  | :-- | :-- | :-- |
-| drawBoards |  |  |  |  |
-| assign_positions |  |  |  |  |
-| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | generates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
+| draw_boards | GUI | Frame frame, str type, int size, int offset_r, int offset_c | None | helps draw boards for the player turn screens |
+| assign_positions | GUI | str type | None | Assigns positions of the ships to the actual boards of the player 1 or player 2 (depending on value of type) |
+| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | generates board depending on the type passed in |
 | set_player_names | GUI | None | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
 | setup_frame3 | GUI | None | None | setup frame 3 |
 | ship_count | GUI | int x | None | set the num_ships for the game |
