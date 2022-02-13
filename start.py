@@ -159,7 +159,7 @@ def p2_place_ships(i):
     #size = size of button i.e. value of padx and pady
     #offset_r = number of rows to offset by
     #offset_c = number of columns to offset by
-def drawBoards(type, size, offset_r, offset_c):
+def draw_boards(type, size, offset_r, offset_c):
     print("test DRAWBOARDS")
     global player_1
     global player_2
@@ -279,13 +279,13 @@ def board(type, size): #size = width and length of the canvas
                 setsize = Canvas(frame7, width=size, height=0).grid(row=11, column=i)
                 setsize = Canvas(frame7, width=0, height=size).grid(row=i, column=11)
             for i, item in enumerate(pos):
-                button = Button(frame7, text="", command=partial(Attack, i, "p1"))
+                button = Button(frame7, text="", command=partial(attack, i, "p1"))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 player_1.enemy_board.append(button)
             P1_ENEMY_CREATED = True   
 
         #draw the frame7 screen
-        drawBoards("p1", size, offset_r=0, offset_c=14) #offset between boards
+        draw_boards("p1", size, offset_r=0, offset_c=14) #offset between boards
         show_frame(frame7) #shows frame 7
 
     if type == 'p2_set': #it is player 1's turn and they are placing their ships
@@ -312,7 +312,7 @@ def board(type, size): #size = width and length of the canvas
                 setsize = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
 
             for i, item in enumerate(pos):
-                button = Button(frame9, text="", command=partial(Attack, i, "p2"))
+                button = Button(frame9, text="", command=partial(attack, i, "p2"))
                 button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
                 player_2.enemy_board.append(button)
             #print(player_2.enemy_board)
@@ -320,7 +320,7 @@ def board(type, size): #size = width and length of the canvas
             frame5.forget()
 
         #draw the frame9 screen
-        drawBoards("p2", size, offset_r=0, offset_c=14) #offset between boards
+        draw_boards("p2", size, offset_r=0, offset_c=14) #offset between boards
         show_frame(frame9) #shows frame 9
 
 
@@ -345,7 +345,7 @@ def show_done_button(type): #toggles button on player 1 or player 2's screen bas
         frame9_button.configure(state=NORMAL)
 
 #Attack_Method
-def Attack(i, type): #playerId = "p1" or "p2"
+def attack(i, type): #playerId = "p1" or "p2"
     global player_1
     global player_2
 
@@ -427,7 +427,7 @@ b.insert(0, "Player 2")
 #button
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.58,) #calls set_player_names when clicked and moves to frame 4
 
-def checkWin(nextFrame): #checks for a win condition (after player 1's turn and after player 2's turn)
+def check_win(nextFrame): #checks for a win condition (after player 1's turn and after player 2's turn)
     global player_1
     global player_2
     
@@ -465,7 +465,7 @@ label_key_black = Label(frame7, text="Black = SUNK", fg='black', bg='white').gri
 my_board_label = Label(frame7, text="Your Board").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame7, text="Enemy Board").grid(row=12, column=17,columnspan=3)
 
-frame7_button = Button(frame7, text=player_1.name + " Done", padx=20, pady=20, state = DISABLED, command=partial(checkWin, frame8)) #player 1 done button on frame 7
+frame7_button = Button(frame7, text=player_1.name + " Done", padx=20, pady=20, state = DISABLED, command=partial(check_win, frame8)) #player 1 done button on frame 7
 frame7_button.grid(row=14, column=12)
 
 #frame 8 = popup player 2   
@@ -479,7 +479,7 @@ label_key_black = Label(frame9, text="Black = SUNK", fg='black', bg='white').gri
 my_board_label = Label(frame9, text="Your Board").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame9, text="Enemy Board").grid(row=12, column=17,columnspan=3)  
 
-frame9_button = Button(frame9, text=player_2.name + " Done", padx=20, pady=20, state=DISABLED, command=partial(checkWin, frame6)) #player 2 done button on frame 9
+frame9_button = Button(frame9, text=player_2.name + " Done", padx=20, pady=20, state=DISABLED, command=partial(check_win, frame6)) #player 2 done button on frame 9
 frame9_button.grid(row=14, column=12)
 
 #Frame 10 = endscreen
