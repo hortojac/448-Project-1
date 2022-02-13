@@ -425,7 +425,7 @@ b = Entry(frame3, width=50)
 b.place(anchor=CENTER, relx=0.5, rely=0.5)
 b.insert(0, "Player 2")
 #button
-frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.55,) #calls set_player_names when clicked and moves to frame 4
+frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.58,) #calls set_player_names when clicked and moves to frame 4
 
 def checkWin(nextFrame): #checks for a win condition (after player 1's turn and after player 2's turn)
     global player_1
