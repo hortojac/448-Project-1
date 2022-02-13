@@ -7,7 +7,7 @@ from ship import Ship
 from place_board import PlaceBoard
 from PIL import ImageTk, Image
 
-def show_frame(frame):
+def show_frame(frame): #raises a frame when called
     frame.tkraise()
 
 ### Global Variables
@@ -24,8 +24,8 @@ p2_fired = False
 ###
 
 root = Tk()
-root.state('zoomed')
-root.title("Battleship")
+root.state('zoomed') #puts the window mode in zoomed
+root.title("Battleship") #labels our frame
 
 ### Images Used
 image=Image.open("assets/sunk.jpeg") #image for sunk (bg for button will be set to black)
@@ -45,9 +45,10 @@ image=Image.open("assets/start.jpeg")
 img_start=ImageTk.PhotoImage(image) #image for just the start button (bg set to blue)
 ###
 
-root.rowconfigure(0, weight=1)
-root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1) #configures rows to a weight of 1
+root.columnconfigure(0, weight=1) #configures columns to weight of 1
 
+#creates frames 1 - 10
 frame1 = Frame(root)
 frame2 = Frame(root)
 frame3 = Frame(root)
@@ -59,7 +60,7 @@ frame8 = Frame(root)
 frame9 = Frame(root)
 frame10 = Frame(root)
 for frame in (frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10):
-    frame.grid(row=0, column=0, sticky = 'nsew')
+    frame.grid(row=0, column=0, sticky = 'nsew') #frame 1 - 10 rows and columns initiliazed to 0 and widgest are sticky.
 
 show_frame(frame1)
 #Frame code below functions
@@ -69,10 +70,10 @@ def set_player_names(): #sets player names, then makes a label with the correspo
     global player_2
     print(e.get())
     print(b.get())
-    player_1.name = e.get()
-    player_2.name = b.get()
+    player_1.name = e.get() #gets player 1 name
+    player_2.name = b.get() #gets player 2 name
 
-    show_frame(frame4)
+    show_frame(frame4) # shows frame 4, when frame 3's button gets clicked. 
 
     #set up frame 4 label
     p1_label = "Player 1 (" + player_1.name + ")"
@@ -112,20 +113,20 @@ def choose_ship_number():
 
 
     if x >= 1: 
-        ship1 = Button(frame4, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
-        ship1 = Button(frame5, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22)
+        ship1 = Button(frame4, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22) #sets a ship button for ship 1 on frame 4
+        ship1 = Button(frame5, text="A", padx=20, pady=10, fg='red').grid(row = 3, column = 22) #sets a ship button for ship 1 on frame 5
         if x >= 2:
-            ship2 = Button(frame4, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22)
-            ship2 = Button(frame5, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22)
+            ship2 = Button(frame4, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22) #sets a ship button for ship 2 on frame 4
+            ship2 = Button(frame5, text="BB", padx=40, pady=10, fg='blue').grid(row = 4, column = 22) #sets a ship button for ship 2 on frame 5
             if x >= 3:
-                ship3 = Button(frame4, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22)
-                ship3 = Button(frame5, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22)
+                ship3 = Button(frame4, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22) #sets a ship button for ship 3 on frame 4
+                ship3 = Button(frame5, text="CCC", padx=60, pady=10, fg='orange').grid(row = 5, column = 22) #sets a ship button for ship 3 on frame 5
                 if x >= 4:
-                    ship4 = Button(frame4, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22)
-                    ship4 = Button(frame5, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22)
+                    ship4 = Button(frame4, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22) #sets a ship button for ship 4 on frame 4
+                    ship4 = Button(frame5, text="DDDD", padx=80, pady=10, fg='green').grid(row = 6, column = 22) #sets a ship button for ship 4 on frame 5
                     if x >= 5:
-                        ship5 = Button(frame4, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
-                        ship5 = Button(frame5, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22)
+                        ship5 = Button(frame4, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22) #sets a ship button for ship 5 on frame 4
+                        ship5 = Button(frame5, text="EEEEE", padx=100, pady=10, fg='purple').grid(row = 7, column = 22) #sets a ship button for ship 5 on frame 5
 
 def setup_frame5():#simple function that resets all the variables so player 2 sees a fresh board and frame 5 is shown so player 2 can start placing their ships.
     global place_board 
@@ -165,7 +166,7 @@ def drawBoards(type, size, offset_r, offset_c):
     if type == "p1":
         print("HERE P1")
     
-        #draw player board  
+        #draw player board, creates a 10 x 10 canvas for the buttons to be placed in
         for i in range(10):
             # shape the grid
             setsize2 = Canvas(frame7, width=size, height=0).grid(row=11, column=i)
@@ -187,7 +188,7 @@ def drawBoards(type, size, offset_r, offset_c):
        
         #draw enemy board
         for i in range(10):
-            # shape the grid
+            # shape the grid, creates a 10 x 10 canvas for buttons to be placed in
             setsize1 = Canvas(frame7, width=size, height=0).grid(row=11, column=i+offset_c)
             setsize1 = Canvas(frame7, width=0, height=size).grid(row=i, column=11+offset_c)
         pos = product(range(10), range(10))
@@ -200,7 +201,7 @@ def drawBoards(type, size, offset_r, offset_c):
 
         #draw player board  
         for i in range(10):
-            # shape the grid
+            # shape the grid, creates a 10 x 10 canvas for buttons to be placed in
             setsize2 = Canvas(frame9, width=size, height=0).grid(row=11, column=i)
             setsize2 = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
 
@@ -219,7 +220,7 @@ def drawBoards(type, size, offset_r, offset_c):
        
         #draw enemy board
         for i in range(10):
-            # shape the grid
+            # shape the grid, creates a 10 x 10 canvas for buttons to be placed in
             setsize1 = Canvas(frame9, width=size, height=0).grid(row=11, column=i+offset_c)
             setsize1 = Canvas(frame9, width=0, height=size).grid(row=i, column=11+offset_c)
         pos = product(range(10), range(10))
@@ -285,13 +286,13 @@ def board(type, size): #size = width and length of the canvas
 
         #draw the frame7 screen
         drawBoards("p1", size, offset_r=0, offset_c=14) #offset between boards
-        show_frame(frame7)
+        show_frame(frame7) #shows frame 7
 
     if type == 'p2_set': #it is player 1's turn and they are placing their ships
         pos = product(range(10), range(10))
 
         for i in range(10):
-            # shape the grid
+            # shape the grid, creates a 10 x 10 canvas for buttons to be placed in
             setsize = Canvas(frame5, width=size, height=0).grid(row=11, column=i)
             setsize = Canvas(frame5, width=0, height=size).grid(row=i, column=11)
         
@@ -306,7 +307,7 @@ def board(type, size): #size = width and length of the canvas
             pos = product(range(10), range(10))
             #create
             for i in range(10):
-                # shape the grid
+                # shape the grid, creates a 10 x 10 canvas for buttons to be placed in
                 setsize = Canvas(frame9, width=size, height=0).grid(row=11, column=i)
                 setsize = Canvas(frame9, width=0, height=size).grid(row=i, column=11)
 
@@ -320,18 +321,18 @@ def board(type, size): #size = width and length of the canvas
 
         #draw the frame9 screen
         drawBoards("p2", size, offset_r=0, offset_c=14) #offset between boards
-        show_frame(frame9)
+        show_frame(frame9) #shows frame 9
 
 
 def setup_frame3(number_of_ships):
-    ship_count(number_of_ships)
-    show_frame(frame3)
+    ship_count(number_of_ships) #passes in number_of_ships value
+    show_frame(frame3) #shows frame 3
     
-myButton1 = Button(frame2, text="1 ship  ",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 1)).place(relx=.5,rely=.3,anchor= CENTER)
-myButton2 = Button(frame2, text="2 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 2)).place(relx=.5,rely=.4,anchor= CENTER)
-myButton3 = Button(frame2, text="3 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 3)).place(relx=.5,rely=.5,anchor= CENTER)
-myButton4 = Button(frame2, text="4 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 4)).place(relx=.5,rely=.6,anchor= CENTER)
-myButton5 = Button(frame2, text="5 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 5)).place(relx=.5,rely=.7,anchor= CENTER)
+myButton1 = Button(frame2, text="1 ship  ",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 1)).place(relx=.5,rely=.3,anchor= CENTER) #button to select 1 ship, calls setup_frame3
+myButton2 = Button(frame2, text="2 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 2)).place(relx=.5,rely=.4,anchor= CENTER) #button to select 2 ships, calls setup_frame3
+myButton3 = Button(frame2, text="3 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 3)).place(relx=.5,rely=.5,anchor= CENTER) #button to select 3 ships, calls setup_frame3
+myButton4 = Button(frame2, text="4 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 4)).place(relx=.5,rely=.6,anchor= CENTER) #button to select 4 ships, calls setup_frame3
+myButton5 = Button(frame2, text="5 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 5)).place(relx=.5,rely=.7,anchor= CENTER) #button to select 5 ships, calls setup_frame3
 
 def show_done_button(type): #toggles button on player 1 or player 2's screen based on "type" (button not active until player has fired)
     global frame7_button
@@ -424,37 +425,39 @@ b = Entry(frame3, width=50)
 b.place(anchor=CENTER, relx=0.5, rely=0.5)
 b.insert(0, "Player 2")
 #button
-frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.55,)
+frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.55,) #calls set_player_names when clicked and moves to frame 4
 
 def checkWin(nextFrame): #checks for a win condition (after player 1's turn and after player 2's turn)
     global player_1
     global player_2
     
+    #keeps track of how many lives player 1 has
     p1_lives = 0
     for k in player_1.ships.keys():
         num = player_1.ships[k].lives
         p1_lives += num
 
+    #keeps track of how many lives player 2 has
     p2_lives = 0
     for k in player_2.ships.keys():
         num = player_2.ships[k].lives
         p2_lives += num
 
     if p2_lives == 0:
-        show_frame(frame10)
-        label_10_p1 = Label(frame10, text=player_1.name + " Wins!!!", font=("Arial", 60))
+        show_frame(frame10) #shows frame 10
+        label_10_p1 = Label(frame10, text=player_1.name + " Wins!!!", font=("Arial", 60)) #label for if player 1 wins
         label_10_p1.place(relx=.5, rely=.2,anchor= CENTER)
     elif p1_lives == 0:
-        show_frame(frame10)
-        label_10_p2 = Label(frame10, text=player_2.name + " Wins!!!", font=("Arial", 60))
+        show_frame(frame10), #shows frame 10
+        label_10_p2 = Label(frame10, text=player_2.name + " Wins!!!", font=("Arial", 60)) #label for if player 2 wins
         label_10_p2.place(relx=.5, rely=.2,anchor= CENTER)
     else:
-        show_frame(nextFrame)
+        show_frame(nextFrame) #shows next frame in the loop 6 - 9 if no one has won yet
 
 #frame 6 code = popup player 1
 frame6_button = Button(frame6, text="Ready " + player_1.name + "?", padx=20, pady=20, command=partial(board, "p1_attack", 40)).place(anchor=CENTER, relx=0.5, rely=0.3)
 
-#frame 7 = player 1 turn
+#frame 7 = player 1 turn, creates six labels for selecting a grid to attack, color key for hitting or missing, and which board is who's
 mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=12)
 label_key_red = Label(frame7, text="Red = HIT", fg='red', bg='grey').grid(row=2, column=12)
 label_key_white = Label(frame7, text="White = MISS", fg='white', bg='black').grid(row=3, column=12)
@@ -462,13 +465,13 @@ label_key_black = Label(frame7, text="Black = SUNK", fg='black', bg='white').gri
 my_board_label = Label(frame7, text="Your Board").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame7, text="Enemy Board").grid(row=12, column=17,columnspan=3)
 
-frame7_button = Button(frame7, text=player_1.name + " Done", padx=20, pady=20, state = DISABLED, command=partial(checkWin, frame8))
+frame7_button = Button(frame7, text=player_1.name + " Done", padx=20, pady=20, state = DISABLED, command=partial(checkWin, frame8)) #player 1 done button on frame 7
 frame7_button.grid(row=14, column=12)
 
 #frame 8 = popup player 2   
 frame8_button = Button(frame8, text="Ready " + player_2.name + "?", padx=20, pady=20, command=partial(board, "p2_attack",40)).place(anchor=CENTER, relx=0.5, rely=0.3,)
 
-#frame 9 = player 2 turn
+#frame 9 = player 2 turn, creates six labels for selecting a grid to attack, color key for hitting or missing, and which board is who's
 mylabel = Label(frame9, text="Select a grid to attack").grid(row=1, column=12)
 label_key_red = Label(frame9, text="Red = HIT", fg='red', bg='grey').grid(row=2, column=12)
 label_key_white = Label(frame9, text="White = MISS", fg='white', bg='black').grid(row=3, column=12)
@@ -476,11 +479,11 @@ label_key_black = Label(frame9, text="Black = SUNK", fg='black', bg='white').gri
 my_board_label = Label(frame9, text="Your Board").grid(row=12, column=3, columnspan=3)
 enemy_board_label = Label(frame9, text="Enemy Board").grid(row=12, column=17,columnspan=3)  
 
-frame9_button = Button(frame9, text=player_2.name + " Done", padx=20, pady=20, state=DISABLED, command=partial(checkWin, frame6))
+frame9_button = Button(frame9, text=player_2.name + " Done", padx=20, pady=20, state=DISABLED, command=partial(checkWin, frame6)) #player 2 done button on frame 9
 frame9_button.grid(row=14, column=12)
 
 #Frame 10 = endscreen
-frame10_button = Button(frame10, text="Press to Quit" ,font=("Arial",50, BOLD), bg="white", padx=20,pady=20, command=root.destroy)
+frame10_button = Button(frame10, text="Press to Quit" ,font=("Arial",50, BOLD), bg="white", padx=20,pady=20, command=root.destroy) #press to quit button, closes program
 frame10_button.place(relx=.50, rely=.5,anchor= CENTER)
 
 root.mainloop()
