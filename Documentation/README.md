@@ -1,8 +1,4 @@
-# Our Timesheet
-https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
-
-# Use this video to learn the basics of Tkinter
-https://www.youtube.com/watch?v=YXPyB4XeYLA
+[Our timesheet](https://docs.google.com/spreadsheets/d/1lUsOUC2fbRDljCjvxWwighowklgWpwoVV_gzfDf-2TM/edit?usp=sharing)
 
 # Playing the Game
 
@@ -65,17 +61,6 @@ This handles the main sequence of scenes/frames/screens and all of the GUI.
 
 > Note: The attack phase loops through frames 6-9.
 
-</details>
-
-<details open>
-<summary>Global Variable List</summary>
-
-| Variable and Default/Initalized Value | Where is it Used | Purpose | 
-| :--: | :-- | :-- |
-| `num_ships = 0` | Set in Frame 2, used in Frames 4-5 | Tracks number of ships selected by player |
-| `player1 = Player("Player 1")`  `player2 = Player("Player 2")` | <ul><li>`.name` set in Frame 3, used in Frames 4-10</li><li>`.ships` used in Frames 7, 9</li></ul>  | Creates Player Objects, which track Player information |
-| `P1_ENEMY_CREATED = False` `P2_ENEMY_CREATED = False` | Frames 7, 9 | Prevents duplicate board creation |
-| `p1_fired = False` `p2_fired = False` | Frames 7, 9 | Determines whether the player can move on to the next frame |
 </details>
 
 <details open>
@@ -219,7 +204,7 @@ For example:
     <td>90</td>
   </tr>
   <tr>
-    <th>100</th>
+    <th>10</th>
     <td>91</td>
     <td>92</td>
     <td>93</td>
@@ -235,35 +220,61 @@ For example:
 
 </details>
 
+### Variables
+| Variable and Default/Initalized Value | Where is it Used | Purpose | 
+| :--: | :-- | :-- |
+| `num_ships = 0` | Set in Frame 2, used in Frames 4-5 | Tracks number of ships selected by player |
+| <ul><li>`player1 = Player("Player 1")`</li><li>`player2 = Player("Player 2")`</li></ul>  | <ul><li>`.name` set in Frame 3, used in Frames 4-10</li><li>`.ships` used in Frames 7, 9</li></ul>  | Creates Player Objects, which track Player information |
+| `place_board` | Frames 4, 5 | Creates PlaceBoard object, which helps verify ship placement |
+| <ul><li>`P1_ENEMY_CREATED = False`</li><li>`P2_ENEMY_CREATED = False`</li></ul> | Frames 7, 9 | Prevents duplicate board creation |
+| <ul><li>`p1_fired = False`</li><li>`p2_fired = False`</li></ul> | Frames 7, 9 | Determines whether the player can move on to the next frame |
+
 ### Functions
 
 | Function |Type | Arguments | Return Type | Purpose | 
 | :--: | :--:  | :-- | :-- | :-- |
 | drawBoards |  |  |  |  |
 | assign_positions |  |  |  |  |
-| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | Generates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
+| board | GUI | board type with 4 possible settings: <ul><li>`p1_set`: Ship placement board for Player 1</li><li>`p1_attack`: Attack board for Player 1</li><li>`p2_set`: Ship placement board for Player 2</li><li>`p1_attack`: Attack board for Player 2</li></ul> | None | henerates board depending on the type passed in as outlined [above](https://gitlab.ku.edu/448-group-11/project-1/-/edit/main/README.md#boards). |
 | set_player_names | GUI | None | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
-| setup_frame3 |  |  |  |  |
-| set_player_names |  |  |  |  |
-| ship_count |  |  |  |  |
-| choose_ship_number |  |  |  |  |
-| p1_place_ships |  |  |  |  |
-| setup_frame5 |  |  |  |  |
-| p2_place_ships |  |  |  |  |
-| attack |  |  |  |  |
-| show_done_button |  |  |  |  |
-| check_win |  |  |  |  |
+| setup_frame3 | GUI | None | None | setup frame 3 |
+| ship_count | GUI | int x | None | set the num_ships for the game |
+| choose_ship_number | GUI | None | None | Uses num_ships to set up player 1 and player 2 "Place Ships" Screens (frame4 and frame5 respectively) |
+| p1_place_ships | GUI | int i | None | places player 1's ship square at the given index on the board IF it is a valid placement (validation handled by place_board class functionality) |
+| setup_frame5 | GUI | None | None | Setup frame 5 |
+| p2_place_ships | GUI | int i  | None | places player 1's ship square at the given index on the board IF it is a valid placement (validation handled by place_board class functionality) |
+| attack | GUI | int i, str type | None | uses index i and type ("p1" or "p2) to determine which player is attacking, and lets them attack a square (if that square is not already pressed) |
+| show_done_button | GUI |    None | None | takes care of the "player end turn" button both for player 1 and player 2's turn screens |
+| check_win | GUI | Frame nextFrame | None | check win conditions. If win is achieved, shows the win screen (frame 10), otherwise it changes to the next frame in the game loop |
 
 ## place_board.py
 
-| Function | Arguments  | Purpose | 
-| :--: |  :-- |  :-- |
-| <ul><li>valid_move_2</li><li>valid_move_3</li><li>valid_move_4</li><li>valid_move_5</li></ul> | button index/location as `i`  | Returns whether the given index is a valid move for the 2nd/3rd/4th/5th ship placement |
-| place_ships | None  | <ul><li>Handles all ship placement interaction.</li><li>There are no undo's or resets.</li><li>Ships are placed onto the screen by clicking on buttons one by one.</li></ul>|
-| change | button index as `i`, array of buttons as `button_ids`  | Changes the button to a letter (or ship) |
-| reset | array of buttons as `button_ids`  | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
-| reset | array of buttons as `button_ids`  | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
-| set_player_names   | None | sets player names, then makes a label with the corresponding player name for frames 4 and 5 respectively |
+Verifies whether the placement of a ship is valid during frames 4-5.
+
+### Variable List 
+| Variable and Default/Initalized Value  | Purpose | 
+| :--: | :-- |
+| <ul><li>`vertical_up = False`</li><li>`vertical_down = False`</li><li>`horizontal_right = False`</li><li>`horizontal_left = False`</li></ul> | Verifies positions for placing 2nd/3rd ships |
+| <ul><li>`left_left = False`</li><li>`left_right = False`</li><li>`right_right = False`</li><li>`right_left = False`</li><li>`up_up = False`</li><li>`up_down = False`</li><li>`down_down = False`</li><li>`down_up = False`</li></ul> | Verifies positions for placing 3rd/4th ships |
+| <ul><li>`lll = False`</li><li>`llr = False`</li><li>`rrr = False`</li><li>`rrl = False`</li><li>`uuu = False`</li><li>`uud = False`</li><li>`ddu = False`</li><li>`ddd = False`</li></ul> | Verifies positions for placing 4th/5th ships |
+| `text_variable= 'A'` | Sets the letter/ship type when updating buttons/placing ships |
+| `selected_ships = 0` | Tracks how many ships have been placed |
+| `placing_ships = 0` | Helps verify `enough_space` |
+| `current_index = 0` | The current index of the ship being placed |
+| `player_1_turn = True` | Whether player 1 has finished placing their ships |
+|  <ul><li>`player_1_finalized = False`</li><li>`player_2_finalized = False`</li></ul> | Whether the player has placed all valid ships when enabling the `Finalize Ship Placement` Button |
+
+### Function List 
+| Function | Access Modifier | Arguments | Purpose |
+| :--: | :--: |  :-- |  :-- |
+| <ul><li>valid_move_2</li><li>valid_move_3</li><li>valid_move_4</li><li>valid_move_5</li></ul> | Private | button index/location as `i`  | Returns whether the given index is a valid move for the 2nd/3rd/4th/5th ship placement |
+| reset_direction | Public | array of buttons as `button_ids`  | Resets ship orientation after each ship has been placed | 
+| reset | Private |array of buttons as `button_ids`  | Resets entire board and variables so player 2 sees fresh board when placing their battleships |
+| <ul><li>enough_space</li><li>enough_space_2</ul> | Private | button index as `i`, array of buttons as `button_ids`| Checks whether there would be enough space for a ship to be placed (e.g. the EEEEE ship wouldn't be able to be placed in the upper right hand corner in this [screenshot](https://cdn.discordapp.com/attachments/937888582398541940/942536810121277450/unknown.png)) |
+| change | Private | button index as `i`, array of buttons as `button_ids`  | Changes the button passed in to a letter (or ship) |
+| <ul><li>p1_is_finalized</li><li>p2_is_finalized</ul> | Public | None | Returns whether the player has placed all valid ships when enabling the `Finalize Ship Placement` Button |
+| place_ship | Private |None  | <ul><li>Handles all ship placement interaction.</li><li>There are no undo's or resets.</li><li>Ships are placed onto the screen by clicking on buttons one by one.</li></ul>|
+
 
 ## ship.py
 
