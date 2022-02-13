@@ -28,7 +28,7 @@ root.state('zoomed')
 root.title("Battleship")
 
 ### Images Used
-image=Image.open("assets/sunk.jpeg")
+image=Image.open("assets/sunk.jpeg") #image for sunk (bg for button will be set to black)
 img_s=image.resize((40,40))
 img_sunk=ImageTk.PhotoImage(img_s)
 
@@ -36,9 +36,13 @@ image=Image.open("assets/hit.jpeg") #image for hit (bg for button will be set to
 img_r=image.resize((40,40))
 img_hit=ImageTk.PhotoImage(img_r)
 
-image=Image.open("assets/miss.jpeg")
+image=Image.open("assets/miss.jpeg") #image for miss (bg for button will be set to white)
 img_w=image.resize((40,40))
 img_miss=ImageTk.PhotoImage(img_w)
+
+image=Image.open("assets/start.jpeg") 
+#img_w=image.resize((40,40))
+img_start=ImageTk.PhotoImage(image) #image for just the start button (bg set to blue)
 ###
 
 root.rowconfigure(0, weight=1)
@@ -175,7 +179,7 @@ def drawBoards(type, size, offset_r, offset_c):
             b = player_1.my_board[i].cget("bg")
 
             temp = player_1.my_board[i]
-            button = Button(master=frame7, image=img, text=txt, bg=b) #make a copy
+            button = Button(master=frame7, image=img, text=txt, compound=CENTER, bg=b) #make a copy
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             player_1.my_board[i] = button #replace button with copied button
             temp.destroy() #destroy old button
@@ -208,7 +212,7 @@ def drawBoards(type, size, offset_r, offset_c):
             b = player_2.my_board[i].cget("bg")
 
             temp = player_2.my_board[i]
-            button = Button(master=frame9, image=img, text=txt, bg=b) #make a copy
+            button = Button(master=frame9, image=img, text=txt, compound=CENTER, bg=b) #make a copy
             button.grid(row=item[0], column=item[1], sticky="n,e,s,w")
             player_2.my_board[i] = button #replace button with copied button
             temp.destroy()
@@ -329,7 +333,7 @@ myButton3 = Button(frame2, text="3 ships",font=("Arial",20, BOLD), padx=25, pady
 myButton4 = Button(frame2, text="4 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 4)).place(relx=.5,rely=.6,anchor= CENTER)
 myButton5 = Button(frame2, text="5 ships",font=("Arial",20, BOLD), padx=25, pady=25, command=partial(setup_frame3, 5)).place(relx=.5,rely=.7,anchor= CENTER)
 
-def show_done_button(type):
+def show_done_button(type): #toggles button on player 1 or player 2's screen based on "type" (button not active until player has fired)
     global frame7_button
     global frame9_button
     if type == "p1":
@@ -400,14 +404,14 @@ def Attack(i, type): #playerId = "p1" or "p2"
                     pop_up_label.after(4000, pop_up_label.destroy)
                 else:
                     player_2.enemy_board[i].configure(bg="red", image=img_hit, compound=CENTER, state ='disabled')   
-                    player_1.my_board[i].configure(bg = 'red', image=img_hit, compound=CENTER, state ='disabled')
+                    player_1.my_board[i].configure(bg = "red", image=img_hit, compound=CENTER, state ='disabled')
                 show_done_button("p2")
             p2_fired = True
         #show_frame(frame9)
 
 #Frame 1 code
 myLabel1 = Label(frame1, text="Battleship!\nPress start to begin playing.",font=("Arial", 25)).place(relx=.5, rely=.2,anchor= CENTER)
-frame1_button = Button(frame1, text="Start",font=("Arial",70, BOLD), command=partial(show_frame,frame2), bg="white", padx=20,pady=20).place(relx=.50, rely=.5,anchor= CENTER)
+frame1_button = Button(frame1, text="Start",font=("Arial",70, BOLD), command=partial(show_frame,frame2), bg="white", padx=20,pady=20, image=img_start, compound=CENTER).place(relx=.50, rely=.5,anchor= CENTER)
 
 #Frame 2 code
 myLabel2 = Label(frame2, text="Choose the number of ships each player will have.",font=("Arial",30, BOLD)).place(relx=.51, rely=.2,anchor= CENTER)
@@ -422,7 +426,7 @@ b.insert(0, "Player 2")
 #button
 frame3_button = Button(frame3, text="Enter", command=partial(set_player_names), padx= 15, pady=15).place(anchor=CENTER, relx=0.5, rely=0.55,)
 
-def checkWin(nextFrame):
+def checkWin(nextFrame): #checks for a win condition (after player 1's turn and after player 2's turn)
     global player_1
     global player_2
     
@@ -448,10 +452,7 @@ def checkWin(nextFrame):
         show_frame(nextFrame)
 
 #frame 6 code = popup player 1
-
-
-frame6_button = Button(frame6, text="Ready " + player_1.name + "?", padx=20, pady=20, command=partial(board, "p1_attack", 40)).place(anchor=CENTER, relx=0.5, rely=0.3,)
-
+frame6_button = Button(frame6, text="Ready " + player_1.name + "?", padx=20, pady=20, command=partial(board, "p1_attack", 40)).place(anchor=CENTER, relx=0.5, rely=0.3)
 
 #frame 7 = player 1 turn
 mylabel = Label(frame7, text="Select a grid to attack").grid(row=1, column=12)

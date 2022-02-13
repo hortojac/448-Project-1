@@ -21,25 +21,25 @@ class Player:
         # [j1][j2][j3]....[j10]
 
 
-        self.ships = {} #blank dicttionary (hashmap) of Ships left of each ship belonging this player
+        self.ships = {} # dictionary (Python hashmap) of Ships for player
 
-        '''Example of a ship_lives dictionary at the start of a 5 ship game
+        '''Example of a ships dictionary at the start of a 5 ship game
         player1.ship_lives = {
-            "A": 1,
-            "B": 2,
-            "C": 3,
-            "D": 4,
-            "E": 5,
+            "A": {Ship(1)}, #ship with 1 life
+            "B": {Ship(2)}, #ship with 2 lives
+            "C": {Ship(3)}, #ship with 3 lives
+            "D": {Ship(4)}, #ship with 4 lives
+            "E": {Ship(5)}, #ship with 5 lives
         }
         '''
 
-    def set_ships(self, num_ships):
+    def set_ships(self, num_ships): # properly sets up self.ships based on number of ships passed to the function
         for i in range(num_ships):
             self.ships.update({
                 chr(i + 65): Ship(i + 1)
             })
 
-    def playerToString(self):
+    def playerToString(self): 
         print("name: " + self.name)
         for k in self.ships.keys():
             self.ships[k].shipToString()
