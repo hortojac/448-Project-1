@@ -4,10 +4,6 @@
 
 The interactive GUI allows for button pressing and clicking on <abbr title="any Tkinter element that builds the interface">**widgets**</abbr> to perform actions. You can enter in your names, and click on buttons to both place your ships and attack your enemy's board. 
 
-Here is a demo: 
-
-[Video embed]
-
 # The Code
 
 For our Battleship game, we used `Python` v3.10.0 with the imported libraries of 
